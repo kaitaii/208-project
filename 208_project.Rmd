@@ -17,10 +17,75 @@ library(mgcv)
 ames<-readRDS("AmesHousing.rds")
 ```
 
+```{r}
+glimpse(ames)  # Knowing that for this dataset n = 881, p = 20-1 = 19.
+sum(is.na(ames))    # check for missing entries
+summary(ames)  # check types of features, which features have missing entries?
+levels(ames$Overall_Qual)   # the levels are NOT properly ordered
+
+# relevel the levels
+
+ames$Overall_Qual <- factor(ames$Overall_Qual, levels = c("Very_Poor", "Poor", "Fair", "Below_Average", 
+                                                  "Average", "Above_Average", "Good", "Very_Good", 
+                                                  "Excellent", "Very_Excellent"))
+
+levels(ames$Overall_Qual)   # the levels are properly ordered
 
 
+```
+
+```{r}
+# split the dataset
+
+set.seed(013123)   # set seed
+
+index <- createDataPartition(y = ames$Sale_Price, p = 0.7, list = FALSE)   # consider 70-30 split
+
+ames_train <- ames[index,]   # training data
+
+ames_test <- ames[-index,]   # test data
+```
+
+```{r}
+# set up the recipe
+
+library(recipes)
+
+ames_recipe <- recipe(formula = Sale_Price ~ ., data = ames_train)   # sets up the type and role of variables
+
+ames_recipe$var_info
+```
+
+```{r}
+# investigate nominal categorical predictors 
+
+ames_train %>% count(Neighborhood) %>% arrange(n)   # check frequency of categories
+```
+
+```{r}
+# finally, after all preprocessing steps have been decided set up the overall blueprint
+
+ames_recipe <- recipe(Sale_Price ~ ., data = ames_train)   # set up recipe
+
+# specify feature engineering steps
+blueprint <- ames_recipe %>%    
+  step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%   # filter out zv/nzv predictors
+  step_impute_mean(Gr_Liv_Area) %>%                                    # impute missing entries
+  step_integer(Overall_Qual) %>%                                       # numeric conversion of levels of the predictors   
+  step_center(all_numeric(), -all_outcomes()) %>%                      # center (subtract mean) all numeric predictors (consider all the numeric predictors except the response)
+  step_scale(all_numeric(), -all_outcomes()) %>%                       # scale (divide by standard deviation) all numeric predictors
+  step_other(Neighborhood, threshold = 0.01, other = "other") %>%      # lumping required predictors
+  step_dummy(all_nominal(), one_hot = TRUE)                            # one-hot/dummy encode nominal categorical predictors
+
+# replace step_center and step_scale with step_normalize
+
+prepare <- prep(blueprint, data = ames_train)    # estimate feature engineering parameters based on training data
 
 
+baked_train <- bake(prepare, new_data = ames_train)   # apply the blueprint to training data for building final/optimal model
+
+baked_test <- bake(prepare, new_data = ames_test)    # apply the blueprint to test data for future use
+```
 
 
 
