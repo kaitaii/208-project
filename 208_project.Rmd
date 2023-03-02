@@ -1,5 +1,6 @@
 ---
 title: "208 project"
+author: "Yi Lu", "Shiyi Yang"
 output: html_document
 date: "2023-03-02"
 ---
@@ -8,6 +9,13 @@ date: "2023-03-02"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+library(tidyverse)
+library(caret)
+library(recipes)
+library(mgcv)
+ames<-readRDS("AmesHousing.rds")
+```
 
 
 
