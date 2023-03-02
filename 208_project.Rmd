@@ -39,22 +39,13 @@ levels(ames$Overall_Qual)   # the levels are properly ordered
 
 set.seed(013123)   # set seed
 
-index <- createDataPartition(y = ames$Sale_Price, p = 0.7, list = FALSE)   # consider 70-30 split
+index <- createDataPartition(y = ames$Sale_Price, p = 0.8, list = FALSE)   # consider 70-30 split
 
 ames_train <- ames[index,]   # training data
 
 ames_test <- ames[-index,]   # test data
 ```
 
-```{r}
-# set up the recipe
-
-library(recipes)
-
-ames_recipe <- recipe(formula = Sale_Price ~ ., data = ames_train)   # sets up the type and role of variables
-
-ames_recipe$var_info
-```
 
 ```{r}
 # investigate nominal categorical predictors 
@@ -65,7 +56,7 @@ ames_train %>% count(Neighborhood) %>% arrange(n)   # check frequency of categor
 ```{r}
 # finally, after all preprocessing steps have been decided set up the overall blueprint
 
-ames_recipe <- recipe(Sale_Price ~ ., data = ames_train)   # set up recipe
+ames_recipe <- recipe(Sale_Price~., data = ames_train)   # set up recipe
 
 # specify feature engineering steps
 blueprint <- ames_recipe %>%    
@@ -75,7 +66,7 @@ blueprint <- ames_recipe %>%
   step_center(all_numeric(), -all_outcomes()) %>%                      # center (subtract mean) all numeric predictors (consider all the numeric predictors except the response)
   step_scale(all_numeric(), -all_outcomes()) %>%                       # scale (divide by standard deviation) all numeric predictors
   step_other(Neighborhood, threshold = 0.01, other = "other") %>%      # lumping required predictors
-  step_dummy(all_nominal(), one_hot = TRUE)                            # one-hot/dummy encode nominal categorical predictors
+  step_dummy(all_nominal(), one_hot = FALSE)                            # one-hot/dummy encode nominal categorical predictors
 
 # replace step_center and step_scale with step_normalize
 
@@ -87,6 +78,25 @@ baked_train <- bake(prepare, new_data = ames_train)   # apply the blueprint to t
 baked_test <- bake(prepare, new_data = ames_test)    # apply the blueprint to test data for future use
 ```
 
+```{r}
+set.seed(111)
+model<-train(blueprint,
+             data=ames_train,
+             method="gam",
+             tuneGrid=data.frame(method = "GCV.Cp", select = TRUE),
+             trControl=trainControl(method="cv",number=5)
+)
+model$results$RMSE
+
+model$finalMo
+```
+```{r}
+# obtain predictions and test set RMSE
+# final_model <- gam(Sale_Price~. ,data=baked_train) 
+final_model_preds<- predict(object = model$finalModel, newdata = baked_test, type = "response")    # obtain predictions
+
+sqrt(mean((final_model_preds - baked_test$Sale_Price)^2))   # calculate test set RMSE
+```
 
 
 
