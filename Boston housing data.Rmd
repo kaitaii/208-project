@@ -5,10 +5,18 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+# LEAVE THIS CODE CHUNK AS-IS
+# This code chunk sets the global codechunk options for this file/chapter
+knitr::opts_chunk$set(error = TRUE, include=TRUE, echo=TRUE, message=TRUE, warning=TRUE)
+# For BP, telling R to not stop on error (error=TRUE option above) and changing errors to display with yellow font on crimson background
+knitr::knit_hooks$set(error = function(x, options) { 
+  paste(c('\n\n:::{style="color:Yellow; background-color: Crimson;"}',
+        gsub('^## Error', '**ERROR:**', x),
+        ':::'), collapse = '\n')
+})
 ```
 
-```{r}
+```{r,echo=FALSE,warning=FALSE, include=FALSE}
 library(tidyverse)
 library(caret)
 library(recipes)
