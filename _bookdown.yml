@@ -1,0 +1,7 @@
+book_filename: "RP"
+output_dir: docs
+delete_merged_file: true
+new_session: false
+edit: https://github.com/kaitaii/208-project/edit/main/%s
+view: https://github.com/kaitaii/208-project/blob/main/%s
+history: https://github.com/kaitaii/208-project/commits/main/%s

@@ -1,9 +1,10 @@
 ---
-title: "208 project"
-author: "Yi Lu", "Shiyi Yang"
+title: "CMSC/LING/STAT 208: Final Project"
+author: "Yi Lu, Shiyi Yang"
 output: html_document
-date: "2023-03-02"
 ---
+
+# Ames Housing
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -83,7 +84,7 @@ set.seed(111)
 model<-train(blueprint,
              data=ames_train,
              method="gam",
-             tuneGrid=data.frame(method = "GCV.Cp", select = TRUE),
+             tuneGrid=data.frame(method = "GCV.Cp", select = TRUE),  
              trControl=trainControl(method="cv",number=5)
 )
 model$results$RMSE
