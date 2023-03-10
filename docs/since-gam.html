@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Since GAM | CMSC/LING/STAT 208: Final Project</title>
+  <meta name="description" content="2 Since GAM | CMSC/LING/STAT 208: Final Project" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Since GAM | CMSC/LING/STAT 208: Final Project" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Since GAM | CMSC/LING/STAT 208: Final Project" />
+  
+  
+  
+
+<meta name="author" content="Yi Lu, Shiyi Yang" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ames-housing.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="1" data-path="ames-housing.html"><a href="ames-housing.html"><i class="fa fa-check"></i><b>1</b> Ames Housing</a></li>
+<li class="chapter" data-level="2" data-path="since-gam.html"><a href="since-gam.html"><i class="fa fa-check"></i><b>2</b> Since GAM</a>
+<ul>
+<li class="chapter" data-level="2.0.1" data-path="since-gam.html"><a href="since-gam.html#section"><i class="fa fa-check"></i><b>2.0.1</b> </a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CMSC/LING/STAT 208: Final Project</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="since-gam" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> Since GAM<a href="since-gam.html#since-gam" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="since-gam.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(boston)  <span class="co"># p=13</span></span></code></pre></div>
+<pre><code>## Rows: 506
+## Columns: 14
+## $ CRIM    &lt;dbl&gt; 0.00632, 0.02731, 0.02729, 0.03237, 0.06905, 0.02985, 0.08829,…
+## $ ZN      &lt;dbl&gt; 18.0, 0.0, 0.0, 0.0, 0.0, 0.0, 12.5, 12.5, 12.5, 12.5, 12.5, 1…
+## $ INDUS   &lt;dbl&gt; 2.31, 7.07, 7.07, 2.18, 2.18, 2.18, 7.87, 7.87, 7.87, 7.87, 7.…
+## $ CHAS    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ NOX     &lt;dbl&gt; 0.538, 0.469, 0.469, 0.458, 0.458, 0.458, 0.524, 0.524, 0.524,…
+## $ RM      &lt;dbl&gt; 6.575, 6.421, 7.185, 6.998, 7.147, 6.430, 6.012, 6.172, 5.631,…
+## $ AGE     &lt;dbl&gt; 65.2, 78.9, 61.1, 45.8, 54.2, 58.7, 66.6, 96.1, 100.0, 85.9, 9…
+## $ DIS     &lt;dbl&gt; 4.0900, 4.9671, 4.9671, 6.0622, 6.0622, 6.0622, 5.5605, 5.9505…
+## $ RAD     &lt;dbl&gt; 1, 2, 2, 3, 3, 3, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4,…
+## $ TAX     &lt;dbl&gt; 296, 242, 242, 222, 222, 222, 311, 311, 311, 311, 311, 311, 31…
+## $ PTRATIO &lt;dbl&gt; 15.3, 17.8, 17.8, 18.7, 18.7, 18.7, 15.2, 15.2, 15.2, 15.2, 15…
+## $ B       &lt;dbl&gt; 396.90, 396.90, 392.83, 394.63, 396.90, 394.12, 395.60, 396.90…
+## $ LSTAT   &lt;dbl&gt; 4.98, 9.14, 4.03, 2.94, 5.33, 5.21, 12.43, 19.15, 29.93, 17.10…
+## $ MEDV    &lt;dbl&gt; 24.0, 21.6, 34.7, 33.4, 36.2, 28.7, 22.9, 27.1, 16.5, 18.9, 15…</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="since-gam.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(boston))  <span class="co"># check for missing entries</span></span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="since-gam.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(boston)  <span class="co"># check types of features</span></span></code></pre></div>
+<pre><code>##       CRIM                ZN             INDUS            CHAS        
+##  Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   Min.   :0.00000  
+##  1st Qu.: 0.08205   1st Qu.:  0.00   1st Qu.: 5.19   1st Qu.:0.00000  
+##  Median : 0.25651   Median :  0.00   Median : 9.69   Median :0.00000  
+##  Mean   : 3.61352   Mean   : 11.36   Mean   :11.14   Mean   :0.06917  
+##  3rd Qu.: 3.67708   3rd Qu.: 12.50   3rd Qu.:18.10   3rd Qu.:0.00000  
+##  Max.   :88.97620   Max.   :100.00   Max.   :27.74   Max.   :1.00000  
+##       NOX               RM             AGE              DIS        
+##  Min.   :0.3850   Min.   :3.561   Min.   :  2.90   Min.   : 1.130  
+##  1st Qu.:0.4490   1st Qu.:5.886   1st Qu.: 45.02   1st Qu.: 2.100  
+##  Median :0.5380   Median :6.208   Median : 77.50   Median : 3.207  
+##  Mean   :0.5547   Mean   :6.285   Mean   : 68.57   Mean   : 3.795  
+##  3rd Qu.:0.6240   3rd Qu.:6.623   3rd Qu.: 94.08   3rd Qu.: 5.188  
+##  Max.   :0.8710   Max.   :8.780   Max.   :100.00   Max.   :12.127  
+##       RAD              TAX           PTRATIO            B         
+##  Min.   : 1.000   Min.   :187.0   Min.   :12.60   Min.   :  0.32  
+##  1st Qu.: 4.000   1st Qu.:279.0   1st Qu.:17.40   1st Qu.:375.38  
+##  Median : 5.000   Median :330.0   Median :19.05   Median :391.44  
+##  Mean   : 9.549   Mean   :408.2   Mean   :18.46   Mean   :356.67  
+##  3rd Qu.:24.000   3rd Qu.:666.0   3rd Qu.:20.20   3rd Qu.:396.23  
+##  Max.   :24.000   Max.   :711.0   Max.   :22.00   Max.   :396.90  
+##      LSTAT            MEDV      
+##  Min.   : 1.73   Min.   : 5.00  
+##  1st Qu.: 6.95   1st Qu.:17.02  
+##  Median :11.36   Median :21.20  
+##  Mean   :12.65   Mean   :22.53  
+##  3rd Qu.:16.95   3rd Qu.:25.00  
+##  Max.   :37.97   Max.   :50.00</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="since-gam.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nearZeroVar</span>(boston)  <span class="co"># check for near zero variable</span></span></code></pre></div>
+<pre><code>## integer(0)</code></pre>
+<div id="section" class="section level3" number="2.0.1">
+<h3><span class="header-section-number">2.0.1</span> </h3>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="since-gam.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># split the dataset</span></span>
+<span id="cb38-2"><a href="since-gam.html#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="since-gam.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)   <span class="co"># set seed</span></span>
+<span id="cb38-4"><a href="since-gam.html#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="since-gam.html#cb38-5" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(<span class="at">y =</span> boston<span class="sc">$</span>MEDV, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)   <span class="co"># consider 70-30 split</span></span>
+<span id="cb38-6"><a href="since-gam.html#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="since-gam.html#cb38-7" aria-hidden="true" tabindex="-1"></a>boston_train <span class="ot">&lt;-</span> boston[index,]   <span class="co"># training data</span></span>
+<span id="cb38-8"><a href="since-gam.html#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="since-gam.html#cb38-9" aria-hidden="true" tabindex="-1"></a>boston_test <span class="ot">&lt;-</span> boston[<span class="sc">-</span>index,]   <span class="co"># test data</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="since-gam.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># finally, after all preprocessing steps have been decided set up the overall blueprint</span></span>
+<span id="cb39-2"><a href="since-gam.html#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="since-gam.html#cb39-3" aria-hidden="true" tabindex="-1"></a>boston_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(MEDV<span class="sc">~</span>., <span class="at">data =</span> boston_train)   <span class="co"># set up recipe</span></span>
+<span id="cb39-4"><a href="since-gam.html#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="since-gam.html#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co"># specify feature engineering steps</span></span>
+<span id="cb39-6"><a href="since-gam.html#cb39-6" aria-hidden="true" tabindex="-1"></a>blueprint <span class="ot">&lt;-</span> boston_recipe <span class="sc">%&gt;%</span>    </span>
+<span id="cb39-7"><a href="since-gam.html#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      <span class="co"># center (subtract mean) all numeric predictors (consider all the numeric predictors except the response)</span></span>
+<span id="cb39-8"><a href="since-gam.html#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())                     <span class="co"># scale (divide by standard deviation) all numeric predictors                     </span></span>
+<span id="cb39-9"><a href="since-gam.html#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="since-gam.html#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="co"># replace step_center and step_scale with step_normalize</span></span>
+<span id="cb39-11"><a href="since-gam.html#cb39-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-12"><a href="since-gam.html#cb39-12" aria-hidden="true" tabindex="-1"></a>prepare <span class="ot">&lt;-</span> <span class="fu">prep</span>(blueprint, <span class="at">data =</span> boston_train)    <span class="co"># estimate feature engineering parameters based on training data</span></span>
+<span id="cb39-13"><a href="since-gam.html#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-14"><a href="since-gam.html#cb39-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-15"><a href="since-gam.html#cb39-15" aria-hidden="true" tabindex="-1"></a>baked_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(prepare, <span class="at">new_data =</span> boston_train)   <span class="co"># apply the blueprint to training data for building final/optimal model</span></span>
+<span id="cb39-16"><a href="since-gam.html#cb39-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-17"><a href="since-gam.html#cb39-17" aria-hidden="true" tabindex="-1"></a>baked_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(prepare, <span class="at">new_data =</span> boston_test)    <span class="co"># apply the blueprint to test data for future use</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="since-gam.html#cb40-1" aria-hidden="true" tabindex="-1"></a>tunegrid<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="at">select =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb40-2"><a href="since-gam.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb40-3"><a href="since-gam.html#cb40-3" aria-hidden="true" tabindex="-1"></a>model<span class="ot">&lt;-</span><span class="fu">train</span>(blueprint,</span>
+<span id="cb40-4"><a href="since-gam.html#cb40-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">data=</span>boston_train,</span>
+<span id="cb40-5"><a href="since-gam.html#cb40-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">method=</span><span class="st">&quot;gam&quot;</span>,</span>
+<span id="cb40-6"><a href="since-gam.html#cb40-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">tuneGrid=</span><span class="fu">data.frame</span>(<span class="at">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="at">select =</span> <span class="cn">TRUE</span>), <span class="co">#method indicates the smoothing parameter estimation method, GCV for models with unknown scale parameter and Mallows&#39; Cp/UBRE/AIC for models with known scale; select=TRUE adds extra penalty so that the smoothing parameter estimation can completely remove terms from the model </span></span>
+<span id="cb40-7"><a href="since-gam.html#cb40-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">trControl=</span><span class="fu">trainControl</span>(<span class="at">method=</span><span class="st">&quot;cv&quot;</span>,<span class="at">number=</span><span class="dv">5</span>)</span>
+<span id="cb40-8"><a href="since-gam.html#cb40-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-9"><a href="since-gam.html#cb40-9" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span>results<span class="sc">$</span>RMSE</span></code></pre></div>
+<pre><code>## [1] 3.989444</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="since-gam.html#cb42-1" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span>finalMo</span></code></pre></div>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## .outcome ~ CHAS + RAD + s(ZN) + s(PTRATIO) + s(TAX) + s(INDUS) + 
+##     s(NOX) + s(B) + s(AGE) + s(DIS) + s(RM) + s(LSTAT) + s(CRIM)
+## 
+## Estimated degrees of freedom:
+## 0.000 0.927 2.906 5.636 7.931 4.886 0.000 
+## 0.889 8.392 5.813 4.421  total = 44.8 
+## 
+## GCV score: 12.95974</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="since-gam.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain predictions and test set RMSE</span></span>
+<span id="cb44-2"><a href="since-gam.html#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="since-gam.html#cb44-3" aria-hidden="true" tabindex="-1"></a>final_model <span class="ot">&lt;-</span> <span class="fu">gam</span>(MEDV<span class="sc">~</span>CHAS <span class="sc">+</span> RAD <span class="sc">+</span> <span class="fu">s</span>(ZN) <span class="sc">+</span> <span class="fu">s</span>(PTRATIO) <span class="sc">+</span> <span class="fu">s</span>(TAX) <span class="sc">+</span> <span class="fu">s</span>(INDUS) <span class="sc">+</span> </span>
+<span id="cb44-4"><a href="since-gam.html#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">s</span>(NOX) <span class="sc">+</span> <span class="fu">s</span>(B) <span class="sc">+</span> <span class="fu">s</span>(AGE) <span class="sc">+</span> <span class="fu">s</span>(DIS) <span class="sc">+</span> <span class="fu">s</span>(RM) <span class="sc">+</span> <span class="fu">s</span>(LSTAT) <span class="sc">+</span> <span class="fu">s</span>(CRIM),<span class="at">data=</span>baked_train) </span>
+<span id="cb44-5"><a href="since-gam.html#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="since-gam.html#cb44-6" aria-hidden="true" tabindex="-1"></a>final_model_preds<span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> final_model, <span class="at">newdata =</span> baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)    <span class="co"># obtain predictions</span></span>
+<span id="cb44-7"><a href="since-gam.html#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="since-gam.html#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((final_model_preds <span class="sc">-</span> baked_test<span class="sc">$</span>MEDV)<span class="sc">^</span><span class="dv">2</span>))   <span class="co"># calculate test set RMSE</span></span></code></pre></div>
+<pre><code>## [1] 3.077761</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="since-gam.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(final_model)</span></code></pre></div>
+<pre><code>##   (Intercept)          CHAS           RAD       s(ZN).1       s(ZN).2 
+##  2.267715e+01  2.022569e-01  3.655526e+00  5.824985e-08  2.806488e-09 
+##       s(ZN).3       s(ZN).4       s(ZN).5       s(ZN).6       s(ZN).7 
+## -3.620269e-08 -4.589304e-08  2.602031e-08 -2.756246e-08 -1.855087e-08 
+##       s(ZN).8       s(ZN).9  s(PTRATIO).1  s(PTRATIO).2  s(PTRATIO).3 
+##  1.102485e-07  2.693148e-01  9.792057e-09 -1.232843e-08 -4.982888e-09 
+##  s(PTRATIO).4  s(PTRATIO).5  s(PTRATIO).6  s(PTRATIO).7  s(PTRATIO).8 
+##  1.256083e-08  5.046351e-10  1.040306e-08  3.151308e-09 -6.044307e-08 
+##  s(PTRATIO).9      s(TAX).1      s(TAX).2      s(TAX).3      s(TAX).4 
+## -1.633053e+00  3.618700e+00  1.405151e+00 -7.740275e-02 -5.318771e-01 
+##      s(TAX).5      s(TAX).6      s(TAX).7      s(TAX).8      s(TAX).9 
+## -8.093729e-02 -2.683977e-01 -6.878059e-02 -2.982261e+00 -6.225554e+00 
+##    s(INDUS).1    s(INDUS).2    s(INDUS).3    s(INDUS).4    s(INDUS).5 
+## -3.352131e+00  6.087354e-01  2.121811e+00 -4.651431e+00 -4.869233e-01 
+##    s(INDUS).6    s(INDUS).7    s(INDUS).8    s(INDUS).9      s(NOX).1 
+## -4.174749e+00  3.677786e+00  9.805027e+00 -3.332319e+00 -2.779861e+00 
+##      s(NOX).2      s(NOX).3      s(NOX).4      s(NOX).5      s(NOX).6 
+## -1.453622e+01 -7.149468e-01  1.176423e+01  7.867835e+00 -1.345680e+01 
+##      s(NOX).7      s(NOX).8      s(NOX).9        s(B).1        s(B).2 
+## -4.829748e+00  4.389334e+01  5.054269e+00  1.036487e-01  1.103010e+00 
+##        s(B).3        s(B).4        s(B).5        s(B).6        s(B).7 
+## -4.976484e-01  7.795278e-01  2.786051e-01 -7.448779e-01  3.100793e-01 
+##        s(B).8        s(B).9      s(AGE).1      s(AGE).2      s(AGE).3 
+##  2.754377e+00  1.674564e-01  6.130129e-08  3.960807e-08 -1.406218e-09 
+##      s(AGE).4      s(AGE).5      s(AGE).6      s(AGE).7      s(AGE).8 
+##  4.299025e-08 -3.504346e-09  3.671368e-08 -4.430853e-11  1.602136e-07 
+##      s(AGE).9      s(DIS).1      s(DIS).2      s(DIS).3      s(DIS).4 
+##  1.056042e-01 -5.787123e+00  1.296531e+01 -4.342308e+00 -9.456774e+00 
+##      s(DIS).5      s(DIS).6      s(DIS).7      s(DIS).8      s(DIS).9 
+##  4.443850e+00 -8.397223e+00  2.881023e-01 -1.274815e+01 -2.105359e+01 
+##       s(RM).1       s(RM).2       s(RM).3       s(RM).4       s(RM).5 
+##  5.560717e+00  6.823768e+00  4.391045e+00 -3.983784e+00 -2.724092e+00 
+##       s(RM).6       s(RM).7       s(RM).8       s(RM).9    s(LSTAT).1 
+##  2.646801e+00  4.467370e+00  1.992231e+01 -8.990143e+00  1.543097e+00 
+##    s(LSTAT).2    s(LSTAT).3    s(LSTAT).4    s(LSTAT).5    s(LSTAT).6 
+## -6.815432e+00  8.930136e-01  2.659123e+00  1.762691e+00  3.583721e+00 
+##    s(LSTAT).7    s(LSTAT).8    s(LSTAT).9     s(CRIM).1     s(CRIM).2 
+##  3.954289e-01 -1.149471e+01 -7.907894e+00  7.107952e+00  1.420625e+01 
+##     s(CRIM).3     s(CRIM).4     s(CRIM).5     s(CRIM).6     s(CRIM).7 
+##  2.044314e-02 -6.418126e+00  5.476575e+00  6.115682e+00 -1.279049e+00 
+##     s(CRIM).8     s(CRIM).9 
+##  1.908162e+01 -3.100936e+00</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="since-gam.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(final_model)</span></code></pre></div>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## MEDV ~ CHAS + RAD + s(ZN) + s(PTRATIO) + s(TAX) + s(INDUS) + 
+##     s(NOX) + s(B) + s(AGE) + s(DIS) + s(RM) + s(LSTAT) + s(CRIM)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  22.6771     0.1588 142.800  &lt; 2e-16 ***
+## CHAS          0.2023     0.1822   1.110 0.267670    
+## RAD           3.6555     1.0438   3.502 0.000521 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##              edf Ref.df      F  p-value    
+## s(ZN)      1.000  1.000  0.572  0.44993    
+## s(PTRATIO) 1.000  1.000 30.385  &lt; 2e-16 ***
+## s(TAX)     3.082  3.730  8.783 3.23e-06 ***
+## s(INDUS)   7.247  8.177  3.245  0.00134 ** 
+## s(NOX)     9.000  9.000 12.730  &lt; 2e-16 ***
+## s(B)       2.089  2.571  1.623  0.17098    
+## s(AGE)     1.000  1.000  0.088  0.76629    
+## s(DIS)     8.777  8.983  6.870  &lt; 2e-16 ***
+## s(RM)      8.566  8.939 21.781  &lt; 2e-16 ***
+## s(LSTAT)   6.823  7.926 20.919  &lt; 2e-16 ***
+## s(CRIM)    4.548  5.496  8.095  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.882   Deviance explained = 89.8%
+## GCV = 11.906  Scale est. = 10.264    n = 407</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ames-housing.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/kaitaii/208-project/edit/main/Bostonhousing.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": "https://github.com/kaitaii/208-project/commits/main/Bostonhousing.Rmd",
+"text": null
+},
+"view": {
+"link": "https://github.com/kaitaii/208-project/blob/main/Bostonhousing.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
