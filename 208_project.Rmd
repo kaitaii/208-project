@@ -152,7 +152,6 @@ ames_final_model_preds2<- predict(object = ames_final_model2, newdata = ames_bak
 
 sqrt(mean((ames_final_model_preds2 - ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
 ```
-```
 
 
 

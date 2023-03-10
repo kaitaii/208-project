@@ -1,15 +1,7 @@
----
-title: "CMSC/LING/STAT 208: Final Project"
-author: "Yi Lu, Shiyi Yang"
-output: html_document
----
-
 
 # Boston housing dataset
 
 Since GAM did not work well with the Ames housing dataset, 
-
-
 
 ```{r,echo=FALSE,warning=FALSE, include=FALSE}
 library(tidyverse)
@@ -104,13 +96,4 @@ summary(boston_final_model)
 ```{r}
 plot(boston_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue")
 ```
-
-
-
-
-
-
-
-
-
 
