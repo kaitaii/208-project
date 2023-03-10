@@ -118,6 +118,31 @@ sqrt(mean((ames_final_model_preds - ames_baked_test$Sale_Price)^2))   # calculat
 plot(ames_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue")
 ```
 
+```{r}
+ames_final_model2 <- gam(Sale_Price~ s(Gr_Liv_Area) + 
+    s(First_Flr_SF) + s(Lot_Area) ,data=ames_baked_train) 
+ames_final_model_preds2<- predict(object = ames_final_model2, newdata = ames_baked_test, type = "response")    # obtain predictions
+
+sqrt(mean((ames_final_model_preds2 - ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
+```
+
+
+
+
+
+
+
+```{r}
+ggplot(ames,aes(x=Gr_Liv_Area,y=Sale_Price))+geom_point()+geom_smooth()
+```
+
+```{r}
+gam_mod <- gam(Sale_Price ~ s(Gr_Liv_Area), data = ames)
+plot(gam_mod)
+```
+
+
+
 
 
 ```{r}
