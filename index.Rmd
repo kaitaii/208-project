@@ -8,7 +8,7 @@ biblio-style: apalike
 link-citations: yes
 ---
 
-# Overview {-}
+# Introduction {-}
 
 This overview provides a brief explanation of this book. This book has two main sections, DataCamp and Econometrics. Each is described below.  
 

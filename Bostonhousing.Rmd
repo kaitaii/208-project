@@ -5,7 +5,9 @@ output: html_document
 ---
 
 
-# Since GAM 
+# Boston housing dataset
+
+Since GAM did not work well with the Ames housing dataset, 
 
 
 
@@ -22,6 +24,9 @@ glimpse(boston)  # p=13
 sum(is.na(boston))  # check for missing entries
 summary(boston)  # check types of features
 nearZeroVar(boston)  # check for near zero variable
+```
+```{r}
+cor(boston)
 ```
 
 ### 
@@ -48,59 +53,57 @@ boston_test <- boston[-index,]   # test data
 boston_recipe <- recipe(MEDV~., data = boston_train)   # set up recipe
 
 # specify feature engineering steps
-blueprint <- boston_recipe %>%    
+boston_blueprint <- boston_recipe %>%    
   step_center(all_numeric(), -all_outcomes()) %>%                      # center (subtract mean) all numeric predictors (consider all the numeric predictors except the response)
   step_scale(all_numeric(), -all_outcomes())                     # scale (divide by standard deviation) all numeric predictors                     
 
 # replace step_center and step_scale with step_normalize
 
-prepare <- prep(blueprint, data = boston_train)    # estimate feature engineering parameters based on training data
+boston_prepare <- prep(boston_blueprint, data = boston_train)    # estimate feature engineering parameters based on training data
 
 
-baked_train <- bake(prepare, new_data = boston_train)   # apply the blueprint to training data for building final/optimal model
+boston_baked_train <- bake(boston_prepare, new_data = boston_train)   # apply the blueprint to training data for building final/optimal model
 
-baked_test <- bake(prepare, new_data = boston_test)    # apply the blueprint to test data for future use
+boston_baked_test <- bake(boston_prepare, new_data = boston_test)    # apply the blueprint to test data for future use
 ```
 
 ```{r}
 tunegrid<-data.frame(method = "GCV.Cp", select = TRUE)
 set.seed(111)
-model<-train(blueprint,
+boston_model<-train(boston_blueprint,
              data=boston_train,
              method="gam",
              tuneGrid=data.frame(method = "GCV.Cp", select = TRUE), #method indicates the smoothing parameter estimation method, GCV for models with unknown scale parameter and Mallows' Cp/UBRE/AIC for models with known scale; select=TRUE adds extra penalty so that the smoothing parameter estimation can completely remove terms from the model 
              trControl=trainControl(method="cv",number=5)
 )
-model$results$RMSE
+boston_model$results$RMSE
 
-model$finalMo
+boston_model$finalMo
 ```
 ```{r}
 # obtain predictions and test set RMSE
 
-final_model <- gam(MEDV~CHAS + RAD + s(ZN) + s(PTRATIO) + s(TAX) + s(INDUS) + 
-    s(NOX) + s(B) + s(AGE) + s(DIS) + s(RM) + s(LSTAT) + s(CRIM),data=baked_train) 
+boston_final_model <- gam(MEDV~CHAS + RAD + s(ZN) + s(PTRATIO) + s(TAX) + s(INDUS) + 
+    s(NOX) + s(B) + s(AGE) + s(DIS) + s(RM) + s(LSTAT) + s(CRIM),data=boston_baked_train) 
 
-final_model_preds<- predict(object = final_model, newdata = baked_test, type = "response")    # obtain predictions
+boston_final_model_preds<- predict(object = boston_final_model, newdata = boston_baked_test, type = "response")    # obtain predictions
 
-sqrt(mean((final_model_preds - baked_test$MEDV)^2))   # calculate test set RMSE
+sqrt(mean((boston_final_model_preds - boston_baked_test$MEDV)^2))   # calculate test set RMSE
 ```
 
 ```{r}
-coef(final_model)
+coef(boston_final_model)
 ```
 
 
 ```{r}
-summary(final_model)
+summary(boston_final_model)
 
 ```
 
-
-
-
-
-
+```{r}
+plot(boston_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue")
+```
 
 
 

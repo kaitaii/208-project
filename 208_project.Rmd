@@ -18,6 +18,7 @@ library(mgcv)
 ames<-readRDS("AmesHousing.rds")
 ```
 
+
 ```{r}
 glimpse(ames)  # Knowing that for this dataset n = 881, p = 20-1 = 19.
 sum(is.na(ames))    # check for missing entries
@@ -60,7 +61,7 @@ ames_train %>% count(Neighborhood) %>% arrange(n)   # check frequency of categor
 ames_recipe <- recipe(Sale_Price~., data = ames_train)   # set up recipe
 
 # specify feature engineering steps
-blueprint <- ames_recipe %>%    
+ames_blueprint <- ames_recipe %>%    
   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%   # filter out zv/nzv predictors
   step_impute_mean(Gr_Liv_Area) %>%                                    # impute missing entries
   step_integer(Overall_Qual) %>%                                       # numeric conversion of levels of the predictors   
@@ -71,41 +72,62 @@ blueprint <- ames_recipe %>%
 
 # replace step_center and step_scale with step_normalize
 
-prepare <- prep(blueprint, data = ames_train)    # estimate feature engineering parameters based on training data
+ames_prepare <- prep(ames_blueprint, data = ames_train)    # estimate feature engineering parameters based on training data
 
 
-baked_train <- bake(prepare, new_data = ames_train)   # apply the blueprint to training data for building final/optimal model
+ames_baked_train <- bake(ames_prepare, new_data = ames_train)   # apply the blueprint to training data for building final/optimal model
 
-baked_test <- bake(prepare, new_data = ames_test)    # apply the blueprint to test data for future use
+ames_baked_test <- bake(ames_prepare, new_data = ames_test)    # apply the blueprint to test data for future use
 ```
+
+
+
 
 ```{r}
 set.seed(111)
-model<-train(blueprint,
+ames_model<-train(ames_blueprint,
              data=ames_train,
              method="gam",
              tuneGrid=data.frame(method = "GCV.Cp", select = TRUE),  
              trControl=trainControl(method="cv",number=5)
 )
-model$results$RMSE
+ames_model$results$RMSE
 
-model$finalMo
+ames_model$finalMo
 ```
 ```{r}
 # obtain predictions and test set RMSE
-# final_model <- gam(Sale_Price~. ,data=baked_train) 
-final_model_preds<- predict(object = model$finalModel, newdata = baked_test, type = "response")    # obtain predictions
+ames_final_model <- gam(Sale_Price~Garage_Type_BuiltIn + Garage_Type_Detchd + Garage_Type_No_Garage + 
+    Neighborhood_College_Creek + Neighborhood_Old_Town + Neighborhood_Edwards + 
+    Neighborhood_Somerset + Neighborhood_Northridge_Heights + 
+    Neighborhood_Gilbert + Neighborhood_Sawyer + MS_SubClass_One_and_Half_Story_Finished_All_Ages + 
+    MS_SubClass_Two_Story_1946_and_Newer + MS_SubClass_Duplex_All_Styles_and_Ages + 
+    MS_SubClass_One_Story_PUD_1946_and_Newer + Garage_Cars + 
+    Overall_Qual + s(TotRms_AbvGrd) + s(Lot_Frontage) + s(Year_Built) + 
+    s(Open_Porch_SF) + s(Second_Flr_SF) + s(Garage_Area) + s(Gr_Liv_Area) + 
+    s(First_Flr_SF) + s(Lot_Area) ,data=ames_baked_train) 
+ames_final_model_preds<- predict(object = ames_final_model, newdata = ames_baked_test, type = "response")    # obtain predictions
 
-sqrt(mean((final_model_preds - baked_test$Sale_Price)^2))   # calculate test set RMSE
+sqrt(mean((ames_final_model_preds - ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
 ```
 
 
 
 
+```{r}
+plot(ames_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue")
+```
 
 
 
+```{r}
+ames_final_model2 <- gam(Sale_Price~ s(Gr_Liv_Area) + 
+    s(First_Flr_SF) + s(Lot_Area) ,data=ames_baked_train) 
+ames_final_model_preds2<- predict(object = ames_final_model2, newdata = ames_baked_test, type = "response")    # obtain predictions
 
+sqrt(mean((ames_final_model_preds2 - ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
+```
+```
 
 
 
