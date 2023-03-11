@@ -1,6 +1,0 @@
-introducation
-ames-housing-dataset-example
-boston-housing-dataset-example
-conclusion
-boston-housing-dataset-example-1
-conclusion-1
