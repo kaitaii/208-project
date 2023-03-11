@@ -1,5 +1,17 @@
+---
+title: "CMSC/LING/STAT 208: Final Project - GAMs"
+author: "Yi Lu, Shiyi Yang"
+output: html_document
+---
 
-# Ames Housing Dataset Example
+# Introducation
+
+The topic we wish to explore is the Generalized Additive Models. It is a powerful extension of the linear regression model that can capture complex nonlinear relationships between predictors and response variables, which allows for non-linear function of each variable, while maintaining their additivity. So, instead of $y = \beta_0 + \beta_1x_1 + \beta_2x_2+...+\epsilon$, we would have a function of $y = \beta_0 + f_1(x_1) + f_2(x_2) + ... +\epsilon$, where $f(xi)$ represent a (smooth) non-linear function. They can also model interactions between variables and handle different types of data, including continuous, categorical, and ordinal variables. 
+
+
+# Example
+
+## Ames Housing Dataset Example
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

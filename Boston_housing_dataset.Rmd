@@ -1,5 +1,5 @@
 
-# Boston housing dataset
+# Boston housing dataset Example
 
 Since GAM did not work well with the Ames housing dataset, we decided to use another dataset and to test the GAM method on it. The new dataset, Boston housing, includes 13 explanatory variables, and the response variable `MEDV`. The following is the description from Kaggle:
 
@@ -50,9 +50,6 @@ nearZeroVar(boston)  # check for near zero variable
 ```{r}
 cor(boston)
 ```
-
-### 
-
 
 
 ```{r}
