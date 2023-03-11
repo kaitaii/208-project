@@ -114,6 +114,19 @@ sqrt(mean((boston_final_model_preds - boston_baked_test$MEDV)^2))   # calculate 
 ```
 
 ```{r}
+
+# obtain predictions and test set RMSE
+
+boston_final_model2 <- gam(MEDV~ s(ZN) + s(PTRATIO) + s(TAX) + s(INDUS) + 
+    s(NOX) + s(B) + s(AGE) + s(DIS) + s(RM) + s(LSTAT) + s(CRIM),data=boston_baked_train) 
+
+boston_final_model_preds2<- predict(object = boston_final_model2, newdata = boston_baked_test, type = "response")    # obtain predictions
+
+sqrt(mean((boston_final_model_preds2 - boston_baked_test$MEDV)^2))   # calculate test set RMSE
+```
+
+
+```{r}
 coef(boston_final_model)
 ```
 
