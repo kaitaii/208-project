@@ -155,7 +155,7 @@ The GCV score is used as a measure of the model's performance because it provide
 ```{r}
 # obtain predictions and test set RMSE
 
-boston_final_model <- gam(MEDV ~ CHAS + RAD + s(ZN) + s(PTRATIO) + s(TAX) + s(INDUS) + s(NOX) + s(B) + s(AGE) + s(DIS) + s(RM) + s(LSTAT) + s(CRIM), data = boston_baked_train) 
+boston_final_model <- gam(MEDV ~ CHAS + RAD + s(ZN) + s(PTRATIO) + s(TAX) + s(INDUS) + s(NOX,sp=0.01) + s(B,sp=8) + s(AGE) + s(DIS,sp=0.01) + s(RM,sp=1) + s(LSTAT) + s(CRIM), data = boston_baked_train) 
 
 boston_final_model_preds<- predict(object = boston_final_model, newdata = boston_baked_test, type = "response")    # obtain predictions
 
@@ -168,7 +168,11 @@ Comparing with using GAM model for `ames` dataset, using it for `boston` dataset
 The reason to that is the fact that the `boston` dataset is a lot more complex then the `ames` dataset. 
 
 ```{r}
-plot(boston_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue")
+boston_final_model$sp
+```
+
+```{r}
+plot(boston_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue", pch = 1)
 ```
 
 Let's look at the residual plot for the `boston` final model. 
