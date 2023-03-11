@@ -133,8 +133,6 @@ boston_model <- train(boston_blueprint,
 
 We implement CV with no repeat here to ensure the model is not overfitting and is generalizable to new data, which is very important for GAM model.
 
-For the model, Method = "gam" indicates the smoothing parameter estimation method, GCV for models with unknown scale parameter and Mallows' Cp/UBRE/AIC for models with known scale; select=TRUE adds extra penalty so that the smoothing parameter estimation can completely remove terms from the model
-
 ### Model's Performance
 
 ```{r}
