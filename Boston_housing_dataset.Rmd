@@ -164,10 +164,24 @@ sqrt(mean((boston_final_model_preds - boston_baked_test$MEDV)^2))   # calculate 
 
 The test set RMSE is even smaller, which is a good sign. 
 
-Comparing with using GAM model for `ames` dataset, using it for `boston` dataset seems become better a lot. The reason why this happen is because 
+Comparing with using GAM model for `ames` dataset, using it for `boston` dataset seems to be a lot better. 
+The reason to that is the fact that the `boston` dataset is a lot more complex then the `ames` dataset. 
 
 ```{r}
+plot(boston_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue")
+```
 
+Let's look at the residual plot for the `boston` final model. 
+As we can see from above, only two of the graphs seem to have a slope close to 0, and lots of others with non-parametric relationships. 
+This is a sign that the model is way more complex, compared to the `ames` dataset, where only 3 explanatory variables seemed to have non-parametric relationship with the response.
+
+### Only splines?
+
+What happens if we only use the variables with splines to predict the response `MEDV`? 
+As we've seen from the attempt in `ames`, the RMSE of only using splines as the explanatory variables had reduced the RMSE. 
+Would that work the same here?
+
+```{r}
 # obtain predictions and test set RMSE
 
 boston_final_model2 <- gam(MEDV~ s(ZN) + s(PTRATIO) + s(TAX) + s(INDUS) + 
@@ -188,7 +202,5 @@ coef(boston_final_model)
 summary(boston_final_model)
 ```
 
-```{r}
-plot(boston_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue")
-```
+
 
