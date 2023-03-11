@@ -1,10 +1,17 @@
 ---
-title: "CMSC/LING/STAT 208: Final Project"
+title: "CMSC/LING/STAT 208: Final Project - GAMs"
 author: "Yi Lu, Shiyi Yang"
 output: html_document
 ---
 
-# Ames Housing
+# Introducation
+
+The topic we wish to explore is the Generalized Additive Models. It is a powerful extension of the linear regression model that can capture complex nonlinear relationships between predictors and response variables, which allows for non-linear function of each variable, while maintaining their additivity. So, instead of $y = \beta_0 + \beta_1x_1 + \beta_2x_2+...+\epsilon$, we would have a function of $y = \beta_0 + f_1(x_1) + f_2(x_2) + ... +\epsilon$, where $f(xi)$ represent a (smooth) non-linear function. They can also model interactions between variables and handle different types of data, including continuous, categorical, and ordinal variables. 
+
+
+# Example
+
+## Ames Housing Dataset Example
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -91,19 +98,25 @@ model$results$RMSE
 
 model$finalMo
 ```
+
+
 ```{r}
 # obtain predictions and test set RMSE
-# final_model <- gam(Sale_Price~. ,data=baked_train) 
-final_model_preds<- predict(object = model$finalModel, newdata = baked_test, type = "response")    # obtain predictions
+
+final_model <- gam(Sale_Price ~ Garage_Type_BuiltIn + Garage_Type_Detchd + Garage_Type_No_Garage + Neighborhood_College_Creek + Neighborhood_Old_Town + Neighborhood_Edwards + Neighborhood_Somerset + Neighborhood_Northridge_Heights + Neighborhood_Gilbert + Neighborhood_Sawyer + MS_SubClass_One_and_Half_Story_Finished_All_Ages + MS_SubClass_Two_Story_1946_and_Newer + MS_SubClass_Duplex_All_Styles_and_Ages + MS_SubClass_One_Story_PUD_1946_and_Newer + Garage_Cars + Overall_Qual + s(TotRms_AbvGrd) + s(Lot_Frontage) + s(Year_Built) + s(Open_Porch_SF) + s(Second_Flr_SF) + s(Garage_Area) + s(Gr_Liv_Area) + s(First_Flr_SF) + s(Lot_Area) ,data=baked_train) 
+
+final_model_preds<- predict(object = final_model, newdata = baked_test, type = "response")    # obtain predictions
 
 sqrt(mean((final_model_preds - baked_test$Sale_Price)^2))   # calculate test set RMSE
 ```
 
+Noticing that the RMSE for both train dataset and test dataset are all large, especailly for test dataset, which means the GAM model didn't work well for ames housing dataset. In order to show a better performace, we found another dataset, boston housing, to have a try. 
+
+## Boston Housing Dataset Example
 
 
 
-
-
+# Conclusion
 
 
 
