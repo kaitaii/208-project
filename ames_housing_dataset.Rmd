@@ -7,6 +7,7 @@
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Data Description
 ```{r}
 library(tidyverse)
 library(caret)
@@ -86,7 +87,7 @@ ames_model<-train(ames_blueprint,
              data=ames_train,
              method="gam",
              tuneGrid=data.frame(method = "GCV.Cp", select = TRUE),  
-             trControl=trainControl(method="cv",number=5)
+             trControl=trainControl(method="repeatedcv",number=5,repeats = 5)
 )
 ames_model$results$RMSE
 
@@ -94,11 +95,11 @@ ames_model$finalMo
 ```
 
 
+
 ```{r}
-  
 # build final model
 ames_final_model <- gam(Sale_Price~Garage_Type_BuiltIn + Garage_Type_Detchd + Garage_Type_No_Garage + Neighborhood_College_Creek + Neighborhood_Old_Town + Neighborhood_Edwards + Neighborhood_Somerset + Neighborhood_Northridge_Heights + Neighborhood_Gilbert + Neighborhood_Sawyer + MS_SubClass_One_and_Half_Story_Finished_All_Ages + MS_SubClass_Two_Story_1946_and_Newer + MS_SubClass_Duplex_All_Styles_and_Ages + 
-MS_SubClass_One_Story_PUD_1946_and_Newer + Garage_Cars + Overall_Qual + s(TotRms_AbvGrd) + s(Lot_Frontage) + s(Year_Built) + s(Open_Porch_SF) + s(Second_Flr_SF) + s(Garage_Area) + s(Gr_Liv_Area) + s(First_Flr_SF) + s(Lot_Area) ,data=ames_baked_train) 
+MS_SubClass_One_Story_PUD_1946_and_Newer + s(Garage_Cars,k=5) + s(Overall_Qual,k=9) + s(TotRms_AbvGrd,k=9) + s(Lot_Frontage,k=9) + s(Year_Built,sp=0.1,k=6) + s(Open_Porch_SF,k=9) + s(Second_Flr_SF,k=9) + s(Garage_Area,sp=1,k=9) + s(Gr_Liv_Area,sp=1,k=9) + s(First_Flr_SF,sp=-0.001,k=3) + s(Lot_Area,sp=1,k=4) ,data=ames_baked_train) 
 
 # final model predication
 ames_final_model_preds<- predict(object = ames_final_model, newdata = ames_baked_test, type = "response")  
@@ -106,6 +107,9 @@ ames_final_model_preds<- predict(object = ames_final_model, newdata = ames_baked
 sqrt(mean((ames_final_model_preds - ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
 ```
 
+```{r}
+gam.check(ames_final_model)
+```
 
 
 
@@ -114,27 +118,9 @@ plot(ames_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue")
 ```
 
 
-Noticing that the RMSE for both train dataset and test dataset are all large, especailly for test dataset, which means the GAM model didn't work well for ames housing dataset. In order to show a better performace, we found another dataset, boston housing, to have a try. 
-
-```{r}
-ames_final_model2 <- gam(Sale_Price~ s(Gr_Liv_Area) + 
-    s(First_Flr_SF) + s(Lot_Area) ,data=ames_baked_train) 
-ames_final_model_preds2<- predict(object = ames_final_model2, newdata = ames_baked_test, type = "response")    # obtain predictions
-
-sqrt(mean((ames_final_model_preds2 - ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
-```
+Noticing that the RMSE for both train dataset and test dataset are all large, especailly for test dataset, which means the GAM model didn't work well for ames housing dataset. In order to show a better performance, we found another dataset, boston housing, to have a try. 
 
 
-
-
-```{r}
-ggplot(ames,aes(x=Gr_Liv_Area,y=Sale_Price))+geom_point()+geom_smooth()
-```
-
-```{r}
-gam_mod <- gam(Sale_Price ~ s(Gr_Liv_Area), data = ames)
-plot(gam_mod)
-```
 
 
 
