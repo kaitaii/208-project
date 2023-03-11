@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Ames Housing | CMSC/LING/STAT 208: Final Project</title>
+  <meta name="description" content="1 Ames Housing | CMSC/LING/STAT 208: Final Project" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Ames Housing | CMSC/LING/STAT 208: Final Project" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Ames Housing | CMSC/LING/STAT 208: Final Project" />
+  
+  
+  
+
+<meta name="author" content="Yi Lu, Shiyi Yang" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="boston-housing-dataset.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="ames-housing.html"><a href="ames-housing.html"><i class="fa fa-check"></i><b>1</b> Ames Housing</a></li>
+<li class="chapter" data-level="2" data-path="boston-housing-dataset.html"><a href="boston-housing-dataset.html"><i class="fa fa-check"></i><b>2</b> Boston housing dataset</a>
+<ul>
+<li class="chapter" data-level="2.0.1" data-path="boston-housing-dataset.html"><a href="boston-housing-dataset.html#section"><i class="fa fa-check"></i><b>2.0.1</b> </a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CMSC/LING/STAT 208: Final Project</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ames-housing" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> Ames Housing<a href="ames-housing.html#ames-housing" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="ames-housing.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching core tidyverse packages ───── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.0     ✔ readr     2.1.4
+## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+## ✔ ggplot2   3.4.1     ✔ tibble    3.1.8
+## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+## ✔ purrr     1.0.1     
+## ── Conflicts ─────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the ]8;;http://conflicted.r-lib.org/conflicted package]8;; to force all conflicts to become errors</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="ames-housing.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code></pre></div>
+<pre><code>## Loading required package: lattice
+## 
+## Attaching package: &#39;caret&#39;
+## 
+## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     lift</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="ames-housing.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;recipes&#39;
+## 
+## The following object is masked from &#39;package:stringr&#39;:
+## 
+##     fixed
+## 
+## The following object is masked from &#39;package:stats&#39;:
+## 
+##     step</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="ames-housing.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span></code></pre></div>
+<pre><code>## Loading required package: nlme
+## 
+## Attaching package: &#39;nlme&#39;
+## 
+## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     collapse
+## 
+## This is mgcv 1.8-41. For overview type &#39;help(&quot;mgcv-package&quot;)&#39;.</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="ames-housing.html#cb9-1" aria-hidden="true" tabindex="-1"></a>ames<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">&quot;AmesHousing.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="ames-housing.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ames)  <span class="co"># Knowing that for this dataset n = 881, p = 20-1 = 19.</span></span></code></pre></div>
+<pre><code>## Rows: 881
+## Columns: 20
+## $ Sale_Price    &lt;int&gt; 244000, 213500, 185000, 394432, 190000, 149000, 149900, …
+## $ Gr_Liv_Area   &lt;int&gt; 2110, 1338, 1187, 1856, 1844, NA, NA, 1069, 1940, 1544, …
+## $ Garage_Type   &lt;fct&gt; Attchd, Attchd, Attchd, Attchd, Attchd, Attchd, Attchd, …
+## $ Garage_Cars   &lt;dbl&gt; 2, 2, 2, 3, 2, 2, 2, 2, 3, 3, 2, 3, 3, 2, 2, 2, 3, 2, 2,…
+## $ Garage_Area   &lt;dbl&gt; 522, 582, 420, 834, 546, 480, 500, 440, 606, 868, 532, 7…
+## $ Street        &lt;fct&gt; Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pa…
+## $ Utilities     &lt;fct&gt; AllPub, AllPub, AllPub, AllPub, AllPub, AllPub, AllPub, …
+## $ Pool_Area     &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ Neighborhood  &lt;fct&gt; North_Ames, Stone_Brook, Gilbert, Stone_Brook, Northwest…
+## $ Screen_Porch  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 165, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ Overall_Qual  &lt;fct&gt; Good, Very_Good, Above_Average, Excellent, Above_Average…
+## $ Lot_Area      &lt;int&gt; 11160, 4920, 7980, 11394, 11751, 11241, 12537, 4043, 101…
+## $ Lot_Frontage  &lt;dbl&gt; 93, 41, 0, 88, 105, 0, 0, 53, 83, 94, 95, 90, 105, 61, 6…
+## $ MS_SubClass   &lt;fct&gt; One_Story_1946_and_Newer_All_Styles, One_Story_PUD_1946_…
+## $ Misc_Val      &lt;int&gt; 0, 0, 500, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ Open_Porch_SF &lt;int&gt; 0, 0, 21, 0, 122, 0, 0, 55, 95, 35, 70, 74, 130, 82, 48,…
+## $ TotRms_AbvGrd &lt;int&gt; 8, 6, 6, 8, 7, 5, 6, 4, 8, 7, 7, 7, 7, 6, 7, 7, 10, 7, 7…
+## $ First_Flr_SF  &lt;int&gt; 2110, 1338, 1187, 1856, 1844, 1004, 1078, 1069, 1940, 15…
+## $ Second_Flr_SF &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 563, 0, 886, 656, 11…
+## $ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009, 20…</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="ames-housing.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(ames))    <span class="co"># check for missing entries</span></span></code></pre></div>
+<pre><code>## [1] 113</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="ames-housing.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ames)  <span class="co"># check types of features, which features have missing entries?</span></span></code></pre></div>
+<pre><code>##    Sale_Price      Gr_Liv_Area                Garage_Type   Garage_Cars   
+##  Min.   : 34900   Min.   : 334   Attchd             :514   Min.   :0.000  
+##  1st Qu.:129500   1st Qu.:1118   Basment            : 10   1st Qu.:1.000  
+##  Median :160000   Median :1442   BuiltIn            : 55   Median :2.000  
+##  Mean   :181115   Mean   :1495   CarPort            :  5   Mean   :1.762  
+##  3rd Qu.:213500   3rd Qu.:1728   Detchd             :234   3rd Qu.:2.000  
+##  Max.   :755000   Max.   :5642   More_Than_Two_Types:  9   Max.   :4.000  
+##                   NA&#39;s   :113    No_Garage          : 54                  
+##   Garage_Area      Street     Utilities     Pool_Area     
+##  Min.   :   0.0   Grvl:  4   AllPub:880   Min.   :  0.00  
+##  1st Qu.: 324.0   Pave:877   NoSeWa:  0   1st Qu.:  0.00  
+##  Median : 480.0              NoSewr:  1   Median :  0.00  
+##  Mean   : 476.5                           Mean   :  2.41  
+##  3rd Qu.: 592.0                           3rd Qu.:  0.00  
+##  Max.   :1418.0                           Max.   :576.00  
+##                                                           
+##              Neighborhood  Screen_Porch           Overall_Qual    Lot_Area     
+##  North_Ames        :127   Min.   :  0.00   Average      :243   Min.   :  1300  
+##  College_Creek     : 86   1st Qu.:  0.00   Above_Average:217   1st Qu.:  7449  
+##  Old_Town          : 83   Median :  0.00   Good         :177   Median :  9512  
+##  Northridge_Heights: 52   Mean   : 18.11   Very_Good    : 99   Mean   : 10105  
+##  Somerset          : 50   3rd Qu.:  0.00   Below_Average: 83   3rd Qu.: 11526  
+##  Edwards           : 49   Max.   :490.00   Excellent    : 38   Max.   :159000  
+##  (Other)           :434                    (Other)      : 24                   
+##   Lot_Frontage                                  MS_SubClass     Misc_Val      
+##  Min.   :  0.00   One_Story_1946_and_Newer_All_Styles :335   Min.   :   0.00  
+##  1st Qu.: 43.00   Two_Story_1946_and_Newer            :171   1st Qu.:   0.00  
+##  Median : 63.00   One_and_Half_Story_Finished_All_Ages: 92   Median :   0.00  
+##  Mean   : 57.78   One_Story_PUD_1946_and_Newer        : 53   Mean   :  37.97  
+##  3rd Qu.: 78.00   Duplex_All_Styles_and_Ages          : 40   3rd Qu.:   0.00  
+##  Max.   :313.00   One_Story_1945_and_Older            : 36   Max.   :8300.00  
+##                   (Other)                             :154                    
+##  Open_Porch_SF    TotRms_AbvGrd     First_Flr_SF  Second_Flr_SF   
+##  Min.   :  0.00   Min.   : 2.000   Min.   : 334   Min.   :   0.0  
+##  1st Qu.:  0.00   1st Qu.: 5.000   1st Qu.: 877   1st Qu.:   0.0  
+##  Median : 27.00   Median : 6.000   Median :1092   Median :   0.0  
+##  Mean   : 49.93   Mean   : 6.413   Mean   :1171   Mean   : 319.6  
+##  3rd Qu.: 72.00   3rd Qu.: 7.000   3rd Qu.:1426   3rd Qu.: 682.0  
+##  Max.   :742.00   Max.   :12.000   Max.   :4692   Max.   :2065.0  
+##                                                                   
+##    Year_Built  
+##  Min.   :1875  
+##  1st Qu.:1954  
+##  Median :1972  
+##  Mean   :1971  
+##  3rd Qu.:2000  
+##  Max.   :2010  
+## </code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="ames-housing.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ames<span class="sc">$</span>Overall_Qual)   <span class="co"># the levels are NOT properly ordered</span></span></code></pre></div>
+<pre><code>##  [1] &quot;Above_Average&quot;  &quot;Average&quot;        &quot;Below_Average&quot;  &quot;Excellent&quot;     
+##  [5] &quot;Fair&quot;           &quot;Good&quot;           &quot;Poor&quot;           &quot;Very_Excellent&quot;
+##  [9] &quot;Very_Good&quot;      &quot;Very_Poor&quot;</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="ames-housing.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># relevel the levels</span></span>
+<span id="cb18-2"><a href="ames-housing.html#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="ames-housing.html#cb18-3" aria-hidden="true" tabindex="-1"></a>ames<span class="sc">$</span>Overall_Qual <span class="ot">&lt;-</span> <span class="fu">factor</span>(ames<span class="sc">$</span>Overall_Qual, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Very_Poor&quot;</span>, <span class="st">&quot;Poor&quot;</span>, <span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Below_Average&quot;</span>, </span>
+<span id="cb18-4"><a href="ames-housing.html#cb18-4" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">&quot;Average&quot;</span>, <span class="st">&quot;Above_Average&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very_Good&quot;</span>, </span>
+<span id="cb18-5"><a href="ames-housing.html#cb18-5" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">&quot;Excellent&quot;</span>, <span class="st">&quot;Very_Excellent&quot;</span>))</span>
+<span id="cb18-6"><a href="ames-housing.html#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="ames-housing.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ames<span class="sc">$</span>Overall_Qual)   <span class="co"># the levels are properly ordered</span></span></code></pre></div>
+<pre><code>##  [1] &quot;Very_Poor&quot;      &quot;Poor&quot;           &quot;Fair&quot;           &quot;Below_Average&quot; 
+##  [5] &quot;Average&quot;        &quot;Above_Average&quot;  &quot;Good&quot;           &quot;Very_Good&quot;     
+##  [9] &quot;Excellent&quot;      &quot;Very_Excellent&quot;</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="ames-housing.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># split the dataset</span></span>
+<span id="cb20-2"><a href="ames-housing.html#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="ames-housing.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)   <span class="co"># set seed</span></span>
+<span id="cb20-4"><a href="ames-housing.html#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="ames-housing.html#cb20-5" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(<span class="at">y =</span> ames<span class="sc">$</span>Sale_Price, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)   <span class="co"># consider 70-30 split</span></span>
+<span id="cb20-6"><a href="ames-housing.html#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="ames-housing.html#cb20-7" aria-hidden="true" tabindex="-1"></a>ames_train <span class="ot">&lt;-</span> ames[index,]   <span class="co"># training data</span></span>
+<span id="cb20-8"><a href="ames-housing.html#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="ames-housing.html#cb20-9" aria-hidden="true" tabindex="-1"></a>ames_test <span class="ot">&lt;-</span> ames[<span class="sc">-</span>index,]   <span class="co"># test data</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="ames-housing.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># investigate nominal categorical predictors </span></span>
+<span id="cb21-2"><a href="ames-housing.html#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="ames-housing.html#cb21-3" aria-hidden="true" tabindex="-1"></a>ames_train <span class="sc">%&gt;%</span> <span class="fu">count</span>(Neighborhood) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(n)   <span class="co"># check frequency of categories</span></span></code></pre></div>
+<pre><code>## # A tibble: 26 × 2
+##    Neighborhood            n
+##    &lt;fct&gt;               &lt;int&gt;
+##  1 Northpark_Villa         2
+##  2 Blueste                 2
+##  3 Greens                  4
+##  4 Veenker                 6
+##  5 Bloomington_Heights     7
+##  6 Briardale               8
+##  7 Clear_Creek            11
+##  8 Meadow_Village         12
+##  9 Stone_Brook            13
+## 10 Timberland             14
+## # … with 16 more rows</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="ames-housing.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># finally, after all preprocessing steps have been decided set up the overall blueprint</span></span>
+<span id="cb23-2"><a href="ames-housing.html#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="ames-housing.html#cb23-3" aria-hidden="true" tabindex="-1"></a>ames_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price<span class="sc">~</span>., <span class="at">data =</span> ames_train)   <span class="co"># set up recipe</span></span>
+<span id="cb23-4"><a href="ames-housing.html#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="ames-housing.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># specify feature engineering steps</span></span>
+<span id="cb23-6"><a href="ames-housing.html#cb23-6" aria-hidden="true" tabindex="-1"></a>ames_blueprint <span class="ot">&lt;-</span> ames_recipe <span class="sc">%&gt;%</span>    </span>
+<span id="cb23-7"><a href="ames-housing.html#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_nzv</span>(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) <span class="sc">%&gt;%</span>   <span class="co"># filter out zv/nzv predictors</span></span>
+<span id="cb23-8"><a href="ames-housing.html#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_mean</span>(Gr_Liv_Area) <span class="sc">%&gt;%</span>                                    <span class="co"># impute missing entries</span></span>
+<span id="cb23-9"><a href="ames-housing.html#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_integer</span>(Overall_Qual) <span class="sc">%&gt;%</span>                                       <span class="co"># numeric conversion of levels of the predictors   </span></span>
+<span id="cb23-10"><a href="ames-housing.html#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      <span class="co"># center (subtract mean) all numeric predictors (consider all the numeric predictors except the response)</span></span>
+<span id="cb23-11"><a href="ames-housing.html#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                       <span class="co"># scale (divide by standard deviation) all numeric predictors</span></span>
+<span id="cb23-12"><a href="ames-housing.html#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_other</span>(Neighborhood, <span class="at">threshold =</span> <span class="fl">0.01</span>, <span class="at">other =</span> <span class="st">&quot;other&quot;</span>) <span class="sc">%&gt;%</span>      <span class="co"># lumping required predictors</span></span>
+<span id="cb23-13"><a href="ames-housing.html#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="at">one_hot =</span> <span class="cn">FALSE</span>)                            <span class="co"># one-hot/dummy encode nominal categorical predictors</span></span>
+<span id="cb23-14"><a href="ames-housing.html#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="ames-housing.html#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co"># replace step_center and step_scale with step_normalize</span></span>
+<span id="cb23-16"><a href="ames-housing.html#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="ames-housing.html#cb23-17" aria-hidden="true" tabindex="-1"></a>ames_prepare <span class="ot">&lt;-</span> <span class="fu">prep</span>(ames_blueprint, <span class="at">data =</span> ames_train)    <span class="co"># estimate feature engineering parameters based on training data</span></span>
+<span id="cb23-18"><a href="ames-housing.html#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="ames-housing.html#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-20"><a href="ames-housing.html#cb23-20" aria-hidden="true" tabindex="-1"></a>ames_baked_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(ames_prepare, <span class="at">new_data =</span> ames_train)   <span class="co"># apply the blueprint to training data for building final/optimal model</span></span>
+<span id="cb23-21"><a href="ames-housing.html#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-22"><a href="ames-housing.html#cb23-22" aria-hidden="true" tabindex="-1"></a>ames_baked_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(ames_prepare, <span class="at">new_data =</span> ames_test)    <span class="co"># apply the blueprint to test data for future use</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="ames-housing.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb24-2"><a href="ames-housing.html#cb24-2" aria-hidden="true" tabindex="-1"></a>ames_model<span class="ot">&lt;-</span><span class="fu">train</span>(ames_blueprint,</span>
+<span id="cb24-3"><a href="ames-housing.html#cb24-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">data=</span>ames_train,</span>
+<span id="cb24-4"><a href="ames-housing.html#cb24-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">method=</span><span class="st">&quot;gam&quot;</span>,</span>
+<span id="cb24-5"><a href="ames-housing.html#cb24-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">tuneGrid=</span><span class="fu">data.frame</span>(<span class="at">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="at">select =</span> <span class="cn">TRUE</span>),  </span>
+<span id="cb24-6"><a href="ames-housing.html#cb24-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">trControl=</span><span class="fu">trainControl</span>(<span class="at">method=</span><span class="st">&quot;cv&quot;</span>,<span class="at">number=</span><span class="dv">5</span>)</span>
+<span id="cb24-7"><a href="ames-housing.html#cb24-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-8"><a href="ames-housing.html#cb24-8" aria-hidden="true" tabindex="-1"></a>ames_model<span class="sc">$</span>results<span class="sc">$</span>RMSE</span></code></pre></div>
+<pre><code>## [1] 71882.39</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="ames-housing.html#cb26-1" aria-hidden="true" tabindex="-1"></a>ames_model<span class="sc">$</span>finalMo</span></code></pre></div>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## .outcome ~ Garage_Type_BuiltIn + Garage_Type_Detchd + Garage_Type_No_Garage + 
+##     Neighborhood_College_Creek + Neighborhood_Old_Town + Neighborhood_Edwards + 
+##     Neighborhood_Somerset + Neighborhood_Northridge_Heights + 
+##     Neighborhood_Gilbert + Neighborhood_Sawyer + MS_SubClass_One_and_Half_Story_Finished_All_Ages + 
+##     MS_SubClass_Two_Story_1946_and_Newer + MS_SubClass_Duplex_All_Styles_and_Ages + 
+##     MS_SubClass_One_Story_PUD_1946_and_Newer + Garage_Cars + 
+##     Overall_Qual + s(TotRms_AbvGrd) + s(Lot_Frontage) + s(Year_Built) + 
+##     s(Open_Porch_SF) + s(Second_Flr_SF) + s(Garage_Area) + s(Gr_Liv_Area) + 
+##     s(First_Flr_SF) + s(Lot_Area)
+## 
+## Estimated degrees of freedom:
+## 0.961 0.000 3.936 1.065 1.974 3.105 6.489 
+## 8.662 7.680  total = 50.87 
+## 
+## GCV score: 722968462</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="ames-housing.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain predictions and test set RMSE</span></span>
+<span id="cb28-2"><a href="ames-housing.html#cb28-2" aria-hidden="true" tabindex="-1"></a>ames_final_model <span class="ot">&lt;-</span> <span class="fu">gam</span>(Sale_Price<span class="sc">~</span>Garage_Type_BuiltIn <span class="sc">+</span> Garage_Type_Detchd <span class="sc">+</span> Garage_Type_No_Garage <span class="sc">+</span> </span>
+<span id="cb28-3"><a href="ames-housing.html#cb28-3" aria-hidden="true" tabindex="-1"></a>    Neighborhood_College_Creek <span class="sc">+</span> Neighborhood_Old_Town <span class="sc">+</span> Neighborhood_Edwards <span class="sc">+</span> </span>
+<span id="cb28-4"><a href="ames-housing.html#cb28-4" aria-hidden="true" tabindex="-1"></a>    Neighborhood_Somerset <span class="sc">+</span> Neighborhood_Northridge_Heights <span class="sc">+</span> </span>
+<span id="cb28-5"><a href="ames-housing.html#cb28-5" aria-hidden="true" tabindex="-1"></a>    Neighborhood_Gilbert <span class="sc">+</span> Neighborhood_Sawyer <span class="sc">+</span> MS_SubClass_One_and_Half_Story_Finished_All_Ages <span class="sc">+</span> </span>
+<span id="cb28-6"><a href="ames-housing.html#cb28-6" aria-hidden="true" tabindex="-1"></a>    MS_SubClass_Two_Story_1946_and_Newer <span class="sc">+</span> MS_SubClass_Duplex_All_Styles_and_Ages <span class="sc">+</span> </span>
+<span id="cb28-7"><a href="ames-housing.html#cb28-7" aria-hidden="true" tabindex="-1"></a>    MS_SubClass_One_Story_PUD_1946_and_Newer <span class="sc">+</span> Garage_Cars <span class="sc">+</span> </span>
+<span id="cb28-8"><a href="ames-housing.html#cb28-8" aria-hidden="true" tabindex="-1"></a>    Overall_Qual <span class="sc">+</span> <span class="fu">s</span>(TotRms_AbvGrd) <span class="sc">+</span> <span class="fu">s</span>(Lot_Frontage) <span class="sc">+</span> <span class="fu">s</span>(Year_Built) <span class="sc">+</span> </span>
+<span id="cb28-9"><a href="ames-housing.html#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">s</span>(Open_Porch_SF) <span class="sc">+</span> <span class="fu">s</span>(Second_Flr_SF) <span class="sc">+</span> <span class="fu">s</span>(Garage_Area) <span class="sc">+</span> <span class="fu">s</span>(Gr_Liv_Area) <span class="sc">+</span> </span>
+<span id="cb28-10"><a href="ames-housing.html#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">s</span>(First_Flr_SF) <span class="sc">+</span> <span class="fu">s</span>(Lot_Area) ,<span class="at">data=</span>ames_baked_train) </span>
+<span id="cb28-11"><a href="ames-housing.html#cb28-11" aria-hidden="true" tabindex="-1"></a>ames_final_model_preds<span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> ames_final_model, <span class="at">newdata =</span> ames_baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)    <span class="co"># obtain predictions</span></span>
+<span id="cb28-12"><a href="ames-housing.html#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="ames-housing.html#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((ames_final_model_preds <span class="sc">-</span> ames_baked_test<span class="sc">$</span>Sale_Price)<span class="sc">^</span><span class="dv">2</span>))   <span class="co"># calculate test set RMSE</span></span></code></pre></div>
+<pre><code>## [1] 195576.6</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="ames-housing.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ames_final_model, <span class="at">residuals=</span><span class="cn">TRUE</span>,<span class="at">shade =</span> <span class="cn">TRUE</span>, <span class="at">shade.col =</span> <span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-8-1.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-8-2.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-8-3.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-8-4.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-8-5.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-8-6.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-8-7.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-8-8.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-8-9.png" width="672" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="ames-housing.html#cb31-1" aria-hidden="true" tabindex="-1"></a>ames_final_model2 <span class="ot">&lt;-</span> <span class="fu">gam</span>(Sale_Price<span class="sc">~</span> <span class="fu">s</span>(Gr_Liv_Area) <span class="sc">+</span> </span>
+<span id="cb31-2"><a href="ames-housing.html#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">s</span>(First_Flr_SF) <span class="sc">+</span> <span class="fu">s</span>(Lot_Area) ,<span class="at">data=</span>ames_baked_train) </span>
+<span id="cb31-3"><a href="ames-housing.html#cb31-3" aria-hidden="true" tabindex="-1"></a>ames_final_model_preds2<span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> ames_final_model2, <span class="at">newdata =</span> ames_baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)    <span class="co"># obtain predictions</span></span>
+<span id="cb31-4"><a href="ames-housing.html#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="ames-housing.html#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((ames_final_model_preds2 <span class="sc">-</span> ames_baked_test<span class="sc">$</span>Sale_Price)<span class="sc">^</span><span class="dv">2</span>))   <span class="co"># calculate test set RMSE</span></span></code></pre></div>
+<pre><code>## [1] 112682</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="ames-housing.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ames,<span class="fu">aes</span>(<span class="at">x=</span>Gr_Liv_Area,<span class="at">y=</span>Sale_Price))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>()</span></code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 113 rows containing non-finite values
+## (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 113 rows containing missing values (`geom_point()`).</code></pre>
+<p><img src="GAM_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="ames-housing.html#cb37-1" aria-hidden="true" tabindex="-1"></a>gam_mod <span class="ot">&lt;-</span> <span class="fu">gam</span>(Sale_Price <span class="sc">~</span> <span class="fu">s</span>(Gr_Liv_Area), <span class="at">data =</span> ames)</span>
+<span id="cb37-2"><a href="ames-housing.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gam_mod)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="ames-housing.html#cb38-1" aria-hidden="true" tabindex="-1"></a>ames_final_model2 <span class="ot">&lt;-</span> <span class="fu">gam</span>(Sale_Price<span class="sc">~</span> <span class="fu">s</span>(Gr_Liv_Area) <span class="sc">+</span> </span>
+<span id="cb38-2"><a href="ames-housing.html#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">s</span>(First_Flr_SF) <span class="sc">+</span> <span class="fu">s</span>(Lot_Area) ,<span class="at">data=</span>ames_baked_train) </span>
+<span id="cb38-3"><a href="ames-housing.html#cb38-3" aria-hidden="true" tabindex="-1"></a>ames_final_model_preds2<span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> ames_final_model2, <span class="at">newdata =</span> ames_baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)    <span class="co"># obtain predictions</span></span>
+<span id="cb38-4"><a href="ames-housing.html#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="ames-housing.html#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((ames_final_model_preds2 <span class="sc">-</span> ames_baked_test<span class="sc">$</span>Sale_Price)<span class="sc">^</span><span class="dv">2</span>))   <span class="co"># calculate test set RMSE</span></span></code></pre></div>
+<pre><code>## [1] 112682</code></pre>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="boston-housing-dataset.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/kaitaii/208-project/edit/main/208_project.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": "https://github.com/kaitaii/208-project/commits/main/208_project.Rmd",
+"text": null
+},
+"view": {
+"link": "https://github.com/kaitaii/208-project/blob/main/208_project.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
