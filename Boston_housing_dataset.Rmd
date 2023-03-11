@@ -1,7 +1,6 @@
 
 # Boston housing dataset Example
 
-<<<<<<< HEAD
 ## Data description
 
 Since GAM did not work well with the Ames housing dataset, which output a big RMSE, we decided to use another dataset and to test the GAM method on it again. The new dataset, Boston housing, includes 13 explanatory variables, and the response variable `MEDV`. The following is the description from Kaggle all variables:
@@ -10,17 +9,6 @@ Response Variable:
 
 1) `MEDV`: Median value of owner-occupied homes in `$`1000's [k`$`]
 
-
-Explanatory variables:
-=======
-## Data description 
-
-Since GAM did not work well with the Ames housing dataset, we decided to use another dataset and to test the GAM method on it. The new dataset, Boston housing, includes 13 explanatory variables, and the response variable `MEDV`. The following is the description from Kaggle:
->>>>>>> 83cc0b6b5d15b672c9342d9c5f12f465f11adaab
-
-Output variable:
-
-1) `MEDV`: Median value of owner-occupied homes in $1000's [k$]
 
 Explanatory variables:
 
@@ -50,11 +38,6 @@ Explanatory variables:
 
 13) `LSTAT`: % lower status of the population
 
-<<<<<<< HEAD
-
-=======
-## Analysis 
->>>>>>> 83cc0b6b5d15b672c9342d9c5f12f465f11adaab
 
 ```{r,echo=FALSE,warning=FALSE, include=FALSE}
 # load package and dataset
@@ -67,15 +50,10 @@ library(mgcv)
 boston<-read_csv("boston.csv") # load package and dataset
 ```
 
-<<<<<<< HEAD
 
-### Data Invistigation
-=======
 ## Data Investigation
 
 Just as before, we first investigate the dataset to see if there's any missing entries, non-numeric variables, or ZV/NZV features.
-
->>>>>>> 83cc0b6b5d15b672c9342d9c5f12f465f11adaab
 
 ```{r}
 glimpse(boston)  
@@ -90,21 +68,18 @@ The first thing we do is to investigate the dataset. Finding that there are 13 f
 cor(boston)
 ```
 
-<<<<<<< HEAD
 From the correlation plot, noticing that for variable `TAX` and `INDUS`, `DIS` and `INDUS`, `TAX` and `INDUS`, `NOX` and `INDUS`, `NOX` and `AGE`, `NOX` and `DIS`, `AGE` and `DIS`... are highly correlated variable. (We are saying two variables are highly correlated when their correlation value is greater that 0.7)
 
-=======
+
 ## Data Spliting
+
 ```{r}
+set.seed(013123)  
 # split the dataset
->>>>>>> 83cc0b6b5d15b672c9342d9c5f12f465f11adaab
-
-### Data Spliting 
-
-```{r}
-set.seed(013123)   # set seed
 
 index <- createDataPartition(y = boston$MEDV, p = 0.8, list = FALSE)   # consider 80-20 split
+
+### Data Spliting 
 
 boston_train <- boston[index,]   # training data
 
