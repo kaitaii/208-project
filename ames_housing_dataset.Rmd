@@ -123,8 +123,6 @@ sqrt(mean((ames_final_model_preds2 - ames_baked_test$Sale_Price)^2))   # calcula
 ```
 
 
-## Boston Housing Dataset Example
-
 
 
 ```{r}
@@ -138,7 +136,7 @@ plot(gam_mod)
 
 
 
-
+## Only splines?
 
 ```{r}
 ames_final_model2 <- gam(Sale_Price~ s(Gr_Liv_Area) + 
