@@ -1,7 +1,7 @@
 
 # Boston housing dataset Example
 
-## Data description
+Data description:
 
 Since GAM did not work well with the Ames housing dataset, which output a big RMSE, we decided to use another dataset and to test the GAM method on it again. The new dataset, Boston housing, includes 13 explanatory variables, and the response variable `MEDV`. The following is the description from Kaggle all variables:
 
@@ -50,8 +50,9 @@ library(mgcv)
 boston<-read_csv("boston.csv") # load package and dataset
 ```
 
+## Preparation Steps
 
-## Data Investigation
+### Data Investigation
 
 Just as before, we first investigate the dataset to see if there's any missing entries, non-numeric variables, or ZV/NZV features.
 
@@ -62,7 +63,7 @@ sum(is.na(boston))
 nearZeroVar(boston) 
 ```
 
-The first thing we do is to investigate the dataset. Finding that there are 13 features in total and all of them are numerical variables. There is no NA value in the whole dataset and no zv or nzv features.
+Finding that there are 13 features in total and all of them are numerical variables. There is no NA value in the whole dataset and no zv or nzv features.
 
 ```{r}
 cor(boston)
@@ -71,22 +72,21 @@ cor(boston)
 From the correlation plot, noticing that for variable `TAX` and `INDUS`, `DIS` and `INDUS`, `TAX` and `INDUS`, `NOX` and `INDUS`, `NOX` and `AGE`, `NOX` and `DIS`, `AGE` and `DIS`... are highly correlated variable. (We are saying two variables are highly correlated when their correlation value is greater that 0.7)
 
 
-## Data Spliting
+### Data Spliting
 
 ```{r}
 set.seed(013123)  
-# split the dataset
 
 index <- createDataPartition(y = boston$MEDV, p = 0.8, list = FALSE)   # consider 80-20 split
 
-### Data Spliting 
+#Data Spliting 
 
 boston_train <- boston[index,]   # training data
 
 boston_test <- boston[-index,]   # test data
 ```
 
-### Recipt and Blueprint
+## Recipt and Blueprint
 
 ```{r}
 # Set up recipe 
@@ -133,7 +133,7 @@ boston_model <- train(boston_blueprint,
 
 We implement CV with no repeat here to ensure the model is not overfitting and is generalizable to new data, which is very important for GAM model.
 
-For the model, Method = "gan" indicates the smoothing parameter estimation method, GCV for models with unknown scale parameter and Mallows' Cp/UBRE/AIC for models with known scale; select=TRUE adds extra penalty so that the smoothing parameter estimation can completely remove terms from the model
+For the model, Method = "gam" indicates the smoothing parameter estimation method, GCV for models with unknown scale parameter and Mallows' Cp/UBRE/AIC for models with known scale; select=TRUE adds extra penalty so that the smoothing parameter estimation can completely remove terms from the model
 
 ### Model's Performance
 
@@ -150,7 +150,9 @@ The estimated degrees of freedom indicate the complexity of the model, and in th
 
 The GCV score is used as a measure of the model's performance because it provides a balance between the model's fit to the data and its complexity. 
 
-### Prediction
+## Final Model
+
+### Prediction on Test Dataset
 
 ```{r}
 # obtain predictions and test set RMSE

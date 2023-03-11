@@ -1,14 +1,16 @@
 
 # Ames Housing Dataset Example
 
-## load package 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Data Description
-```{r}
+Data Description:
+
+First, we use the `ames` dataset that we used in class, since we want to first learn how to apply this model and then do further investigation. 
+
+```{r,echo=FALSE,warning=FALSE, include=FALSE}
 library(tidyverse)
 library(caret)
 library(recipes)
@@ -16,12 +18,19 @@ library(mgcv)
 ames<-readRDS("AmesHousing.rds")
 ```
 
+## Preparation Steps
+
+### Data Investigation
+
+Just as before, we first investigate the dataset to see if there's any missing entries, non-numeric variables, or ZV/NZV features.
 
 ```{r}
-glimpse(ames)  # Knowing that for this dataset n = 881, p = 20-1 = 19.
-sum(is.na(ames))    # check for missing entries
-summary(ames)  # check types of features, which features have missing entries?
-levels(ames$Overall_Qual)   # the levels are NOT properly ordered
+glimpse(ames)
+sum(is.na(ames))  
+summary(ames)  
+nearZeroVar(ames, saveMetrics = TRUE)
+
+levels(ames$Overall_Qual) 
 
 # relevel the levels
 
@@ -34,12 +43,14 @@ levels(ames$Overall_Qual)   # the levels are properly ordered
 
 ```
 
+Finding that there are 19 features in total and 13 of them are numerical variables, 6 of them are categorical variables. For the ordinal categorical variables `Overall_Qual`, finding that the level is not in order, hence, we relevel the level for this variable. Further, there're 113 NA values and 5 nzv features in the whole dataset. Those are things we need to deal within blueprint.
+
+### Data Spliting
+
 ```{r}
-# split the dataset
+set.seed(013123)
 
-set.seed(013123)   # set seed
-
-index <- createDataPartition(y = ames$Sale_Price, p = 0.8, list = FALSE)   # consider 70-30 split
+index <- createDataPartition(y = ames$Sale_Price, p = 0.8, list = FALSE)   # consider 80-20 split
 
 ames_train <- ames[index,]   # training data
 
@@ -53,65 +64,90 @@ ames_test <- ames[-index,]   # test data
 ames_train %>% count(Neighborhood) %>% arrange(n)   # check frequency of categories
 ```
 
-```{r}
-# finally, after all preprocessing steps have been decided set up the overall blueprint
+## Recipt and Blueprint
+After all preprocessing steps have been decided set up the overall blueprint.
 
-ames_recipe <- recipe(Sale_Price~., data = ames_train)   # set up recipe
+```{r}
+# set up recipe
+ames_recipe <- recipe(Sale_Price~., data = ames_train) 
 
 # specify feature engineering steps
 ames_blueprint <- ames_recipe %>%    
-  step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%   # filter out zv/nzv predictors
-  step_impute_mean(Gr_Liv_Area) %>%                                    # impute missing entries
-  step_integer(Overall_Qual) %>%                                       # numeric conversion of levels of the predictors   
-  step_center(all_numeric(), -all_outcomes()) %>%                      # center (subtract mean) all numeric predictors (consider all the numeric predictors except the response)
-  step_scale(all_numeric(), -all_outcomes()) %>%                       # scale (divide by standard deviation) all numeric predictors
-  step_other(Neighborhood, threshold = 0.01, other = "other") %>%      # lumping required predictors
-  step_dummy(all_nominal(), one_hot = FALSE)                            # one-hot/dummy encode nominal categorical predictors
-
-# replace step_center and step_scale with step_normalize
-
-ames_prepare <- prep(ames_blueprint, data = ames_train)    # estimate feature engineering parameters based on training data
-
-
-ames_baked_train <- bake(ames_prepare, new_data = ames_train)   # apply the blueprint to training data for building final/optimal model
-
-ames_baked_test <- bake(ames_prepare, new_data = ames_test)    # apply the blueprint to test data for future use
+  step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%  
+  step_impute_mean(Gr_Liv_Area) %>%                                   
+  step_integer(Overall_Qual) %>%                                       
+  step_center(all_numeric(), -all_outcomes()) %>%                      
+  step_scale(all_numeric(), -all_outcomes()) %>%                      
+  step_other(Neighborhood, threshold = 0.01, other = "other") %>%      
+  step_dummy(all_nominal(), one_hot = FALSE)                            
 ```
 
+Within the blueprint, we first filter out the zv/nzv predictors, and impute the missing entries. Then, we do numeric conversion of level of ordinal categorical variable `Overall_Qual`. Following with the data standardization step and lumping step. Finally, do the one-hot/dummy encode of nominal categorical variables.
 
+```{r}
+# estimate feature engineering parameters based on training data
+ames_prepare <- prep(ames_blueprint, data = ames_train)   
 
+# apply the blueprint to training data for building final/optimal model
+ames_baked_train <- bake(ames_prepare, new_data = ames_train) 
+
+# apply the blueprint to test data for future use
+ames_baked_test <- bake(ames_prepare, new_data = ames_test)    
+```
+
+## Analysis
+
+### Bulid Model
 
 ```{r}
 set.seed(111)
+# implement 5-fold CV with 5 times of repeats
+cv_specs <- trainControl(method = "repeatedcv", number = 5, repeats = 5)
+
+# set tunegrid
+tunegrid <- data.frame(method = "GCV.Cp", select = TRUE)
+
+# GAM model
 ames_model<-train(ames_blueprint,
-             data=ames_train,
-             method="gam",
-             tuneGrid=data.frame(method = "GCV.Cp", select = TRUE),  
-             trControl=trainControl(method="repeatedcv",number=5,repeats = 5)
-)
+             data = ames_train,
+             method = "gam",
+             tuneGrid = tunegrid,  
+             trControl = cv_specs)
+
+```
+
+
+### Model's Performance
+
+```{r}
 ames_model$results$RMSE
 
 ames_model$finalMo
 ```
 
 
+## Final Model
+
+### Prediction on Test Dataset
 
 ```{r}
+
 # build final model
+
 ames_final_model <- gam(Sale_Price~Garage_Type_BuiltIn + Garage_Type_Detchd + Garage_Type_No_Garage + Neighborhood_College_Creek + Neighborhood_Old_Town + Neighborhood_Edwards + Neighborhood_Somerset + Neighborhood_Northridge_Heights + Neighborhood_Gilbert + Neighborhood_Sawyer + MS_SubClass_One_and_Half_Story_Finished_All_Ages + MS_SubClass_Two_Story_1946_and_Newer + MS_SubClass_Duplex_All_Styles_and_Ages + 
 MS_SubClass_One_Story_PUD_1946_and_Newer + s(Garage_Cars,k=5) + s(Overall_Qual,k=9) + s(TotRms_AbvGrd,k=9) + s(Lot_Frontage,k=9) + s(Year_Built,sp=0.1,k=6) + s(Open_Porch_SF,k=9) + s(Second_Flr_SF,k=9) + s(Garage_Area,sp=1,k=9) + s(Gr_Liv_Area,sp=1,k=9) + s(First_Flr_SF,sp=-0.001,k=3) + s(Lot_Area,sp=1,k=4) ,data=ames_baked_train) 
 
 # final model predication
+
 ames_final_model_preds<- predict(object = ames_final_model, newdata = ames_baked_test, type = "response")  
 
 sqrt(mean((ames_final_model_preds - ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
 ```
 
+
 ```{r}
 gam.check(ames_final_model)
 ```
-
-
 
 ```{r}
 plot(ames_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue")

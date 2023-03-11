@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Conclusion | CMSC 208 Final Project</title>
-  <meta name="description" content="4 Conclusion | CMSC 208 Final Project" />
+  <title>3.2 Recipt and Blueprint | CMSC 208 Final Project</title>
+  <meta name="description" content="3.2 Recipt and Blueprint | CMSC 208 Final Project" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Conclusion | CMSC 208 Final Project" />
+  <meta property="og:title" content="3.2 Recipt and Blueprint | CMSC 208 Final Project" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Conclusion | CMSC 208 Final Project" />
+  <meta name="twitter:title" content="3.2 Recipt and Blueprint | CMSC 208 Final Project" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="final-model-1.html"/>
-
+<link rel="prev" href="preparation-steps-1.html"/>
+<link rel="next" href="analysis-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -189,17 +189,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="conclusion" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">4</span> Conclusion<a href="conclusion.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-
+<div id="recipt-and-blueprint-1" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Recipt and Blueprint<a href="recipt-and-blueprint-1.html#recipt-and-blueprint-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="recipt-and-blueprint-1.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up recipe </span></span>
+<span id="cb50-2"><a href="recipt-and-blueprint-1.html#cb50-2" aria-hidden="true" tabindex="-1"></a>boston_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(MEDV <span class="sc">~</span> ., <span class="at">data =</span> boston_train)</span>
+<span id="cb50-3"><a href="recipt-and-blueprint-1.html#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="recipt-and-blueprint-1.html#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># set up blueprint</span></span>
+<span id="cb50-5"><a href="recipt-and-blueprint-1.html#cb50-5" aria-hidden="true" tabindex="-1"></a>boston_blueprint <span class="ot">&lt;-</span> boston_recipe <span class="sc">%&gt;%</span>    </span>
+<span id="cb50-6"><a href="recipt-and-blueprint-1.html#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      <span class="co"># center (subtract mean) all numeric predictors (consider all the numeric predictors except the response)</span></span>
+<span id="cb50-7"><a href="recipt-and-blueprint-1.html#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())                     <span class="co"># scale (divide by standard deviation) all numeric predictors                     </span></span></code></pre></div>
+<p>Since there’s no missing value, no zv/nzv features and no categorical variable in <code>boston</code> dataset, all we need in blueprint is to standardize the data.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="recipt-and-blueprint-1.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate feature engineering parameters based on training data</span></span>
+<span id="cb51-2"><a href="recipt-and-blueprint-1.html#cb51-2" aria-hidden="true" tabindex="-1"></a>boston_prepare <span class="ot">&lt;-</span> <span class="fu">prep</span>(boston_blueprint, <span class="at">data =</span> boston_train)   </span>
+<span id="cb51-3"><a href="recipt-and-blueprint-1.html#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="recipt-and-blueprint-1.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to training data for building final/optimal model</span></span>
+<span id="cb51-5"><a href="recipt-and-blueprint-1.html#cb51-5" aria-hidden="true" tabindex="-1"></a>boston_baked_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(boston_prepare, <span class="at">new_data =</span> boston_train)   </span>
+<span id="cb51-6"><a href="recipt-and-blueprint-1.html#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="recipt-and-blueprint-1.html#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to test data for future use</span></span>
+<span id="cb51-8"><a href="recipt-and-blueprint-1.html#cb51-8" aria-hidden="true" tabindex="-1"></a>boston_baked_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(boston_prepare, <span class="at">new_data =</span> boston_test)    </span></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="final-model-1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="preparation-steps-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="analysis-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -230,15 +245,15 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/kaitaii/208-project/edit/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/edit/main/Boston_housing_dataset.Rmd",
 "text": "Edit"
 },
 "history": {
-"link": "https://github.com/kaitaii/208-project/commits/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/commits/main/Boston_housing_dataset.Rmd",
 "text": null
 },
 "view": {
-"link": "https://github.com/kaitaii/208-project/blob/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/blob/main/Boston_housing_dataset.Rmd",
 "text": null
 },
 "download": null,

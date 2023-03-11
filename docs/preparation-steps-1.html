@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3 Boston housing dataset Example | CMSC 208 Final Project</title>
-  <meta name="description" content="3 Boston housing dataset Example | CMSC 208 Final Project" />
+  <title>3.1 Preparation Steps | CMSC 208 Final Project</title>
+  <meta name="description" content="3.1 Preparation Steps | CMSC 208 Final Project" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3 Boston housing dataset Example | CMSC 208 Final Project" />
+  <meta property="og:title" content="3.1 Preparation Steps | CMSC 208 Final Project" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3 Boston housing dataset Example | CMSC 208 Final Project" />
+  <meta name="twitter:title" content="3.1 Preparation Steps | CMSC 208 Final Project" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="only-splines.html"/>
-<link rel="next" href="preparation-steps-1.html"/>
+<link rel="prev" href="boston-housing-dataset-example.html"/>
+<link rel="next" href="recipt-and-blueprint-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -189,38 +189,130 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="boston-housing-dataset-example" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">3</span> Boston housing dataset Example<a href="boston-housing-dataset-example.html#boston-housing-dataset-example" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Data description:</p>
-<p>Since GAM did not work well with the Ames housing dataset, which output a big RMSE, we decided to use another dataset and to test the GAM method on it again. The new dataset, Boston housing, includes 13 explanatory variables, and the response variable <code>MEDV</code>. The following is the description from Kaggle all variables:</p>
-<p>Response Variable:</p>
-<ol style="list-style-type: decimal">
-<li><code>MEDV</code>: Median value of owner-occupied homes in <code>$</code>1000’s [k<code>$</code>]</li>
-</ol>
-<p>Explanatory variables:</p>
-<ol style="list-style-type: decimal">
-<li><p><code>CRIM</code>: per capita crime rate by town</p></li>
-<li><p><code>ZN</code>: proportion of residential land zoned for lots over 25,000 sq.ft.</p></li>
-<li><p><code>INDUS</code>: proportion of non-retail business acres per town</p></li>
-<li><p><code>CHAS</code>: Charles River dummy variable (1 if tract bounds river; 0 otherwise)</p></li>
-<li><p><code>NOX</code>: nitric oxides concentration (parts per 10 million) [parts/10M]</p></li>
-<li><p><code>RM</code>: average number of rooms per dwelling</p></li>
-<li><p><code>AGE</code>: proportion of owner-occupied units built prior to 1940</p></li>
-<li><p><code>DIS</code>: weighted distances to five Boston employment centres</p></li>
-<li><p><code>RAD</code>: index of accessibility to radial highways</p></li>
-<li><p><code>TAX</code>: full-value property-tax rate per <code>$</code>10,000 [<code>$</code>/10k]</p></li>
-<li><p><code>PTRATIO</code>: pupil-teacher ratio by town</p></li>
-<li><p><code>B</code>: The result of the equation B=1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town</p></li>
-<li><p><code>LSTAT</code>: % lower status of the population</p></li>
-</ol>
+<div id="preparation-steps-1" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Preparation Steps<a href="preparation-steps-1.html#preparation-steps-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="data-investigation-1" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Data Investigation<a href="preparation-steps-1.html#data-investigation-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Just as before, we first investigate the dataset to see if there’s any missing entries, non-numeric variables, or ZV/NZV features.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="preparation-steps-1.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(boston)  </span></code></pre></div>
+<pre><code>## Rows: 506
+## Columns: 14
+## $ CRIM    &lt;dbl&gt; 0.00632, 0.02731, 0.02729, 0.03237, 0.06905, 0.02985, 0.08829,…
+## $ ZN      &lt;dbl&gt; 18.0, 0.0, 0.0, 0.0, 0.0, 0.0, 12.5, 12.5, 12.5, 12.5, 12.5, 1…
+## $ INDUS   &lt;dbl&gt; 2.31, 7.07, 7.07, 2.18, 2.18, 2.18, 7.87, 7.87, 7.87, 7.87, 7.…
+## $ CHAS    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ NOX     &lt;dbl&gt; 0.538, 0.469, 0.469, 0.458, 0.458, 0.458, 0.524, 0.524, 0.524,…
+## $ RM      &lt;dbl&gt; 6.575, 6.421, 7.185, 6.998, 7.147, 6.430, 6.012, 6.172, 5.631,…
+## $ AGE     &lt;dbl&gt; 65.2, 78.9, 61.1, 45.8, 54.2, 58.7, 66.6, 96.1, 100.0, 85.9, 9…
+## $ DIS     &lt;dbl&gt; 4.0900, 4.9671, 4.9671, 6.0622, 6.0622, 6.0622, 5.5605, 5.9505…
+## $ RAD     &lt;dbl&gt; 1, 2, 2, 3, 3, 3, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4,…
+## $ TAX     &lt;dbl&gt; 296, 242, 242, 222, 222, 222, 311, 311, 311, 311, 311, 311, 31…
+## $ PTRATIO &lt;dbl&gt; 15.3, 17.8, 17.8, 18.7, 18.7, 18.7, 15.2, 15.2, 15.2, 15.2, 15…
+## $ B       &lt;dbl&gt; 396.90, 396.90, 392.83, 394.63, 396.90, 394.12, 395.60, 396.90…
+## $ LSTAT   &lt;dbl&gt; 4.98, 9.14, 4.03, 2.94, 5.33, 5.21, 12.43, 19.15, 29.93, 17.10…
+## $ MEDV    &lt;dbl&gt; 24.0, 21.6, 34.7, 33.4, 36.2, 28.7, 22.9, 27.1, 16.5, 18.9, 15…</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="preparation-steps-1.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(boston) </span></code></pre></div>
+<pre><code>##       CRIM                ZN             INDUS            CHAS        
+##  Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   Min.   :0.00000  
+##  1st Qu.: 0.08205   1st Qu.:  0.00   1st Qu.: 5.19   1st Qu.:0.00000  
+##  Median : 0.25651   Median :  0.00   Median : 9.69   Median :0.00000  
+##  Mean   : 3.61352   Mean   : 11.36   Mean   :11.14   Mean   :0.06917  
+##  3rd Qu.: 3.67708   3rd Qu.: 12.50   3rd Qu.:18.10   3rd Qu.:0.00000  
+##  Max.   :88.97620   Max.   :100.00   Max.   :27.74   Max.   :1.00000  
+##       NOX               RM             AGE              DIS        
+##  Min.   :0.3850   Min.   :3.561   Min.   :  2.90   Min.   : 1.130  
+##  1st Qu.:0.4490   1st Qu.:5.886   1st Qu.: 45.02   1st Qu.: 2.100  
+##  Median :0.5380   Median :6.208   Median : 77.50   Median : 3.207  
+##  Mean   :0.5547   Mean   :6.285   Mean   : 68.57   Mean   : 3.795  
+##  3rd Qu.:0.6240   3rd Qu.:6.623   3rd Qu.: 94.08   3rd Qu.: 5.188  
+##  Max.   :0.8710   Max.   :8.780   Max.   :100.00   Max.   :12.127  
+##       RAD              TAX           PTRATIO            B         
+##  Min.   : 1.000   Min.   :187.0   Min.   :12.60   Min.   :  0.32  
+##  1st Qu.: 4.000   1st Qu.:279.0   1st Qu.:17.40   1st Qu.:375.38  
+##  Median : 5.000   Median :330.0   Median :19.05   Median :391.44  
+##  Mean   : 9.549   Mean   :408.2   Mean   :18.46   Mean   :356.67  
+##  3rd Qu.:24.000   3rd Qu.:666.0   3rd Qu.:20.20   3rd Qu.:396.23  
+##  Max.   :24.000   Max.   :711.0   Max.   :22.00   Max.   :396.90  
+##      LSTAT            MEDV      
+##  Min.   : 1.73   Min.   : 5.00  
+##  1st Qu.: 6.95   1st Qu.:17.02  
+##  Median :11.36   Median :21.20  
+##  Mean   :12.65   Mean   :22.53  
+##  3rd Qu.:16.95   3rd Qu.:25.00  
+##  Max.   :37.97   Max.   :50.00</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="preparation-steps-1.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(boston)) </span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="preparation-steps-1.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nearZeroVar</span>(boston) </span></code></pre></div>
+<pre><code>## integer(0)</code></pre>
+<p>Finding that there are 13 features in total and all of them are numerical variables. There is no NA value in the whole dataset and no zv or nzv features.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="preparation-steps-1.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(boston)</span></code></pre></div>
+<pre><code>##                CRIM          ZN       INDUS         CHAS         NOX
+## CRIM     1.00000000 -0.20046922  0.40658341 -0.055891582  0.42097171
+## ZN      -0.20046922  1.00000000 -0.53382819 -0.042696719 -0.51660371
+## INDUS    0.40658341 -0.53382819  1.00000000  0.062938027  0.76365145
+## CHAS    -0.05589158 -0.04269672  0.06293803  1.000000000  0.09120281
+## NOX      0.42097171 -0.51660371  0.76365145  0.091202807  1.00000000
+## RM      -0.21924670  0.31199059 -0.39167585  0.091251225 -0.30218819
+## AGE      0.35273425 -0.56953734  0.64477851  0.086517774  0.73147010
+## DIS     -0.37967009  0.66440822 -0.70802699 -0.099175780 -0.76923011
+## RAD      0.62550515 -0.31194783  0.59512927 -0.007368241  0.61144056
+## TAX      0.58276431 -0.31456332  0.72076018 -0.035586518  0.66802320
+## PTRATIO  0.28994558 -0.39167855  0.38324756 -0.121515174  0.18893268
+## B       -0.38506394  0.17552032 -0.35697654  0.048788485 -0.38005064
+## LSTAT    0.45562148 -0.41299457  0.60379972 -0.053929298  0.59087892
+## MEDV    -0.38830461  0.36044534 -0.48372516  0.175260177 -0.42732077
+##                  RM         AGE         DIS          RAD         TAX    PTRATIO
+## CRIM    -0.21924670  0.35273425 -0.37967009  0.625505145  0.58276431  0.2899456
+## ZN       0.31199059 -0.56953734  0.66440822 -0.311947826 -0.31456332 -0.3916785
+## INDUS   -0.39167585  0.64477851 -0.70802699  0.595129275  0.72076018  0.3832476
+## CHAS     0.09125123  0.08651777 -0.09917578 -0.007368241 -0.03558652 -0.1215152
+## NOX     -0.30218819  0.73147010 -0.76923011  0.611440563  0.66802320  0.1889327
+## RM       1.00000000 -0.24026493  0.20524621 -0.209846668 -0.29204783 -0.3555015
+## AGE     -0.24026493  1.00000000 -0.74788054  0.456022452  0.50645559  0.2615150
+## DIS      0.20524621 -0.74788054  1.00000000 -0.494587930 -0.53443158 -0.2324705
+## RAD     -0.20984667  0.45602245 -0.49458793  1.000000000  0.91022819  0.4647412
+## TAX     -0.29204783  0.50645559 -0.53443158  0.910228189  1.00000000  0.4608530
+## PTRATIO -0.35550149  0.26151501 -0.23247054  0.464741179  0.46085304  1.0000000
+## B        0.12806864 -0.27353398  0.29151167 -0.444412816 -0.44180801 -0.1773833
+## LSTAT   -0.61380827  0.60233853 -0.49699583  0.488676335  0.54399341  0.3740443
+## MEDV     0.69535995 -0.37695457  0.24992873 -0.381626231 -0.46853593 -0.5077867
+##                   B      LSTAT       MEDV
+## CRIM    -0.38506394  0.4556215 -0.3883046
+## ZN       0.17552032 -0.4129946  0.3604453
+## INDUS   -0.35697654  0.6037997 -0.4837252
+## CHAS     0.04878848 -0.0539293  0.1752602
+## NOX     -0.38005064  0.5908789 -0.4273208
+## RM       0.12806864 -0.6138083  0.6953599
+## AGE     -0.27353398  0.6023385 -0.3769546
+## DIS      0.29151167 -0.4969958  0.2499287
+## RAD     -0.44441282  0.4886763 -0.3816262
+## TAX     -0.44180801  0.5439934 -0.4685359
+## PTRATIO -0.17738330  0.3740443 -0.5077867
+## B        1.00000000 -0.3660869  0.3334608
+## LSTAT   -0.36608690  1.0000000 -0.7376627
+## MEDV     0.33346082 -0.7376627  1.0000000</code></pre>
+<p>From the correlation plot, noticing that for variable <code>TAX</code> and <code>INDUS</code>, <code>DIS</code> and <code>INDUS</code>, <code>TAX</code> and <code>INDUS</code>, <code>NOX</code> and <code>INDUS</code>, <code>NOX</code> and <code>AGE</code>, <code>NOX</code> and <code>DIS</code>, <code>AGE</code> and <code>DIS</code>… are highly correlated variable. (We are saying two variables are highly correlated when their correlation value is greater that 0.7)</p>
+</div>
+<div id="data-spliting-1" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Data Spliting<a href="preparation-steps-1.html#data-spliting-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="preparation-steps-1.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)  </span>
+<span id="cb49-2"><a href="preparation-steps-1.html#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="preparation-steps-1.html#cb49-3" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(<span class="at">y =</span> boston<span class="sc">$</span>MEDV, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)   <span class="co"># consider 80-20 split</span></span>
+<span id="cb49-4"><a href="preparation-steps-1.html#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="preparation-steps-1.html#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Data Spliting </span></span>
+<span id="cb49-6"><a href="preparation-steps-1.html#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="preparation-steps-1.html#cb49-7" aria-hidden="true" tabindex="-1"></a>boston_train <span class="ot">&lt;-</span> boston[index,]   <span class="co"># training data</span></span>
+<span id="cb49-8"><a href="preparation-steps-1.html#cb49-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-9"><a href="preparation-steps-1.html#cb49-9" aria-hidden="true" tabindex="-1"></a>boston_test <span class="ot">&lt;-</span> boston[<span class="sc">-</span>index,]   <span class="co"># test data</span></span></code></pre></div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="only-splines.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="preparation-steps-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="boston-housing-dataset-example.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="recipt-and-blueprint-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

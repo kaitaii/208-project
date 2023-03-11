@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Conclusion | CMSC 208 Final Project</title>
-  <meta name="description" content="4 Conclusion | CMSC 208 Final Project" />
+  <title>2.4 Final Model | CMSC 208 Final Project</title>
+  <meta name="description" content="2.4 Final Model | CMSC 208 Final Project" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Conclusion | CMSC 208 Final Project" />
+  <meta property="og:title" content="2.4 Final Model | CMSC 208 Final Project" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Conclusion | CMSC 208 Final Project" />
+  <meta name="twitter:title" content="2.4 Final Model | CMSC 208 Final Project" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="final-model-1.html"/>
-
+<link rel="prev" href="analysis.html"/>
+<link rel="next" href="only-splines.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -189,17 +189,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="conclusion" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">4</span> Conclusion<a href="conclusion.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-
+<div id="final-model" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Final Model<a href="final-model.html#final-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="prediction-on-test-dataset" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Prediction on Test Dataset<a href="final-model.html#prediction-on-test-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="final-model.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build final model</span></span>
+<span id="cb32-2"><a href="final-model.html#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="final-model.html#cb32-3" aria-hidden="true" tabindex="-1"></a>ames_final_model <span class="ot">&lt;-</span> <span class="fu">gam</span>(Sale_Price<span class="sc">~</span>Garage_Type_BuiltIn <span class="sc">+</span> Garage_Type_Detchd <span class="sc">+</span> Garage_Type_No_Garage <span class="sc">+</span> Neighborhood_College_Creek <span class="sc">+</span> Neighborhood_Old_Town <span class="sc">+</span> Neighborhood_Edwards <span class="sc">+</span> Neighborhood_Somerset <span class="sc">+</span> Neighborhood_Northridge_Heights <span class="sc">+</span> Neighborhood_Gilbert <span class="sc">+</span> Neighborhood_Sawyer <span class="sc">+</span> MS_SubClass_One_and_Half_Story_Finished_All_Ages <span class="sc">+</span> MS_SubClass_Two_Story_1946_and_Newer <span class="sc">+</span> MS_SubClass_Duplex_All_Styles_and_Ages <span class="sc">+</span> </span>
+<span id="cb32-4"><a href="final-model.html#cb32-4" aria-hidden="true" tabindex="-1"></a>MS_SubClass_One_Story_PUD_1946_and_Newer <span class="sc">+</span> <span class="fu">s</span>(Garage_Cars,<span class="at">k=</span><span class="dv">5</span>) <span class="sc">+</span> <span class="fu">s</span>(Overall_Qual,<span class="at">k=</span><span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(TotRms_AbvGrd,<span class="at">k=</span><span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(Lot_Frontage,<span class="at">k=</span><span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(Year_Built,<span class="at">sp=</span><span class="fl">0.1</span>,<span class="at">k=</span><span class="dv">6</span>) <span class="sc">+</span> <span class="fu">s</span>(Open_Porch_SF,<span class="at">k=</span><span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(Second_Flr_SF,<span class="at">k=</span><span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(Garage_Area,<span class="at">sp=</span><span class="dv">1</span>,<span class="at">k=</span><span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(Gr_Liv_Area,<span class="at">sp=</span><span class="dv">1</span>,<span class="at">k=</span><span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(First_Flr_SF,<span class="at">sp=</span><span class="sc">-</span><span class="fl">0.001</span>,<span class="at">k=</span><span class="dv">3</span>) <span class="sc">+</span> <span class="fu">s</span>(Lot_Area,<span class="at">sp=</span><span class="dv">1</span>,<span class="at">k=</span><span class="dv">4</span>) ,<span class="at">data=</span>ames_baked_train) </span>
+<span id="cb32-5"><a href="final-model.html#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="final-model.html#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co"># final model predication</span></span>
+<span id="cb32-7"><a href="final-model.html#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="final-model.html#cb32-8" aria-hidden="true" tabindex="-1"></a>ames_final_model_preds<span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> ames_final_model, <span class="at">newdata =</span> ames_baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)  </span>
+<span id="cb32-9"><a href="final-model.html#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="final-model.html#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((ames_final_model_preds <span class="sc">-</span> ames_baked_test<span class="sc">$</span>Sale_Price)<span class="sc">^</span><span class="dv">2</span>))   <span class="co"># calculate test set RMSE</span></span></code></pre></div>
+<pre><code>## [1] 27534.36</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="final-model.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(ames_final_model)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre><code>## 
+## Method: GCV   Optimizer: magic
+## Smoothing parameter selection converged after 19 iterations.
+## The RMS GCV score gradient at convergence was 43.10934 .
+## The Hessian was positive definite.
+## Model rank =  85 / 85 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                    k&#39;  edf k-index p-value  
+## s(Garage_Cars)   4.00 1.40    1.07    0.95  
+## s(Overall_Qual)  8.00 5.22    1.14    1.00  
+## s(TotRms_AbvGrd) 8.00 3.53    1.02    0.68  
+## s(Lot_Frontage)  8.00 2.12    0.98    0.30  
+## s(Year_Built)    5.00 4.20    0.95    0.09 .
+## s(Open_Porch_SF) 8.00 1.00    1.00    0.47  
+## s(Second_Flr_SF) 8.00 6.63    1.02    0.72  
+## s(Garage_Area)   8.00 2.28    1.03    0.79  
+## s(Gr_Liv_Area)   8.00 1.73    0.98    0.38  
+## s(First_Flr_SF)  2.00 1.57    1.06    0.92  
+## s(Lot_Area)      3.00 1.52    1.02    0.69  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="final-model.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ames_final_model, <span class="at">residuals=</span><span class="cn">TRUE</span>,<span class="at">shade =</span> <span class="cn">TRUE</span>, <span class="at">shade.col =</span> <span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-11-1.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-11-2.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-11-3.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-11-4.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-11-5.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-11-6.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-11-7.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-11-8.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-11-9.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-11-10.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-11-11.png" width="672" /></p>
+<p>Noticing that the RMSE for both train dataset and test dataset are all large, especailly for test dataset, which means the GAM model didn’t work well for ames housing dataset. In order to show a better performance, we found another dataset, boston housing, to have a try.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="final-model-1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="only-splines.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -230,15 +272,15 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/kaitaii/208-project/edit/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/edit/main/ames_housing_dataset.Rmd",
 "text": "Edit"
 },
 "history": {
-"link": "https://github.com/kaitaii/208-project/commits/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/commits/main/ames_housing_dataset.Rmd",
 "text": null
 },
 "view": {
-"link": "https://github.com/kaitaii/208-project/blob/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/blob/main/ames_housing_dataset.Rmd",
 "text": null
 },
 "download": null,

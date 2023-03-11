@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Conclusion | CMSC 208 Final Project</title>
-  <meta name="description" content="4 Conclusion | CMSC 208 Final Project" />
+  <title>2.2 Recipt and Blueprint | CMSC 208 Final Project</title>
+  <meta name="description" content="2.2 Recipt and Blueprint | CMSC 208 Final Project" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Conclusion | CMSC 208 Final Project" />
+  <meta property="og:title" content="2.2 Recipt and Blueprint | CMSC 208 Final Project" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Conclusion | CMSC 208 Final Project" />
+  <meta name="twitter:title" content="2.2 Recipt and Blueprint | CMSC 208 Final Project" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="final-model-1.html"/>
-
+<link rel="prev" href="preparation-steps.html"/>
+<link rel="next" href="analysis.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -189,17 +189,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="conclusion" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">4</span> Conclusion<a href="conclusion.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-
+<div id="recipt-and-blueprint" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Recipt and Blueprint<a href="recipt-and-blueprint.html#recipt-and-blueprint" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After all preprocessing steps have been decided set up the overall blueprint.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="recipt-and-blueprint.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set up recipe</span></span>
+<span id="cb25-2"><a href="recipt-and-blueprint.html#cb25-2" aria-hidden="true" tabindex="-1"></a>ames_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price<span class="sc">~</span>., <span class="at">data =</span> ames_train) </span>
+<span id="cb25-3"><a href="recipt-and-blueprint.html#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="recipt-and-blueprint.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># specify feature engineering steps</span></span>
+<span id="cb25-5"><a href="recipt-and-blueprint.html#cb25-5" aria-hidden="true" tabindex="-1"></a>ames_blueprint <span class="ot">&lt;-</span> ames_recipe <span class="sc">%&gt;%</span>    </span>
+<span id="cb25-6"><a href="recipt-and-blueprint.html#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_nzv</span>(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) <span class="sc">%&gt;%</span>  </span>
+<span id="cb25-7"><a href="recipt-and-blueprint.html#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_mean</span>(Gr_Liv_Area) <span class="sc">%&gt;%</span>                                   </span>
+<span id="cb25-8"><a href="recipt-and-blueprint.html#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_integer</span>(Overall_Qual) <span class="sc">%&gt;%</span>                                       </span>
+<span id="cb25-9"><a href="recipt-and-blueprint.html#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      </span>
+<span id="cb25-10"><a href="recipt-and-blueprint.html#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      </span>
+<span id="cb25-11"><a href="recipt-and-blueprint.html#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_other</span>(Neighborhood, <span class="at">threshold =</span> <span class="fl">0.01</span>, <span class="at">other =</span> <span class="st">&quot;other&quot;</span>) <span class="sc">%&gt;%</span>      </span>
+<span id="cb25-12"><a href="recipt-and-blueprint.html#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="at">one_hot =</span> <span class="cn">FALSE</span>)                            </span></code></pre></div>
+<p>Within the blueprint, we first filter out the zv/nzv predictors, and impute the missing entries. Then, we do numeric conversion of level of ordinal categorical variable <code>Overall_Qual</code>. Following with the data standardization step and lumping step. Finally, do the one-hot/dummy encode of nominal categorical variables.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="recipt-and-blueprint.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate feature engineering parameters based on training data</span></span>
+<span id="cb26-2"><a href="recipt-and-blueprint.html#cb26-2" aria-hidden="true" tabindex="-1"></a>ames_prepare <span class="ot">&lt;-</span> <span class="fu">prep</span>(ames_blueprint, <span class="at">data =</span> ames_train)   </span>
+<span id="cb26-3"><a href="recipt-and-blueprint.html#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="recipt-and-blueprint.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to training data for building final/optimal model</span></span>
+<span id="cb26-5"><a href="recipt-and-blueprint.html#cb26-5" aria-hidden="true" tabindex="-1"></a>ames_baked_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(ames_prepare, <span class="at">new_data =</span> ames_train) </span>
+<span id="cb26-6"><a href="recipt-and-blueprint.html#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="recipt-and-blueprint.html#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to test data for future use</span></span>
+<span id="cb26-8"><a href="recipt-and-blueprint.html#cb26-8" aria-hidden="true" tabindex="-1"></a>ames_baked_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(ames_prepare, <span class="at">new_data =</span> ames_test)    </span></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="final-model-1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="preparation-steps.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -230,15 +251,15 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/kaitaii/208-project/edit/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/edit/main/ames_housing_dataset.Rmd",
 "text": "Edit"
 },
 "history": {
-"link": "https://github.com/kaitaii/208-project/commits/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/commits/main/ames_housing_dataset.Rmd",
 "text": null
 },
 "view": {
-"link": "https://github.com/kaitaii/208-project/blob/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/blob/main/ames_housing_dataset.Rmd",
 "text": null
 },
 "download": null,

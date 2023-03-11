@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Conclusion | CMSC 208 Final Project</title>
-  <meta name="description" content="4 Conclusion | CMSC 208 Final Project" />
+  <title>2.3 Analysis | CMSC 208 Final Project</title>
+  <meta name="description" content="2.3 Analysis | CMSC 208 Final Project" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Conclusion | CMSC 208 Final Project" />
+  <meta property="og:title" content="2.3 Analysis | CMSC 208 Final Project" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Conclusion | CMSC 208 Final Project" />
+  <meta name="twitter:title" content="2.3 Analysis | CMSC 208 Final Project" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="final-model-1.html"/>
-
+<link rel="prev" href="recipt-and-blueprint.html"/>
+<link rel="next" href="final-model.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -189,17 +189,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="conclusion" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">4</span> Conclusion<a href="conclusion.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-
+<div id="analysis" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Analysis<a href="analysis.html#analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="bulid-model" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Bulid Model<a href="analysis.html#bulid-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="analysis.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb27-2"><a href="analysis.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># implement 5-fold CV with 5 times of repeats</span></span>
+<span id="cb27-3"><a href="analysis.html#cb27-3" aria-hidden="true" tabindex="-1"></a>cv_specs <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">5</span>)</span>
+<span id="cb27-4"><a href="analysis.html#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="analysis.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># set tunegrid</span></span>
+<span id="cb27-6"><a href="analysis.html#cb27-6" aria-hidden="true" tabindex="-1"></a>tunegrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="at">select =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-7"><a href="analysis.html#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="analysis.html#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># GAM model</span></span>
+<span id="cb27-9"><a href="analysis.html#cb27-9" aria-hidden="true" tabindex="-1"></a>ames_model<span class="ot">&lt;-</span><span class="fu">train</span>(ames_blueprint,</span>
+<span id="cb27-10"><a href="analysis.html#cb27-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> ames_train,</span>
+<span id="cb27-11"><a href="analysis.html#cb27-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">&quot;gam&quot;</span>,</span>
+<span id="cb27-12"><a href="analysis.html#cb27-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">tuneGrid =</span> tunegrid,  </span>
+<span id="cb27-13"><a href="analysis.html#cb27-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">trControl =</span> cv_specs)</span></code></pre></div>
+</div>
+<div id="models-performance" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Model’s Performance<a href="analysis.html#models-performance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="analysis.html#cb28-1" aria-hidden="true" tabindex="-1"></a>ames_model<span class="sc">$</span>results<span class="sc">$</span>RMSE</span></code></pre></div>
+<pre><code>## [1] 70421.17</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="analysis.html#cb30-1" aria-hidden="true" tabindex="-1"></a>ames_model<span class="sc">$</span>finalMo</span></code></pre></div>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## .outcome ~ Garage_Type_BuiltIn + Garage_Type_Detchd + Garage_Type_No_Garage + 
+##     Neighborhood_College_Creek + Neighborhood_Old_Town + Neighborhood_Edwards + 
+##     Neighborhood_Somerset + Neighborhood_Northridge_Heights + 
+##     Neighborhood_Gilbert + Neighborhood_Sawyer + MS_SubClass_One_and_Half_Story_Finished_All_Ages + 
+##     MS_SubClass_Two_Story_1946_and_Newer + MS_SubClass_Duplex_All_Styles_and_Ages + 
+##     MS_SubClass_One_Story_PUD_1946_and_Newer + Garage_Cars + 
+##     Overall_Qual + s(TotRms_AbvGrd) + s(Lot_Frontage) + s(Year_Built) + 
+##     s(Open_Porch_SF) + s(Second_Flr_SF) + s(Garage_Area) + s(Gr_Liv_Area) + 
+##     s(First_Flr_SF) + s(Lot_Area)
+## 
+## Estimated degrees of freedom:
+## 0.961 0.000 3.936 1.065 1.974 3.105 6.489 
+## 8.662 7.680  total = 50.87 
+## 
+## GCV score: 722968462</code></pre>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="final-model-1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="recipt-and-blueprint.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="final-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -230,15 +271,15 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/kaitaii/208-project/edit/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/edit/main/ames_housing_dataset.Rmd",
 "text": "Edit"
 },
 "history": {
-"link": "https://github.com/kaitaii/208-project/commits/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/commits/main/ames_housing_dataset.Rmd",
 "text": null
 },
 "view": {
-"link": "https://github.com/kaitaii/208-project/blob/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/blob/main/ames_housing_dataset.Rmd",
 "text": null
 },
 "download": null,

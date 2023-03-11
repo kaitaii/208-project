@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Conclusion | CMSC 208 Final Project</title>
-  <meta name="description" content="4 Conclusion | CMSC 208 Final Project" />
+  <title>2.5 Only splines? | CMSC 208 Final Project</title>
+  <meta name="description" content="2.5 Only splines? | CMSC 208 Final Project" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Conclusion | CMSC 208 Final Project" />
+  <meta property="og:title" content="2.5 Only splines? | CMSC 208 Final Project" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Conclusion | CMSC 208 Final Project" />
+  <meta name="twitter:title" content="2.5 Only splines? | CMSC 208 Final Project" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="final-model-1.html"/>
-
+<link rel="prev" href="final-model.html"/>
+<link rel="next" href="boston-housing-dataset-example.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -189,17 +189,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="conclusion" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">4</span> Conclusion<a href="conclusion.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="only-splines" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Only splines?<a href="only-splines.html#only-splines" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="only-splines.html#cb37-1" aria-hidden="true" tabindex="-1"></a>ames_final_model2 <span class="ot">&lt;-</span> <span class="fu">gam</span>(Sale_Price<span class="sc">~</span> <span class="fu">s</span>(Gr_Liv_Area) <span class="sc">+</span> </span>
+<span id="cb37-2"><a href="only-splines.html#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">s</span>(First_Flr_SF) <span class="sc">+</span> <span class="fu">s</span>(Lot_Area) ,<span class="at">data=</span>ames_baked_train) </span>
+<span id="cb37-3"><a href="only-splines.html#cb37-3" aria-hidden="true" tabindex="-1"></a>ames_final_model_preds2<span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> ames_final_model2, <span class="at">newdata =</span> ames_baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)    <span class="co"># obtain predictions</span></span>
+<span id="cb37-4"><a href="only-splines.html#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="only-splines.html#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((ames_final_model_preds2 <span class="sc">-</span> ames_baked_test<span class="sc">$</span>Sale_Price)<span class="sc">^</span><span class="dv">2</span>))   <span class="co"># calculate test set RMSE</span></span></code></pre></div>
+<pre><code>## [1] 112682</code></pre>
 
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="final-model-1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="final-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="boston-housing-dataset-example.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -230,15 +237,15 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/kaitaii/208-project/edit/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/edit/main/ames_housing_dataset.Rmd",
 "text": "Edit"
 },
 "history": {
-"link": "https://github.com/kaitaii/208-project/commits/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/commits/main/ames_housing_dataset.Rmd",
 "text": null
 },
 "view": {
-"link": "https://github.com/kaitaii/208-project/blob/main/Conclusion.Rmd",
+"link": "https://github.com/kaitaii/208-project/blob/main/ames_housing_dataset.Rmd",
 "text": null
 },
 "download": null,
