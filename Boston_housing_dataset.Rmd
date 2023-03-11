@@ -1,5 +1,5 @@
 
-# Boston housing dataset
+# Boston housing dataset Example
 
 Since GAM did not work well with the Ames housing dataset, 
 
@@ -20,9 +20,6 @@ nearZeroVar(boston)  # check for near zero variable
 ```{r}
 cor(boston)
 ```
-
-### 
-
 
 
 ```{r}
