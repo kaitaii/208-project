@@ -127,9 +127,6 @@ sqrt(mean((ames_final_model_preds2 - ames_baked_test$Sale_Price)^2))   # calcula
 
 
 
-# Conclusion
-
-
 ```{r}
 ggplot(ames,aes(x=Gr_Liv_Area,y=Sale_Price))+geom_point()+geom_smooth()
 ```
