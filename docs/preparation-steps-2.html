@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7 Boston housing dataset Example | CMSC 208 Final Project</title>
-  <meta name="description" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <title>6.1 Preparation Steps | CMSC 208 Final Project</title>
+  <meta name="description" content="6.1 Preparation Steps | CMSC 208 Final Project" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <meta property="og:title" content="6.1 Preparation Steps | CMSC 208 Final Project" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <meta name="twitter:title" content="6.1 Preparation Steps | CMSC 208 Final Project" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="final-model-2.html"/>
-<link rel="next" href="preparation-steps-3.html"/>
+<link rel="prev" href="ames-housing-dataset-example-1.html"/>
+<link rel="next" href="recipe-and-blueprint-2.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -225,38 +225,159 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="boston-housing-dataset-example-1" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">7</span> Boston housing dataset Example<a href="boston-housing-dataset-example-1.html#boston-housing-dataset-example-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Data description:</p>
-<p>Orignially, since GAM did not work well with the Ames housing dataset, which output a big RMSE, we decided to use another dataset and to test the GAM method on it again. The new dataset, Boston housing, includes 13 explanatory variables, and the response variable <code>MEDV</code>. The following is the description from Kaggle all variables:</p>
-<p>Response Variable:</p>
-<ol style="list-style-type: decimal">
-<li><code>MEDV</code>: Median value of owner-occupied homes in <code>$</code>1000’s [k<code>$</code>]</li>
-</ol>
-<p>Explanatory variables:</p>
-<ol style="list-style-type: decimal">
-<li><p><code>CRIM</code>: per capita crime rate by town</p></li>
-<li><p><code>ZN</code>: proportion of residential land zoned for lots over 25,000 sq.ft.</p></li>
-<li><p><code>INDUS</code>: proportion of non-retail business acres per town</p></li>
-<li><p><code>CHAS</code>: Charles River dummy variable (1 if tract bounds river; 0 otherwise)</p></li>
-<li><p><code>NOX</code>: nitric oxides concentration (parts per 10 million) [parts/10M]</p></li>
-<li><p><code>RM</code>: average number of rooms per dwelling</p></li>
-<li><p><code>AGE</code>: proportion of owner-occupied units built prior to 1940</p></li>
-<li><p><code>DIS</code>: weighted distances to five Boston employment centres</p></li>
-<li><p><code>RAD</code>: index of accessibility to radial highways</p></li>
-<li><p><code>TAX</code>: full-value property-tax rate per <code>$</code>10,000 [<code>$</code>/10k]</p></li>
-<li><p><code>PTRATIO</code>: pupil-teacher ratio by town</p></li>
-<li><p><code>B</code>: The result of the equation B=1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town</p></li>
-<li><p><code>LSTAT</code>: % lower status of the population</p></li>
-</ol>
+<div id="preparation-steps-2" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Preparation Steps<a href="preparation-steps-2.html#preparation-steps-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="data-investigation-2" class="section level3 hasAnchor" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Data Investigation<a href="preparation-steps-2.html#data-investigation-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Just as before, we first investigate the dataset to see if there’s any missing entries, non-numeric variables, or ZV/NZV features.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="preparation-steps-2.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ames)</span></code></pre></div>
+<pre><code>## Rows: 881
+## Columns: 20
+## $ Sale_Price    &lt;int&gt; 244000, 213500, 185000, 394432, 190000, 149000, 149900, …
+## $ Gr_Liv_Area   &lt;int&gt; 2110, 1338, 1187, 1856, 1844, NA, NA, 1069, 1940, 1544, …
+## $ Garage_Type   &lt;fct&gt; Attchd, Attchd, Attchd, Attchd, Attchd, Attchd, Attchd, …
+## $ Garage_Cars   &lt;dbl&gt; 2, 2, 2, 3, 2, 2, 2, 2, 3, 3, 2, 3, 3, 2, 2, 2, 3, 2, 2,…
+## $ Garage_Area   &lt;dbl&gt; 522, 582, 420, 834, 546, 480, 500, 440, 606, 868, 532, 7…
+## $ Street        &lt;fct&gt; Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pa…
+## $ Utilities     &lt;fct&gt; AllPub, AllPub, AllPub, AllPub, AllPub, AllPub, AllPub, …
+## $ Pool_Area     &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ Neighborhood  &lt;fct&gt; North_Ames, Stone_Brook, Gilbert, Stone_Brook, Northwest…
+## $ Screen_Porch  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 165, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ Overall_Qual  &lt;fct&gt; Good, Very_Good, Above_Average, Excellent, Above_Average…
+## $ Lot_Area      &lt;int&gt; 11160, 4920, 7980, 11394, 11751, 11241, 12537, 4043, 101…
+## $ Lot_Frontage  &lt;dbl&gt; 93, 41, 0, 88, 105, 0, 0, 53, 83, 94, 95, 90, 105, 61, 6…
+## $ MS_SubClass   &lt;fct&gt; One_Story_1946_and_Newer_All_Styles, One_Story_PUD_1946_…
+## $ Misc_Val      &lt;int&gt; 0, 0, 500, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ Open_Porch_SF &lt;int&gt; 0, 0, 21, 0, 122, 0, 0, 55, 95, 35, 70, 74, 130, 82, 48,…
+## $ TotRms_AbvGrd &lt;int&gt; 8, 6, 6, 8, 7, 5, 6, 4, 8, 7, 7, 7, 7, 6, 7, 7, 10, 7, 7…
+## $ First_Flr_SF  &lt;int&gt; 2110, 1338, 1187, 1856, 1844, 1004, 1078, 1069, 1940, 15…
+## $ Second_Flr_SF &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 563, 0, 886, 656, 11…
+## $ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009, 20…</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="preparation-steps-2.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(ames))  </span></code></pre></div>
+<pre><code>## [1] 113</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="preparation-steps-2.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ames)  </span></code></pre></div>
+<pre><code>##    Sale_Price      Gr_Liv_Area                Garage_Type   Garage_Cars   
+##  Min.   : 34900   Min.   : 334   Attchd             :514   Min.   :0.000  
+##  1st Qu.:129500   1st Qu.:1118   Basment            : 10   1st Qu.:1.000  
+##  Median :160000   Median :1442   BuiltIn            : 55   Median :2.000  
+##  Mean   :181115   Mean   :1495   CarPort            :  5   Mean   :1.762  
+##  3rd Qu.:213500   3rd Qu.:1728   Detchd             :234   3rd Qu.:2.000  
+##  Max.   :755000   Max.   :5642   More_Than_Two_Types:  9   Max.   :4.000  
+##                   NA&#39;s   :113    No_Garage          : 54                  
+##   Garage_Area      Street     Utilities     Pool_Area     
+##  Min.   :   0.0   Grvl:  4   AllPub:880   Min.   :  0.00  
+##  1st Qu.: 324.0   Pave:877   NoSeWa:  0   1st Qu.:  0.00  
+##  Median : 480.0              NoSewr:  1   Median :  0.00  
+##  Mean   : 476.5                           Mean   :  2.41  
+##  3rd Qu.: 592.0                           3rd Qu.:  0.00  
+##  Max.   :1418.0                           Max.   :576.00  
+##                                                           
+##              Neighborhood  Screen_Porch           Overall_Qual    Lot_Area     
+##  North_Ames        :127   Min.   :  0.00   Average      :243   Min.   :  1300  
+##  College_Creek     : 86   1st Qu.:  0.00   Above_Average:217   1st Qu.:  7449  
+##  Old_Town          : 83   Median :  0.00   Good         :177   Median :  9512  
+##  Northridge_Heights: 52   Mean   : 18.11   Very_Good    : 99   Mean   : 10105  
+##  Somerset          : 50   3rd Qu.:  0.00   Below_Average: 83   3rd Qu.: 11526  
+##  Edwards           : 49   Max.   :490.00   Excellent    : 38   Max.   :159000  
+##  (Other)           :434                    (Other)      : 24                   
+##   Lot_Frontage                                  MS_SubClass     Misc_Val      
+##  Min.   :  0.00   One_Story_1946_and_Newer_All_Styles :335   Min.   :   0.00  
+##  1st Qu.: 43.00   Two_Story_1946_and_Newer            :171   1st Qu.:   0.00  
+##  Median : 63.00   One_and_Half_Story_Finished_All_Ages: 92   Median :   0.00  
+##  Mean   : 57.78   One_Story_PUD_1946_and_Newer        : 53   Mean   :  37.97  
+##  3rd Qu.: 78.00   Duplex_All_Styles_and_Ages          : 40   3rd Qu.:   0.00  
+##  Max.   :313.00   One_Story_1945_and_Older            : 36   Max.   :8300.00  
+##                   (Other)                             :154                    
+##  Open_Porch_SF    TotRms_AbvGrd     First_Flr_SF  Second_Flr_SF   
+##  Min.   :  0.00   Min.   : 2.000   Min.   : 334   Min.   :   0.0  
+##  1st Qu.:  0.00   1st Qu.: 5.000   1st Qu.: 877   1st Qu.:   0.0  
+##  Median : 27.00   Median : 6.000   Median :1092   Median :   0.0  
+##  Mean   : 49.93   Mean   : 6.413   Mean   :1171   Mean   : 319.6  
+##  3rd Qu.: 72.00   3rd Qu.: 7.000   3rd Qu.:1426   3rd Qu.: 682.0  
+##  Max.   :742.00   Max.   :12.000   Max.   :4692   Max.   :2065.0  
+##                                                                   
+##    Year_Built  
+##  Min.   :1875  
+##  1st Qu.:1954  
+##  Median :1972  
+##  Mean   :1971  
+##  3rd Qu.:2000  
+##  Max.   :2010  
+## </code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="preparation-steps-2.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nearZeroVar</span>(ames, <span class="at">saveMetrics =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##                freqRatio percentUnique zeroVar   nzv
+## Sale_Price      1.000000    55.7321226   FALSE FALSE
+## Gr_Liv_Area     1.333333    62.9965948   FALSE FALSE
+## Garage_Type     2.196581     0.7945516   FALSE FALSE
+## Garage_Cars     1.970213     0.5675369   FALSE FALSE
+## Garage_Area     2.250000    38.0249716   FALSE FALSE
+## Street        219.250000     0.2270148   FALSE  TRUE
+## Utilities     880.000000     0.2270148   FALSE  TRUE
+## Pool_Area     876.000000     0.6810443   FALSE  TRUE
+## Neighborhood    1.476744     2.9511918   FALSE FALSE
+## Screen_Porch  199.750000     6.6969353   FALSE  TRUE
+## Overall_Qual    1.119816     1.1350738   FALSE FALSE
+## Lot_Area        1.071429    79.7956867   FALSE FALSE
+## Lot_Frontage    1.617021    11.5777526   FALSE FALSE
+## MS_SubClass     1.959064     1.7026107   FALSE FALSE
+## Misc_Val      141.833333     1.9296254   FALSE  TRUE
+## Open_Porch_SF  23.176471    19.2962543   FALSE FALSE
+## TotRms_AbvGrd   1.311224     1.2485812   FALSE FALSE
+## First_Flr_SF    1.777778    63.7911464   FALSE FALSE
+## Second_Flr_SF  64.250000    31.3280363   FALSE FALSE
+## Year_Built      1.116279    12.0317821   FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="preparation-steps-2.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ames<span class="sc">$</span>Overall_Qual) </span></code></pre></div>
+<pre><code>##  [1] &quot;Above_Average&quot;  &quot;Average&quot;        &quot;Below_Average&quot;  &quot;Excellent&quot;     
+##  [5] &quot;Fair&quot;           &quot;Good&quot;           &quot;Poor&quot;           &quot;Very_Excellent&quot;
+##  [9] &quot;Very_Good&quot;      &quot;Very_Poor&quot;</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="preparation-steps-2.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># relevel the levels</span></span>
+<span id="cb11-2"><a href="preparation-steps-2.html#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="preparation-steps-2.html#cb11-3" aria-hidden="true" tabindex="-1"></a>ames<span class="sc">$</span>Overall_Qual <span class="ot">&lt;-</span> <span class="fu">factor</span>(ames<span class="sc">$</span>Overall_Qual, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Very_Poor&quot;</span>, <span class="st">&quot;Poor&quot;</span>, <span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Below_Average&quot;</span>, </span>
+<span id="cb11-4"><a href="preparation-steps-2.html#cb11-4" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">&quot;Average&quot;</span>, <span class="st">&quot;Above_Average&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very_Good&quot;</span>, </span>
+<span id="cb11-5"><a href="preparation-steps-2.html#cb11-5" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">&quot;Excellent&quot;</span>, <span class="st">&quot;Very_Excellent&quot;</span>))</span>
+<span id="cb11-6"><a href="preparation-steps-2.html#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="preparation-steps-2.html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ames<span class="sc">$</span>Overall_Qual)   <span class="co"># the levels are properly ordered</span></span></code></pre></div>
+<pre><code>##  [1] &quot;Very_Poor&quot;      &quot;Poor&quot;           &quot;Fair&quot;           &quot;Below_Average&quot; 
+##  [5] &quot;Average&quot;        &quot;Above_Average&quot;  &quot;Good&quot;           &quot;Very_Good&quot;     
+##  [9] &quot;Excellent&quot;      &quot;Very_Excellent&quot;</code></pre>
+<p>Finding that there are 19 features in total and 13 of them are numerical variables, 6 of them are categorical variables. For the ordinal categorical variables <code>Overall_Qual</code>, finding that the level is not in order, hence, we releveled the level for this variable. Further, there’re 113 NA values and 5 nzv features in the whole dataset. Those are things we need to deal within blueprint.</p>
+</div>
+<div id="data-spliting-2" class="section level3 hasAnchor" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> Data Spliting<a href="preparation-steps-2.html#data-spliting-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="preparation-steps-2.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)</span>
+<span id="cb13-2"><a href="preparation-steps-2.html#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="preparation-steps-2.html#cb13-3" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(<span class="at">y =</span> ames<span class="sc">$</span>Sale_Price, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)   <span class="co"># consider 80-20 split</span></span>
+<span id="cb13-4"><a href="preparation-steps-2.html#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="preparation-steps-2.html#cb13-5" aria-hidden="true" tabindex="-1"></a>ames_train <span class="ot">&lt;-</span> ames[index,]   <span class="co"># training data</span></span>
+<span id="cb13-6"><a href="preparation-steps-2.html#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="preparation-steps-2.html#cb13-7" aria-hidden="true" tabindex="-1"></a>ames_test <span class="ot">&lt;-</span> ames[<span class="sc">-</span>index,]   <span class="co"># test data</span></span>
+<span id="cb13-8"><a href="preparation-steps-2.html#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="preparation-steps-2.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># investigate nominal categorical predictors </span></span>
+<span id="cb13-10"><a href="preparation-steps-2.html#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="preparation-steps-2.html#cb13-11" aria-hidden="true" tabindex="-1"></a>ames_train <span class="sc">%&gt;%</span> <span class="fu">count</span>(Neighborhood) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(n)   <span class="co"># check frequency of categories</span></span></code></pre></div>
+<pre><code>## # A tibble: 26 × 2
+##    Neighborhood            n
+##    &lt;fct&gt;               &lt;int&gt;
+##  1 Northpark_Villa         2
+##  2 Blueste                 2
+##  3 Greens                  4
+##  4 Veenker                 6
+##  5 Bloomington_Heights     7
+##  6 Briardale               8
+##  7 Clear_Creek            11
+##  8 Meadow_Village         12
+##  9 Stone_Brook            13
+## 10 Timberland             14
+## # … with 16 more rows</code></pre>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="final-model-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="preparation-steps-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ames-housing-dataset-example-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="recipe-and-blueprint-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6.4 Final Model | CMSC 208 Final Project</title>
+  <meta name="description" content="6.4 Final Model | CMSC 208 Final Project" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6.4 Final Model | CMSC 208 Final Project" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6.4 Final Model | CMSC 208 Final Project" />
+  
+  
+  
+
+<meta name="author" content="Yi Lu, Shiyi Yang" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="analysis-2.html"/>
+<link rel="next" href="boston-housing-dataset-example-1.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="ames-housing-dataset-example.html"><a href="ames-housing-dataset-example.html"><i class="fa fa-check"></i><b>2</b> Ames Housing Dataset Example</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="preparation-steps.html"><a href="preparation-steps.html"><i class="fa fa-check"></i><b>2.1</b> Preparation Steps</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="preparation-steps.html"><a href="preparation-steps.html#data-investigation"><i class="fa fa-check"></i><b>2.1.1</b> Data Investigation</a></li>
+<li class="chapter" data-level="2.1.2" data-path="preparation-steps.html"><a href="preparation-steps.html#data-spliting"><i class="fa fa-check"></i><b>2.1.2</b> Data Spliting</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="recipe-and-blueprint.html"><a href="recipe-and-blueprint.html"><i class="fa fa-check"></i><b>2.2</b> Recipe and Blueprint</a></li>
+<li class="chapter" data-level="2.3" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>2.3</b> Analysis</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="analysis.html"><a href="analysis.html#bulid-model"><i class="fa fa-check"></i><b>2.3.1</b> Bulid Model</a></li>
+<li class="chapter" data-level="2.3.2" data-path="analysis.html"><a href="analysis.html#models-performance"><i class="fa fa-check"></i><b>2.3.2</b> Model’s Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="final-model.html"><a href="final-model.html"><i class="fa fa-check"></i><b>2.4</b> Final Model</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="final-model.html"><a href="final-model.html#prediction-on-test-dataset"><i class="fa fa-check"></i><b>2.4.1</b> Prediction on Test Dataset</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="boston-housing-dataset-example.html"><a href="boston-housing-dataset-example.html"><i class="fa fa-check"></i><b>3</b> Boston housing dataset Example</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="preparation-steps-1.html"><a href="preparation-steps-1.html"><i class="fa fa-check"></i><b>3.1</b> Preparation Steps</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="preparation-steps-1.html"><a href="preparation-steps-1.html#data-investigation-1"><i class="fa fa-check"></i><b>3.1.1</b> Data Investigation</a></li>
+<li class="chapter" data-level="3.1.2" data-path="preparation-steps-1.html"><a href="preparation-steps-1.html#data-spliting-1"><i class="fa fa-check"></i><b>3.1.2</b> Data Spliting</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="recipe-and-blueprint-1.html"><a href="recipe-and-blueprint-1.html"><i class="fa fa-check"></i><b>3.2</b> Recipe and Blueprint</a></li>
+<li class="chapter" data-level="3.3" data-path="analysis-1.html"><a href="analysis-1.html"><i class="fa fa-check"></i><b>3.3</b> Analysis</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="analysis-1.html"><a href="analysis-1.html#bulid-model-1"><i class="fa fa-check"></i><b>3.3.1</b> Bulid Model</a></li>
+<li class="chapter" data-level="3.3.2" data-path="analysis-1.html"><a href="analysis-1.html#models-performance-1"><i class="fa fa-check"></i><b>3.3.2</b> Model’s Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="final-model-1.html"><a href="final-model-1.html"><i class="fa fa-check"></i><b>3.4</b> Final Model</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="final-model-1.html"><a href="final-model-1.html#prediction-on-test-dataset-1"><i class="fa fa-check"></i><b>3.4.1</b> Prediction on Test Dataset</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>4</b> Conclusion</a></li>
+<li class="chapter" data-level="5" data-path="introduction-1.html"><a href="introduction-1.html"><i class="fa fa-check"></i><b>5</b> Introduction</a></li>
+<li class="chapter" data-level="6" data-path="ames-housing-dataset-example-1.html"><a href="ames-housing-dataset-example-1.html"><i class="fa fa-check"></i><b>6</b> Ames Housing Dataset Example</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="preparation-steps-2.html"><a href="preparation-steps-2.html"><i class="fa fa-check"></i><b>6.1</b> Preparation Steps</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="preparation-steps-2.html"><a href="preparation-steps-2.html#data-investigation-2"><i class="fa fa-check"></i><b>6.1.1</b> Data Investigation</a></li>
+<li class="chapter" data-level="6.1.2" data-path="preparation-steps-2.html"><a href="preparation-steps-2.html#data-spliting-2"><i class="fa fa-check"></i><b>6.1.2</b> Data Spliting</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="recipe-and-blueprint-2.html"><a href="recipe-and-blueprint-2.html"><i class="fa fa-check"></i><b>6.2</b> Recipe and Blueprint</a></li>
+<li class="chapter" data-level="6.3" data-path="analysis-2.html"><a href="analysis-2.html"><i class="fa fa-check"></i><b>6.3</b> Analysis</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="analysis-2.html"><a href="analysis-2.html#bulid-model-2"><i class="fa fa-check"></i><b>6.3.1</b> Bulid Model</a></li>
+<li class="chapter" data-level="6.3.2" data-path="analysis-2.html"><a href="analysis-2.html#models-performance-2"><i class="fa fa-check"></i><b>6.3.2</b> Model’s Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="final-model-2.html"><a href="final-model-2.html"><i class="fa fa-check"></i><b>6.4</b> Final Model</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="final-model-2.html"><a href="final-model-2.html#prediction-on-test-dataset-2"><i class="fa fa-check"></i><b>6.4.1</b> Prediction on Test Dataset</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="boston-housing-dataset-example-1.html"><a href="boston-housing-dataset-example-1.html"><i class="fa fa-check"></i><b>7</b> Boston housing dataset Example</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="preparation-steps-3.html"><a href="preparation-steps-3.html"><i class="fa fa-check"></i><b>7.1</b> Preparation Steps</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="preparation-steps-3.html"><a href="preparation-steps-3.html#data-investigation-3"><i class="fa fa-check"></i><b>7.1.1</b> Data Investigation</a></li>
+<li class="chapter" data-level="7.1.2" data-path="preparation-steps-3.html"><a href="preparation-steps-3.html#data-spliting-3"><i class="fa fa-check"></i><b>7.1.2</b> Data Spliting</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="recipe-and-blueprint-3.html"><a href="recipe-and-blueprint-3.html"><i class="fa fa-check"></i><b>7.2</b> Recipe and Blueprint</a></li>
+<li class="chapter" data-level="7.3" data-path="analysis-3.html"><a href="analysis-3.html"><i class="fa fa-check"></i><b>7.3</b> Analysis</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="analysis-3.html"><a href="analysis-3.html#bulid-model-3"><i class="fa fa-check"></i><b>7.3.1</b> Bulid Model</a></li>
+<li class="chapter" data-level="7.3.2" data-path="analysis-3.html"><a href="analysis-3.html#models-performance-3"><i class="fa fa-check"></i><b>7.3.2</b> Model’s Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="final-model-3.html"><a href="final-model-3.html"><i class="fa fa-check"></i><b>7.4</b> Final Model</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="final-model-3.html"><a href="final-model-3.html#prediction-on-test-dataset-3"><i class="fa fa-check"></i><b>7.4.1</b> Prediction on Test Dataset</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="conclusion-1.html"><a href="conclusion-1.html"><i class="fa fa-check"></i><b>8</b> Conclusion</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CMSC 208 Final Project</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="final-model-2" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Final Model<a href="final-model-2.html#final-model-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="prediction-on-test-dataset-2" class="section level3 hasAnchor" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Prediction on Test Dataset<a href="final-model-2.html#prediction-on-test-dataset-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="final-model-2.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build final model</span></span>
+<span id="cb22-2"><a href="final-model-2.html#cb22-2" aria-hidden="true" tabindex="-1"></a>ames_final_model <span class="ot">&lt;-</span> <span class="fu">gam</span>(Sale_Price<span class="sc">~</span> Garage_Type_BuiltIn <span class="sc">+</span> Garage_Type_Detchd <span class="sc">+</span> Garage_Type_No_Garage <span class="sc">+</span>  Neighborhood_College_Creek <span class="sc">+</span> Neighborhood_Old_Town <span class="sc">+</span> Neighborhood_Edwards <span class="sc">+</span>  Neighborhood_Somerset <span class="sc">+</span> Neighborhood_Northridge_Heights <span class="sc">+</span> </span>
+<span id="cb22-3"><a href="final-model-2.html#cb22-3" aria-hidden="true" tabindex="-1"></a>    Neighborhood_Gilbert <span class="sc">+</span> Neighborhood_Sawyer <span class="sc">+</span> MS_SubClass_One_and_Half_Story_Finished_All_Ages <span class="sc">+</span></span>
+<span id="cb22-4"><a href="final-model-2.html#cb22-4" aria-hidden="true" tabindex="-1"></a>    MS_SubClass_Two_Story_1946_and_Newer <span class="sc">+</span> MS_SubClass_Duplex_All_Styles_and_Ages <span class="sc">+</span> </span>
+<span id="cb22-5"><a href="final-model-2.html#cb22-5" aria-hidden="true" tabindex="-1"></a>    MS_SubClass_One_Story_PUD_1946_and_Newer <span class="sc">+</span> Garage_Cars <span class="sc">+</span> </span>
+<span id="cb22-6"><a href="final-model-2.html#cb22-6" aria-hidden="true" tabindex="-1"></a>    Overall_Qual <span class="sc">+</span> <span class="fu">s</span>(TotRms_AbvGrd) <span class="sc">+</span> <span class="fu">s</span>(Lot_Frontage) <span class="sc">+</span> <span class="fu">s</span>(Year_Built) <span class="sc">+</span> </span>
+<span id="cb22-7"><a href="final-model-2.html#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">s</span>(Open_Porch_SF) <span class="sc">+</span> <span class="fu">s</span>(Second_Flr_SF) <span class="sc">+</span> <span class="fu">s</span>(Garage_Area) <span class="sc">+</span> <span class="fu">s</span>(Gr_Liv_Area) <span class="sc">+</span> </span>
+<span id="cb22-8"><a href="final-model-2.html#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">s</span>(First_Flr_SF) <span class="sc">+</span> <span class="fu">s</span>(Lot_Area),<span class="at">data=</span>ames_baked_train) </span>
+<span id="cb22-9"><a href="final-model-2.html#cb22-9" aria-hidden="true" tabindex="-1"></a>ames_final_model_preds<span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> ames_final_model, <span class="at">newdata =</span> ames_baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)    <span class="co"># obtain predictions</span></span>
+<span id="cb22-10"><a href="final-model-2.html#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="final-model-2.html#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((ames_final_model_preds<span class="sc">-</span> ames_baked_test<span class="sc">$</span>Sale_Price)<span class="sc">^</span><span class="dv">2</span>))   <span class="co"># calculate test set RMSE</span></span></code></pre></div>
+<pre><code>## [1] 195576.6</code></pre>
+<p>Using the formula provided from training, we tried to fit the GAM model.
+The RMSE of the final model is 195576.6, compared to 70421.17 previously.
+Obviously, this is not ideal, since now the RMSE is more than two times higher.
+Why?</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="final-model-2.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ames_final_model, <span class="at">residuals=</span><span class="cn">TRUE</span>,<span class="at">shade =</span> <span class="cn">TRUE</span>, <span class="at">shade.col =</span> <span class="st">&quot;lightblue&quot;</span>,<span class="at">pch =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="fl">0.5</span>,<span class="at">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Here we have the residual plot of those variables that had applied splines function, and the blue shades represent the 95% confidence interval.
+From the graphs for <code>Gr_Liv_Area</code> and <code>Lot_Area</code>, we could see that the tails are drawn to the noises, letting it change the slope, which should not be happening.</p>
+<p>In order to create a well-fit final model, we have to recognize what is wrong with out current model.
+First, let’s look at the several plots <code>gam.check</code> had produced.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="final-model-2.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1293</span>)</span>
+<span id="cb25-2"><a href="final-model-2.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(ames_final_model)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre><code>## 
+## Method: GCV   Optimizer: magic
+## Smoothing parameter selection converged after 26 iterations.
+## The RMS GCV score gradient at convergence was 17.03165 .
+## The Hessian was positive definite.
+## Model rank =  98 / 98 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                    k&#39;  edf k-index p-value    
+## s(TotRms_AbvGrd) 9.00 1.00    1.05   0.865    
+## s(Lot_Frontage)  9.00 1.00    0.97   0.200    
+## s(Year_Built)    9.00 3.94    0.92   0.015 *  
+## s(Open_Porch_SF) 9.00 1.00    0.91  &lt;2e-16 ***
+## s(Second_Flr_SF) 9.00 1.00    0.95   0.085 .  
+## s(Garage_Area)   9.00 3.62    0.98   0.295    
+## s(Gr_Liv_Area)   9.00 9.00    1.00   0.560    
+## s(First_Flr_SF)  9.00 6.48    1.09   0.970    
+## s(Lot_Area)      9.00 7.81    1.05   0.930    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>From the Q-Q plot, we could see that there is a clear trend to the residuals; from the residual values plot, we could see that there’s a cluster of points, and maybe a negative slope; from the histogram, we could see that there is a bell-shaped curve; and from the response vs. fitted values plot, we could see that the values are fitted pretty good.
+We should also look at the table generated from <code>gam.check</code>.
+The table shows the <code>k</code> value, effective degrees of freedom, test statistics, and p-value of each basis functions.
+The <code>k</code> value is very similar to the “knots” in MARS, representing how many basis function is used to fit the model, and could be used as the smoothing parameter.
+Another smoothing parameter we would use is <code>λ</code>, since <span class="math inline">\(FIT=Likelihood-λ*Wiggliness\)</span> is how the fit of GAM model is calculated.
+The likelihood represents how well the model captures patterns in the data, and wiggliness represents the complexity of the model.
+As described in the model, when the p-value is too low, or if the k-index is below 1, it’s possible that we need to increase the size of the basis function.
+In the table above, we could see that <code>Year_Built</code>, <code>Open_porch_SF</code>, and <code>Second_Flr_SF</code> all had p-values below 0.1.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="final-model-2.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build final model</span></span>
+<span id="cb27-2"><a href="final-model-2.html#cb27-2" aria-hidden="true" tabindex="-1"></a>ames_final_model2 <span class="ot">&lt;-</span> <span class="fu">gam</span>(Sale_Price<span class="sc">~</span>Garage_Type_BuiltIn <span class="sc">+</span> Garage_Type_Detchd <span class="sc">+</span> Garage_Type_No_Garage <span class="sc">+</span> Neighborhood_College_Creek <span class="sc">+</span> Neighborhood_Old_Town <span class="sc">+</span> Neighborhood_Edwards <span class="sc">+</span> Neighborhood_Somerset <span class="sc">+</span> Neighborhood_Northridge_Heights <span class="sc">+</span> Neighborhood_Gilbert <span class="sc">+</span> Neighborhood_Sawyer <span class="sc">+</span> MS_SubClass_One_and_Half_Story_Finished_All_Ages <span class="sc">+</span> MS_SubClass_Two_Story_1946_and_Newer <span class="sc">+</span> MS_SubClass_Duplex_All_Styles_and_Ages <span class="sc">+</span> </span>
+<span id="cb27-3"><a href="final-model-2.html#cb27-3" aria-hidden="true" tabindex="-1"></a>MS_SubClass_One_Story_PUD_1946_and_Newer <span class="sc">+</span> <span class="fu">s</span>(Garage_Cars,<span class="at">sp=</span><span class="fl">0.1</span>,<span class="at">k=</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">s</span>(Overall_Qual,<span class="at">k=</span><span class="dv">3</span>) <span class="sc">+</span> <span class="fu">s</span>(TotRms_AbvGrd,<span class="at">sp=</span><span class="fl">0.01</span>,<span class="at">k=</span><span class="dv">11</span>) <span class="sc">+</span> <span class="fu">s</span>(Lot_Frontage,<span class="at">sp=</span><span class="fl">0.1</span>,<span class="at">k=</span><span class="dv">7</span>) <span class="sc">+</span><span class="fu">s</span>(Year_Built,<span class="at">sp=</span><span class="fl">0.0001</span>,<span class="at">k=</span><span class="dv">29</span>) <span class="sc">+</span> <span class="fu">s</span>(Open_Porch_SF,<span class="at">sp=</span><span class="fl">0.6</span>,<span class="at">k=</span><span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(Second_Flr_SF,<span class="at">sp=</span><span class="fl">0.9</span>,<span class="at">k=</span><span class="dv">7</span>) <span class="sc">+</span> <span class="fu">s</span>(Garage_Area,<span class="at">sp=</span><span class="dv">1</span>,<span class="at">k=</span><span class="dv">5</span>) <span class="sc">+</span> <span class="fu">s</span>(Gr_Liv_Area,<span class="at">sp=</span><span class="dv">10</span>,<span class="at">k=</span><span class="dv">6</span>) <span class="sc">+</span> <span class="fu">s</span>(First_Flr_SF,<span class="at">sp=</span><span class="fl">0.001</span>,<span class="at">k=</span><span class="dv">3</span>) <span class="sc">+</span> <span class="fu">s</span>(Lot_Area,<span class="at">sp=</span><span class="dv">1</span>,<span class="at">k=</span><span class="dv">3</span>) ,<span class="at">data=</span>ames_baked_train) </span></code></pre></div>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots): basis dimension, k, increased to minimum possible</code></pre>
+<p>After seeing where the problem was, we started using the smoothing parameter to tune the variables.
+From the formula <span class="math inline">\(FIT=Likelihood-λ*Wiggliness\)</span>, we know that, the more wiggly (complex) we want the variable to fit, the smaller <code>λ</code> needs to be (between 0 and 1), and if we want the fit to be less wiggly, <code>λ</code> has to be bigger than 1.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="final-model-2.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ames_final_model,<span class="at">select=</span><span class="fu">c</span>(<span class="dv">7</span>), <span class="at">residuals=</span><span class="cn">TRUE</span>,<span class="at">shade =</span> <span class="cn">TRUE</span>, <span class="at">shade.col =</span> <span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>For example, above is the plot from the first model of the variable <code>Gr_Liv_Area</code>.
+We can see that, when the above ground living area was increasing, the trend of the price goes up when there are more data, and when there is less data, the price started dramatically.
+This disobeys the common sense, since the bigger the house is, the more expensive the house should be.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="final-model-2.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ames_final_model2,<span class="at">select=</span><span class="fu">c</span>(<span class="dv">9</span>), <span class="at">residuals=</span><span class="cn">TRUE</span>,<span class="at">shade =</span> <span class="cn">TRUE</span>, <span class="at">shade.col =</span> <span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>This is the reason why we need to use <code>λ</code> and tune the variable.
+For the second model, we chose a <code>λ</code> of 10, which means that we don’t want the trend to be wiggly, and it should be as simple as possible, which also prevents the line of best fit to be drawn by the noises.
+As we can see from the graph above, the price is now predicted to increase with the above ground area.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="final-model-2.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12984</span>)</span>
+<span id="cb31-2"><a href="final-model-2.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(ames_final_model2)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre><code>## 
+## Method: GCV   Optimizer: magic
+## Smoothing parameter selection converged after 8 iterations.
+## The RMS GCV score gradient at convergence was 3093.98 .
+## The Hessian was positive definite.
+## Model rank =  90 / 90 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                     k&#39;   edf k-index p-value
+## s(Garage_Cars)    2.00  1.81    1.03    0.77
+## s(Overall_Qual)   2.00  1.95    1.04    0.91
+## s(TotRms_AbvGrd) 10.00  6.24    0.99    0.30
+## s(Lot_Frontage)   6.00  3.43    0.98    0.28
+## s(Year_Built)    28.00 25.78    0.95    0.12
+## s(Open_Porch_SF)  8.00  2.53    0.97    0.18
+## s(Second_Flr_SF)  6.00  2.46    0.98    0.23
+## s(Garage_Area)    4.00  1.80    1.00    0.48
+## s(Gr_Liv_Area)    5.00  1.08    0.97    0.20
+## s(First_Flr_SF)   2.00  1.97    1.00    0.47
+## s(Lot_Area)       2.00  1.03    1.02    0.74</code></pre>
+<p>After tuning, we can see that now the basis dimension for all variables have p-values of bigger than 0.1.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="final-model-2.html#cb33-1" aria-hidden="true" tabindex="-1"></a>ames_final_model_preds2<span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> ames_final_model2, <span class="at">newdata =</span> ames_baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)    <span class="co"># obtain predictions</span></span>
+<span id="cb33-2"><a href="final-model-2.html#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="final-model-2.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((ames_final_model_preds2<span class="sc">-</span> ames_baked_test<span class="sc">$</span>Sale_Price)<span class="sc">^</span><span class="dv">2</span>))   <span class="co"># calculate test set RMSE</span></span></code></pre></div>
+<pre><code>## [1] 28781.85</code></pre>
+<p>Here, we can also see that the RMSE value had decreased to 28781.85, compared to 195576.6 from the first model.</p>
+</div>
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="analysis-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="boston-housing-dataset-example-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/kaitaii/208-project/edit/main/report.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": "https://github.com/kaitaii/208-project/commits/main/report.Rmd",
+"text": null
+},
+"view": {
+"link": "https://github.com/kaitaii/208-project/blob/main/report.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

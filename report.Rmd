@@ -2,26 +2,15 @@
 title: "CMSC 208 Final Project"
 author: "Yi Lu, Shiyi Yang"
 date: "`r format(Sys.time(), '%B %d, %Y %H:%M %Z')`"
-site: bookdown::bookdown_site
-bibliography: references.bib
-biblio-style: apalike
-link-citations: yes
----
---- 
-title: "CMSC 208 Final Project"
-author: "Yi Lu, Shiyi Yang"
-date: "`r format(Sys.time(), '%B %d, %Y %H:%M %Z')`"
-site: bookdown::bookdown_site
-bibliography: references.bib
-biblio-style: apalike
-link-citations: yes
+output: html_document
 ---
 
 # Introduction
 
 Generalized Additive Models is a powerful extension of the linear regression model that can capture complex nonlinear relationships between predictors and response variables. 
-Unlike linear regression, GAMs allow for non-linear function of each variable, while maintaining their additivity. 
-Instead of $y = \beta_0 + \beta_1x_1 + \beta_2x_2+...+\epsilon$, GAMs have a function of $y = \beta_0 + f_1(x_1) + f_2(x_2) + ... +\epsilon$, where $f(xi)$ represent a (smooth) non-linear function. 
+
+Unlike linear regression, GAMs allow for non-linear function of each variable, while maintaining their additivity. Instead of $y = \beta_0 + \beta_1x_1 + \beta_2x_2+...+\epsilon$, GAMs have a function of $y = \beta_0 + f_1(x_1) + f_2(x_2) + ... +\epsilon$, where $f(x_i)$ represent a (smooth) non-linear function. 
+
 GAMs can also model interactions between variables and handle different types of data, including continuous, categorical, and ordinal variables.
 
 In this project, we are trying to imply this new model we learned and explored the performance of it on two datasets, `ames` and `boston`, which have different features and complexity. 
@@ -29,12 +18,6 @@ However, our initial results on the ames dataset were a bit disappointing, with 
 
 To address this issue, we further investigated the model and its hyper-parameters, and implemented the hyper-parameters on both `ames` and `boston` datasets.
 We present our findings for using GAMs on these datasets in this report.
-
-
-
-
-
-<!--chapter:end:index.Rmd-->
 
 
 # Ames Housing Dataset Example
@@ -49,7 +32,7 @@ Data Description:
 First, we use the `ames` dataset that we used in class, since we want to first learn how to apply this model and then do further investigation.
 Response variable: 
 
-1)`Sale_Price`: Property sale price in USD
+1) `Sale_Price`: Property sale price in USD
 
 Explanatory variable:
 
@@ -308,32 +291,206 @@ sqrt(mean((ames_final_model_preds2- ames_baked_test$Sale_Price)^2))   # calculat
 Here, we can also see that the RMSE value had decreased to 28781.85, compared to 195576.6 from the first model. 
 
 
-<!--chapter:end:ames_housing_dataset.Rmd-->
-
-
 # Boston housing dataset Example
 
-Placeholder
+Data description:
 
+Orignially, since GAM did not work well with the Ames housing dataset, which output a big RMSE, we decided to use another dataset and to test the GAM method on it again. The new dataset, Boston housing, includes 13 explanatory variables, and the response variable `MEDV`. The following is the description from Kaggle all variables:
+
+Response Variable: 
+
+1) `MEDV`: Median value of owner-occupied homes in `$`1000's [k`$`]
+
+
+Explanatory variables:
+
+1) `CRIM`: per capita crime rate by town
+
+2) `ZN`: proportion of residential land zoned for lots over 25,000 sq.ft.
+
+3) `INDUS`: proportion of non-retail business acres per town
+
+4) `CHAS`: Charles River dummy variable (1 if tract bounds river; 0 otherwise)
+
+5) `NOX`: nitric oxides concentration (parts per 10 million) [parts/10M]
+
+6) `RM`: average number of rooms per dwelling
+
+7) `AGE`: proportion of owner-occupied units built prior to 1940
+
+8) `DIS`: weighted distances to five Boston employment centres
+
+9) `RAD`: index of accessibility to radial highways
+
+10) `TAX`: full-value property-tax rate per `$`10,000 [`$`/10k]
+
+11) `PTRATIO`: pupil-teacher ratio by town
+
+12) `B`: The result of the equation B=1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town
+
+13) `LSTAT`: % lower status of the population
+
+
+```{r,echo=FALSE,warning=FALSE, include=FALSE}
+# load dataset
+boston<-read_csv("boston.csv") # load package and dataset
+```
 
 ## Preparation Steps
+
 ### Data Investigation
+
+Just as before, we first investigate the dataset to see if there's any missing entries, non-numeric variables, or ZV/NZV features.
+
+```{r}
+glimpse(boston)  
+summary(boston) 
+sum(is.na(boston)) 
+nearZeroVar(boston) 
+```
+
+Finding that there are 13 features in total and all of them are numerical variables. There is no NA value in the whole dataset and no zv or nzv features.
+
+
 ### Data Spliting
+
+```{r}
+set.seed(013123)  
+
+index <- createDataPartition(y = boston$MEDV, p = 0.8, list = FALSE)   # consider 80-20 split
+
+#Data Spliting 
+
+boston_train <- boston[index,]   # training data
+
+boston_test <- boston[-index,]   # test data
+```
+
 ## Recipe and Blueprint
+
+```{r}
+# Set up recipe 
+boston_recipe <- recipe(MEDV ~ ., data = boston_train)
+
+# set up blueprint
+boston_blueprint <- boston_recipe %>%    
+  step_center(all_numeric(), -all_outcomes()) %>%                      # center (subtract mean) all numeric predictors (consider all the numeric predictors except the response)
+  step_scale(all_numeric(), -all_outcomes())                     # scale (divide by standard deviation) all numeric predictors                     
+```
+
+Since there's no missing value, no zv/nzv features and no categorical variable in `boston` dataset, all we need in blueprint is to standardize the data. 
+
+```{r}
+# estimate feature engineering parameters based on training data
+boston_prepare <- prep(boston_blueprint, data = boston_train)   
+
+# apply the blueprint to training data for building final/optimal model
+boston_baked_train <- bake(boston_prepare, new_data = boston_train)   
+
+# apply the blueprint to test data for future use
+boston_baked_test <- bake(boston_prepare, new_data = boston_test)    
+```
+
 ## Analysis
+
 ### Bulid Model
+
+```{r}
+set.seed(111)
+# implement 5-fold CV with no repeat
+cv_specs <- trainControl(method = "cv", number = 5)
+
+# set tunegrid
+tunegrid <- data.frame(method = "GCV.Cp", select = TRUE)
+
+# GAM model
+boston_model <- train(boston_blueprint,
+                      data = boston_train,
+                      method = "gam",
+                      tuneGrid = data.frame(method = "GCV.Cp", select = TRUE),
+                      trControl = cv_specs)
+```
+
+We implement CV with no repeat here to ensure the model is not overfitting and is generalizable to new data, which is very important for GAM model.
+
 ### Model's Performance
+
+```{r}
+# RMSE
+boston_model$results$RMSE
+
+boston_model$finalMo
+```
+
+From the result, seeing that the RMSE is very small here, around 4, which indicates GAM model works well with train `boston` dataset. 
+
+
 ## Final Model
+
 ### Prediction on Test Dataset
 
-<!--chapter:end:Boston_housing_dataset.Rmd-->
+```{r}
+# obtain predictions and test set RMSE
 
+boston_final_model <- gam(MEDV ~ CHAS + RAD + s(ZN, sp = 1, k = 8) + s(PTRATIO, sp = 0.1, k = 12) + s(TAX, sp = 1.2, k = 13) + s(INDUS,sp = 0.1, k = 12) + s(NOX, sp = 0.01, k = 12) + s(B, sp = 8, k = 9) + s(AGE, k = 9) + s(DIS,sp = 0.01, k = 9) + s(RM,sp = 0.8, k = 9) + s(LSTAT, k = 9) + s(CRIM, k = 9), data = boston_baked_train) 
+
+boston_final_model_preds<- predict(object = boston_final_model, newdata = boston_baked_test, type = "response")    # obtain predictions
+
+sqrt(mean((boston_final_model_preds - boston_baked_test$MEDV)^2))   # calculate test set RMSE
+```
+
+The test set RMSE is even smaller, which is a good sign. 
+
+Comparing with the first model using GAM model for `ames` dataset, using it for `boston` dataset seems to be a lot better. 
+The reason to that is the fact that the `boston` dataset is a lot more complex then the `ames` dataset. 
+
+
+```{r}
+plot(boston_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue", pch = 1)
+```
+
+Let's look at the residual plot for the `boston` final model. 
+As we can see from above, only two of the graphs seem to have a slope close to 0, and lots of others with non-parametric relationships. 
+This is a sign that the model is way more complex, compared to the `ames` dataset, where only 3 explanatory variables seemed to have non-parametric relationship with the response.
+
+
+```{r}
+set.seed(111)
+gam.check(boston_final_model)
+```
+
+However, after several attempts, we were not able to increase the p-value of the basis dimension values and k-index. 
 
 # Conclusion
 
-Placeholder
+Even though the RMSE from the boston final model was better than that of ames, we were still not satisfied with the result. 
+The first problem is the low p-value for the basis k dimension from the boston final model. 
+In the process of trying to increase the p-value, we had came across the possible explanation, that the concurvity of our model is too high.
+
+```{r}
+concurvity(boston_final_model,full=TRUE)
+```
+
+From the correlation table, which shows how much each smooth is predetermined by all the other smooths,notice that for all variables except for `B`, all of the smooths has at least 0.8 of worst case concurvity. 
+The problem with having concurvity is that, if two variables have high concurvity and form a perfect parabola with each other, the confidence interval would be really wide, and negatively affect the ability of model prediction. 
+
+```{r}
+concurvity(ames_final_model2,full=TRUE)
+```
+
+Here we can see the concurvity table of our second ames model. 
+Similarly, this model also has some high worst case concurvities, but slightly less in nunmber compared to the boston model.
+
+![Ames Q-Q Plot](amesqq.png)
+![Boston Q-Q Plot](bostonqq.png)
+
+From both the Q-Q plots, we can see the problem with concurvity more clearly. 
+Both models still have trends in the graph, but ames model performs a little better by being more linear. 
+
+In conclusion, when using Generalized Additive models, it's a good idea to always check the concurvity within the models, even if you're getting very low RMSE values. 
+It's possible that through using smoothing parameters, the RMSE lowers, but the existence of high concurvity would always be a bad sign in using GAM.
 
 
 
-<!--chapter:end:Conclusion.Rmd-->
+
 

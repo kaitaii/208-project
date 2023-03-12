@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7 Boston housing dataset Example | CMSC 208 Final Project</title>
-  <meta name="description" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <title>7.2 Recipe and Blueprint | CMSC 208 Final Project</title>
+  <meta name="description" content="7.2 Recipe and Blueprint | CMSC 208 Final Project" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <meta property="og:title" content="7.2 Recipe and Blueprint | CMSC 208 Final Project" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <meta name="twitter:title" content="7.2 Recipe and Blueprint | CMSC 208 Final Project" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="final-model-2.html"/>
-<link rel="next" href="preparation-steps-3.html"/>
+<link rel="prev" href="preparation-steps-3.html"/>
+<link rel="next" href="analysis-3.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -225,38 +225,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="boston-housing-dataset-example-1" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">7</span> Boston housing dataset Example<a href="boston-housing-dataset-example-1.html#boston-housing-dataset-example-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Data description:</p>
-<p>Orignially, since GAM did not work well with the Ames housing dataset, which output a big RMSE, we decided to use another dataset and to test the GAM method on it again. The new dataset, Boston housing, includes 13 explanatory variables, and the response variable <code>MEDV</code>. The following is the description from Kaggle all variables:</p>
-<p>Response Variable:</p>
-<ol style="list-style-type: decimal">
-<li><code>MEDV</code>: Median value of owner-occupied homes in <code>$</code>1000’s [k<code>$</code>]</li>
-</ol>
-<p>Explanatory variables:</p>
-<ol style="list-style-type: decimal">
-<li><p><code>CRIM</code>: per capita crime rate by town</p></li>
-<li><p><code>ZN</code>: proportion of residential land zoned for lots over 25,000 sq.ft.</p></li>
-<li><p><code>INDUS</code>: proportion of non-retail business acres per town</p></li>
-<li><p><code>CHAS</code>: Charles River dummy variable (1 if tract bounds river; 0 otherwise)</p></li>
-<li><p><code>NOX</code>: nitric oxides concentration (parts per 10 million) [parts/10M]</p></li>
-<li><p><code>RM</code>: average number of rooms per dwelling</p></li>
-<li><p><code>AGE</code>: proportion of owner-occupied units built prior to 1940</p></li>
-<li><p><code>DIS</code>: weighted distances to five Boston employment centres</p></li>
-<li><p><code>RAD</code>: index of accessibility to radial highways</p></li>
-<li><p><code>TAX</code>: full-value property-tax rate per <code>$</code>10,000 [<code>$</code>/10k]</p></li>
-<li><p><code>PTRATIO</code>: pupil-teacher ratio by town</p></li>
-<li><p><code>B</code>: The result of the equation B=1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town</p></li>
-<li><p><code>LSTAT</code>: % lower status of the population</p></li>
-</ol>
+<div id="recipe-and-blueprint-3" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Recipe and Blueprint<a href="recipe-and-blueprint-3.html#recipe-and-blueprint-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="recipe-and-blueprint-3.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up recipe </span></span>
+<span id="cb44-2"><a href="recipe-and-blueprint-3.html#cb44-2" aria-hidden="true" tabindex="-1"></a>boston_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(MEDV <span class="sc">~</span> ., <span class="at">data =</span> boston_train)</span>
+<span id="cb44-3"><a href="recipe-and-blueprint-3.html#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="recipe-and-blueprint-3.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># set up blueprint</span></span>
+<span id="cb44-5"><a href="recipe-and-blueprint-3.html#cb44-5" aria-hidden="true" tabindex="-1"></a>boston_blueprint <span class="ot">&lt;-</span> boston_recipe <span class="sc">%&gt;%</span>    </span>
+<span id="cb44-6"><a href="recipe-and-blueprint-3.html#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      <span class="co"># center (subtract mean) all numeric predictors (consider all the numeric predictors except the response)</span></span>
+<span id="cb44-7"><a href="recipe-and-blueprint-3.html#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())                     <span class="co"># scale (divide by standard deviation) all numeric predictors                     </span></span></code></pre></div>
+<p>Since there’s no missing value, no zv/nzv features and no categorical variable in <code>boston</code> dataset, all we need in blueprint is to standardize the data.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="recipe-and-blueprint-3.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate feature engineering parameters based on training data</span></span>
+<span id="cb45-2"><a href="recipe-and-blueprint-3.html#cb45-2" aria-hidden="true" tabindex="-1"></a>boston_prepare <span class="ot">&lt;-</span> <span class="fu">prep</span>(boston_blueprint, <span class="at">data =</span> boston_train)   </span>
+<span id="cb45-3"><a href="recipe-and-blueprint-3.html#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="recipe-and-blueprint-3.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to training data for building final/optimal model</span></span>
+<span id="cb45-5"><a href="recipe-and-blueprint-3.html#cb45-5" aria-hidden="true" tabindex="-1"></a>boston_baked_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(boston_prepare, <span class="at">new_data =</span> boston_train)   </span>
+<span id="cb45-6"><a href="recipe-and-blueprint-3.html#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="recipe-and-blueprint-3.html#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to test data for future use</span></span>
+<span id="cb45-8"><a href="recipe-and-blueprint-3.html#cb45-8" aria-hidden="true" tabindex="-1"></a>boston_baked_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(boston_prepare, <span class="at">new_data =</span> boston_test)    </span></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="final-model-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="preparation-steps-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="preparation-steps-3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="analysis-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

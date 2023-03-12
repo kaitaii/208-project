@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7 Boston housing dataset Example | CMSC 208 Final Project</title>
-  <meta name="description" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <title>7.3 Analysis | CMSC 208 Final Project</title>
+  <meta name="description" content="7.3 Analysis | CMSC 208 Final Project" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <meta property="og:title" content="7.3 Analysis | CMSC 208 Final Project" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <meta name="twitter:title" content="7.3 Analysis | CMSC 208 Final Project" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="final-model-2.html"/>
-<link rel="next" href="preparation-steps-3.html"/>
+<link rel="prev" href="recipe-and-blueprint-3.html"/>
+<link rel="next" href="final-model-3.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -225,38 +225,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="boston-housing-dataset-example-1" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">7</span> Boston housing dataset Example<a href="boston-housing-dataset-example-1.html#boston-housing-dataset-example-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Data description:</p>
-<p>Orignially, since GAM did not work well with the Ames housing dataset, which output a big RMSE, we decided to use another dataset and to test the GAM method on it again. The new dataset, Boston housing, includes 13 explanatory variables, and the response variable <code>MEDV</code>. The following is the description from Kaggle all variables:</p>
-<p>Response Variable:</p>
-<ol style="list-style-type: decimal">
-<li><code>MEDV</code>: Median value of owner-occupied homes in <code>$</code>1000’s [k<code>$</code>]</li>
-</ol>
-<p>Explanatory variables:</p>
-<ol style="list-style-type: decimal">
-<li><p><code>CRIM</code>: per capita crime rate by town</p></li>
-<li><p><code>ZN</code>: proportion of residential land zoned for lots over 25,000 sq.ft.</p></li>
-<li><p><code>INDUS</code>: proportion of non-retail business acres per town</p></li>
-<li><p><code>CHAS</code>: Charles River dummy variable (1 if tract bounds river; 0 otherwise)</p></li>
-<li><p><code>NOX</code>: nitric oxides concentration (parts per 10 million) [parts/10M]</p></li>
-<li><p><code>RM</code>: average number of rooms per dwelling</p></li>
-<li><p><code>AGE</code>: proportion of owner-occupied units built prior to 1940</p></li>
-<li><p><code>DIS</code>: weighted distances to five Boston employment centres</p></li>
-<li><p><code>RAD</code>: index of accessibility to radial highways</p></li>
-<li><p><code>TAX</code>: full-value property-tax rate per <code>$</code>10,000 [<code>$</code>/10k]</p></li>
-<li><p><code>PTRATIO</code>: pupil-teacher ratio by town</p></li>
-<li><p><code>B</code>: The result of the equation B=1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town</p></li>
-<li><p><code>LSTAT</code>: % lower status of the population</p></li>
-</ol>
+<div id="analysis-3" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Analysis<a href="analysis-3.html#analysis-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="bulid-model-3" class="section level3 hasAnchor" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> Bulid Model<a href="analysis-3.html#bulid-model-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="analysis-3.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb46-2"><a href="analysis-3.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># implement 5-fold CV with no repeat</span></span>
+<span id="cb46-3"><a href="analysis-3.html#cb46-3" aria-hidden="true" tabindex="-1"></a>cv_specs <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)</span>
+<span id="cb46-4"><a href="analysis-3.html#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="analysis-3.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="co"># set tunegrid</span></span>
+<span id="cb46-6"><a href="analysis-3.html#cb46-6" aria-hidden="true" tabindex="-1"></a>tunegrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="at">select =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb46-7"><a href="analysis-3.html#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="analysis-3.html#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="co"># GAM model</span></span>
+<span id="cb46-9"><a href="analysis-3.html#cb46-9" aria-hidden="true" tabindex="-1"></a>boston_model <span class="ot">&lt;-</span> <span class="fu">train</span>(boston_blueprint,</span>
+<span id="cb46-10"><a href="analysis-3.html#cb46-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> boston_train,</span>
+<span id="cb46-11"><a href="analysis-3.html#cb46-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">&quot;gam&quot;</span>,</span>
+<span id="cb46-12"><a href="analysis-3.html#cb46-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="at">select =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb46-13"><a href="analysis-3.html#cb46-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">trControl =</span> cv_specs)</span></code></pre></div>
+<p>We implement CV with no repeat here to ensure the model is not overfitting and is generalizable to new data, which is very important for GAM model.</p>
+</div>
+<div id="models-performance-3" class="section level3 hasAnchor" number="7.3.2">
+<h3><span class="header-section-number">7.3.2</span> Model’s Performance<a href="analysis-3.html#models-performance-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="analysis-3.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># RMSE</span></span>
+<span id="cb47-2"><a href="analysis-3.html#cb47-2" aria-hidden="true" tabindex="-1"></a>boston_model<span class="sc">$</span>results<span class="sc">$</span>RMSE</span></code></pre></div>
+<pre><code>## [1] 3.989444</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="analysis-3.html#cb49-1" aria-hidden="true" tabindex="-1"></a>boston_model<span class="sc">$</span>finalMo</span></code></pre></div>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## .outcome ~ CHAS + RAD + s(ZN) + s(PTRATIO) + s(TAX) + s(INDUS) + 
+##     s(NOX) + s(B) + s(AGE) + s(DIS) + s(RM) + s(LSTAT) + s(CRIM)
+## 
+## Estimated degrees of freedom:
+## 0.000 0.927 2.906 5.636 7.931 4.886 0.000 
+## 0.889 8.392 5.813 4.421  total = 44.8 
+## 
+## GCV score: 12.95974</code></pre>
+<p>From the result, seeing that the RMSE is very small here, around 4, which indicates GAM model works well with train <code>boston</code> dataset.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="final-model-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="preparation-steps-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="recipe-and-blueprint-3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="final-model-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

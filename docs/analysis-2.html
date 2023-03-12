@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7 Boston housing dataset Example | CMSC 208 Final Project</title>
-  <meta name="description" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <title>6.3 Analysis | CMSC 208 Final Project</title>
+  <meta name="description" content="6.3 Analysis | CMSC 208 Final Project" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <meta property="og:title" content="6.3 Analysis | CMSC 208 Final Project" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <meta name="twitter:title" content="6.3 Analysis | CMSC 208 Final Project" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="final-model-2.html"/>
-<link rel="next" href="preparation-steps-3.html"/>
+<link rel="prev" href="recipe-and-blueprint-2.html"/>
+<link rel="next" href="final-model-2.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -225,38 +225,67 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="boston-housing-dataset-example-1" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">7</span> Boston housing dataset Example<a href="boston-housing-dataset-example-1.html#boston-housing-dataset-example-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Data description:</p>
-<p>Orignially, since GAM did not work well with the Ames housing dataset, which output a big RMSE, we decided to use another dataset and to test the GAM method on it again. The new dataset, Boston housing, includes 13 explanatory variables, and the response variable <code>MEDV</code>. The following is the description from Kaggle all variables:</p>
-<p>Response Variable:</p>
-<ol style="list-style-type: decimal">
-<li><code>MEDV</code>: Median value of owner-occupied homes in <code>$</code>1000’s [k<code>$</code>]</li>
-</ol>
-<p>Explanatory variables:</p>
-<ol style="list-style-type: decimal">
-<li><p><code>CRIM</code>: per capita crime rate by town</p></li>
-<li><p><code>ZN</code>: proportion of residential land zoned for lots over 25,000 sq.ft.</p></li>
-<li><p><code>INDUS</code>: proportion of non-retail business acres per town</p></li>
-<li><p><code>CHAS</code>: Charles River dummy variable (1 if tract bounds river; 0 otherwise)</p></li>
-<li><p><code>NOX</code>: nitric oxides concentration (parts per 10 million) [parts/10M]</p></li>
-<li><p><code>RM</code>: average number of rooms per dwelling</p></li>
-<li><p><code>AGE</code>: proportion of owner-occupied units built prior to 1940</p></li>
-<li><p><code>DIS</code>: weighted distances to five Boston employment centres</p></li>
-<li><p><code>RAD</code>: index of accessibility to radial highways</p></li>
-<li><p><code>TAX</code>: full-value property-tax rate per <code>$</code>10,000 [<code>$</code>/10k]</p></li>
-<li><p><code>PTRATIO</code>: pupil-teacher ratio by town</p></li>
-<li><p><code>B</code>: The result of the equation B=1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town</p></li>
-<li><p><code>LSTAT</code>: % lower status of the population</p></li>
-</ol>
+<div id="analysis-2" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Analysis<a href="analysis-2.html#analysis-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="bulid-model-2" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Bulid Model<a href="analysis-2.html#bulid-model-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="analysis-2.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb17-2"><a href="analysis-2.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># implement 5-fold CV repeated 5 times</span></span>
+<span id="cb17-3"><a href="analysis-2.html#cb17-3" aria-hidden="true" tabindex="-1"></a>cv_specs <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>, <span class="at">repeats=</span><span class="dv">5</span>)</span>
+<span id="cb17-4"><a href="analysis-2.html#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="analysis-2.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># set tunegrid</span></span>
+<span id="cb17-6"><a href="analysis-2.html#cb17-6" aria-hidden="true" tabindex="-1"></a>tunegrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="at">select =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-7"><a href="analysis-2.html#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="analysis-2.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># GAM model</span></span>
+<span id="cb17-9"><a href="analysis-2.html#cb17-9" aria-hidden="true" tabindex="-1"></a>ames_model<span class="ot">&lt;-</span><span class="fu">train</span>(ames_blueprint,</span>
+<span id="cb17-10"><a href="analysis-2.html#cb17-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> ames_train,</span>
+<span id="cb17-11"><a href="analysis-2.html#cb17-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">&quot;gam&quot;</span>,</span>
+<span id="cb17-12"><a href="analysis-2.html#cb17-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">tuneGrid =</span> tunegrid,  </span>
+<span id="cb17-13"><a href="analysis-2.html#cb17-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">trControl =</span> cv_specs)</span></code></pre></div>
+<p>We implement 5 fold CV with 5 repeats here to ensure the model is not overfitting and is generalizable to new data, which is very important for GAM model.</p>
+<p>For the model, <code>Method = "gam"</code> indicates the smoothing parameter estimation method, <code>GCV</code> for models with unknown scale parameter and Mallows’ Cp/UBRE/AIC for models with known scale; <code>select=TRUE</code> adds extra penalty so that the smoothing parameter estimation can completely remove terms from the model</p>
+</div>
+<div id="models-performance-2" class="section level3 hasAnchor" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> Model’s Performance<a href="analysis-2.html#models-performance-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="analysis-2.html#cb18-1" aria-hidden="true" tabindex="-1"></a>ames_model<span class="sc">$</span>results<span class="sc">$</span>RMSE</span></code></pre></div>
+<pre><code>## [1] 70421.17</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="analysis-2.html#cb20-1" aria-hidden="true" tabindex="-1"></a>ames_model<span class="sc">$</span>finalMo</span></code></pre></div>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## .outcome ~ Garage_Type_BuiltIn + Garage_Type_Detchd + Garage_Type_No_Garage + 
+##     Neighborhood_College_Creek + Neighborhood_Old_Town + Neighborhood_Edwards + 
+##     Neighborhood_Somerset + Neighborhood_Northridge_Heights + 
+##     Neighborhood_Gilbert + Neighborhood_Sawyer + MS_SubClass_One_and_Half_Story_Finished_All_Ages + 
+##     MS_SubClass_Two_Story_1946_and_Newer + MS_SubClass_Duplex_All_Styles_and_Ages + 
+##     MS_SubClass_One_Story_PUD_1946_and_Newer + Garage_Cars + 
+##     Overall_Qual + s(TotRms_AbvGrd) + s(Lot_Frontage) + s(Year_Built) + 
+##     s(Open_Porch_SF) + s(Second_Flr_SF) + s(Garage_Area) + s(Gr_Liv_Area) + 
+##     s(First_Flr_SF) + s(Lot_Area)
+## 
+## Estimated degrees of freedom:
+## 0.961 0.000 3.936 1.065 1.974 3.105 6.489 
+## 8.662 7.680  total = 50.87 
+## 
+## GCV score: 722968462</code></pre>
+<p>Here we could see that the RMSE is 70421.17, which is pretty high, probably due to the size of the dataset being big.
+The estimated degrees of freedom indicate the complexity of the model, and in this case, the EDF ranges from 0 to 8.662, with a total EDF of 50.87.
+The EDF values for the smoothing functions indicate the effective number of parameters used to fit the data, and higher EDF values generally indicate more flexible, complex models.
+The GCV score is used as a measure of the model’s performance because it provides a balance between the model’s fit to the data and its complexity.</p>
+<p>We could also look at the formula of the final model generated from training.
+It shows that out of the 53 variables, only 9 of the variables have a non-parametric relationship with the response.
+This could also be the reason for the high RMSE.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="final-model-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="preparation-steps-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="recipe-and-blueprint-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="final-model-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

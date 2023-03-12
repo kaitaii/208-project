@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7 Boston housing dataset Example | CMSC 208 Final Project</title>
-  <meta name="description" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <title>7.4 Final Model | CMSC 208 Final Project</title>
+  <meta name="description" content="7.4 Final Model | CMSC 208 Final Project" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <meta property="og:title" content="7.4 Final Model | CMSC 208 Final Project" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7 Boston housing dataset Example | CMSC 208 Final Project" />
+  <meta name="twitter:title" content="7.4 Final Model | CMSC 208 Final Project" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="final-model-2.html"/>
-<link rel="next" href="preparation-steps-3.html"/>
+<link rel="prev" href="analysis-3.html"/>
+<link rel="next" href="conclusion-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -225,38 +225,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="boston-housing-dataset-example-1" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">7</span> Boston housing dataset Example<a href="boston-housing-dataset-example-1.html#boston-housing-dataset-example-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Data description:</p>
-<p>Orignially, since GAM did not work well with the Ames housing dataset, which output a big RMSE, we decided to use another dataset and to test the GAM method on it again. The new dataset, Boston housing, includes 13 explanatory variables, and the response variable <code>MEDV</code>. The following is the description from Kaggle all variables:</p>
-<p>Response Variable:</p>
-<ol style="list-style-type: decimal">
-<li><code>MEDV</code>: Median value of owner-occupied homes in <code>$</code>1000’s [k<code>$</code>]</li>
-</ol>
-<p>Explanatory variables:</p>
-<ol style="list-style-type: decimal">
-<li><p><code>CRIM</code>: per capita crime rate by town</p></li>
-<li><p><code>ZN</code>: proportion of residential land zoned for lots over 25,000 sq.ft.</p></li>
-<li><p><code>INDUS</code>: proportion of non-retail business acres per town</p></li>
-<li><p><code>CHAS</code>: Charles River dummy variable (1 if tract bounds river; 0 otherwise)</p></li>
-<li><p><code>NOX</code>: nitric oxides concentration (parts per 10 million) [parts/10M]</p></li>
-<li><p><code>RM</code>: average number of rooms per dwelling</p></li>
-<li><p><code>AGE</code>: proportion of owner-occupied units built prior to 1940</p></li>
-<li><p><code>DIS</code>: weighted distances to five Boston employment centres</p></li>
-<li><p><code>RAD</code>: index of accessibility to radial highways</p></li>
-<li><p><code>TAX</code>: full-value property-tax rate per <code>$</code>10,000 [<code>$</code>/10k]</p></li>
-<li><p><code>PTRATIO</code>: pupil-teacher ratio by town</p></li>
-<li><p><code>B</code>: The result of the equation B=1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town</p></li>
-<li><p><code>LSTAT</code>: % lower status of the population</p></li>
-</ol>
+<div id="final-model-3" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Final Model<a href="final-model-3.html#final-model-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="prediction-on-test-dataset-3" class="section level3 hasAnchor" number="7.4.1">
+<h3><span class="header-section-number">7.4.1</span> Prediction on Test Dataset<a href="final-model-3.html#prediction-on-test-dataset-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="final-model-3.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain predictions and test set RMSE</span></span>
+<span id="cb51-2"><a href="final-model-3.html#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="final-model-3.html#cb51-3" aria-hidden="true" tabindex="-1"></a>boston_final_model <span class="ot">&lt;-</span> <span class="fu">gam</span>(MEDV <span class="sc">~</span> CHAS <span class="sc">+</span> RAD <span class="sc">+</span> <span class="fu">s</span>(ZN, <span class="at">sp =</span> <span class="dv">1</span>, <span class="at">k =</span> <span class="dv">8</span>) <span class="sc">+</span> <span class="fu">s</span>(PTRATIO, <span class="at">sp =</span> <span class="fl">0.1</span>, <span class="at">k =</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">s</span>(TAX, <span class="at">sp =</span> <span class="fl">1.2</span>, <span class="at">k =</span> <span class="dv">13</span>) <span class="sc">+</span> <span class="fu">s</span>(INDUS,<span class="at">sp =</span> <span class="fl">0.1</span>, <span class="at">k =</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">s</span>(NOX, <span class="at">sp =</span> <span class="fl">0.01</span>, <span class="at">k =</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">s</span>(B, <span class="at">sp =</span> <span class="dv">8</span>, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(AGE, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(DIS,<span class="at">sp =</span> <span class="fl">0.01</span>, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(RM,<span class="at">sp =</span> <span class="fl">0.8</span>, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(LSTAT, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(CRIM, <span class="at">k =</span> <span class="dv">9</span>), <span class="at">data =</span> boston_baked_train) </span>
+<span id="cb51-4"><a href="final-model-3.html#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="final-model-3.html#cb51-5" aria-hidden="true" tabindex="-1"></a>boston_final_model_preds<span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> boston_final_model, <span class="at">newdata =</span> boston_baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)    <span class="co"># obtain predictions</span></span>
+<span id="cb51-6"><a href="final-model-3.html#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="final-model-3.html#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((boston_final_model_preds <span class="sc">-</span> boston_baked_test<span class="sc">$</span>MEDV)<span class="sc">^</span><span class="dv">2</span>))   <span class="co"># calculate test set RMSE</span></span></code></pre></div>
+<pre><code>## [1] 2.628545</code></pre>
+<p>The test set RMSE is even smaller, which is a good sign.</p>
+<p>Comparing with the first model using GAM model for <code>ames</code> dataset, using it for <code>boston</code> dataset seems to be a lot better.
+The reason to that is the fact that the <code>boston</code> dataset is a lot more complex then the <code>ames</code> dataset.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="final-model-3.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boston_final_model, <span class="at">residuals=</span><span class="cn">TRUE</span>,<span class="at">shade =</span> <span class="cn">TRUE</span>, <span class="at">shade.col =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="at">pch =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-24-1.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-2.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-3.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-4.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-5.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-6.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-7.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-8.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-9.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-10.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-11.png" width="672" /></p>
+<p>Let’s look at the residual plot for the <code>boston</code> final model.
+As we can see from above, only two of the graphs seem to have a slope close to 0, and lots of others with non-parametric relationships.
+This is a sign that the model is way more complex, compared to the <code>ames</code> dataset, where only 3 explanatory variables seemed to have non-parametric relationship with the response.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="final-model-3.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb54-2"><a href="final-model-3.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(boston_final_model)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<pre><code>## 
+## Method: GCV   Optimizer: magic
+## Smoothing parameter selection converged after 14 iterations.
+## The RMS GCV score gradient at convergence was 8.826314e-07 .
+## The Hessian was positive definite.
+## Model rank =  103 / 103 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##               k&#39;   edf k-index p-value    
+## s(ZN)       7.00  2.28    0.71  &lt;2e-16 ***
+## s(PTRATIO) 11.00  5.12    0.72  &lt;2e-16 ***
+## s(TAX)     12.00  3.57    0.72  &lt;2e-16 ***
+## s(INDUS)   11.00  4.30    0.68  &lt;2e-16 ***
+## s(NOX)     11.00  8.39    0.88  &lt;2e-16 ***
+## s(B)        8.00  1.42    0.99    0.45    
+## s(AGE)      8.00  1.00    1.05    0.80    
+## s(DIS)      8.00  6.42    0.84  &lt;2e-16 ***
+## s(RM)       8.00  3.16    0.93    0.04 *  
+## s(LSTAT)    8.00  6.93    1.03    0.76    
+## s(CRIM)     8.00  4.42    1.03    0.77    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>However, after several attempts, we were not able to increase the p-value of the basis dimension values and k-index.</p>
 </div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="final-model-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="preparation-steps-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="analysis-3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conclusion-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
