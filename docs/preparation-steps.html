@@ -150,7 +150,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.4.1" data-path="final-model.html"><a href="final-model.html#prediction-on-test-dataset"><i class="fa fa-check"></i><b>2.4.1</b> Prediction on Test Dataset</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="only-splines.html"><a href="only-splines.html"><i class="fa fa-check"></i><b>2.5</b> Only splines?</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="boston-housing-dataset-example.html"><a href="boston-housing-dataset-example.html"><i class="fa fa-check"></i><b>3</b> Boston housing dataset Example</a>
 <ul>
@@ -168,7 +167,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4" data-path="final-model-1.html"><a href="final-model-1.html"><i class="fa fa-check"></i><b>3.4</b> Final Model</a>
 <ul>
 <li class="chapter" data-level="3.4.1" data-path="final-model-1.html"><a href="final-model-1.html#prediction-on-test-dataset-1"><i class="fa fa-check"></i><b>3.4.1</b> Prediction on Test Dataset</a></li>
-<li class="chapter" data-level="3.4.2" data-path="final-model-1.html"><a href="final-model-1.html#only-splines-1"><i class="fa fa-check"></i><b>3.4.2</b> Only splines?</a></li>
+<li class="chapter" data-level="3.4.2" data-path="final-model-1.html"><a href="final-model-1.html#only-splines"><i class="fa fa-check"></i><b>3.4.2</b> Only splines?</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>4</b> Conclusion</a></li>
@@ -194,7 +193,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="data-investigation" class="section level3 hasAnchor" number="2.1.1">
 <h3><span class="header-section-number">2.1.1</span> Data Investigation<a href="preparation-steps.html#data-investigation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Just as before, we first investigate the dataset to see if there’s any missing entries, non-numeric variables, or ZV/NZV features.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="preparation-steps.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ames)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="preparation-steps.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ames)</span></code></pre></div>
 <pre><code>## Rows: 881
 ## Columns: 20
 ## $ Sale_Price    &lt;int&gt; 244000, 213500, 185000, 394432, 190000, 149000, 149900, …
@@ -217,9 +216,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ First_Flr_SF  &lt;int&gt; 2110, 1338, 1187, 1856, 1844, 1004, 1078, 1069, 1940, 15…
 ## $ Second_Flr_SF &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 563, 0, 886, 656, 11…
 ## $ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009, 20…</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="preparation-steps.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(ames))  </span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="preparation-steps.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(ames))  </span></code></pre></div>
 <pre><code>## [1] 113</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="preparation-steps.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ames)  </span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="preparation-steps.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ames)  </span></code></pre></div>
 <pre><code>##    Sale_Price      Gr_Liv_Area                Garage_Type   Garage_Cars   
 ##  Min.   : 34900   Min.   : 334   Attchd             :514   Min.   :0.000  
 ##  1st Qu.:129500   1st Qu.:1118   Basment            : 10   1st Qu.:1.000  
@@ -268,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  3rd Qu.:2000  
 ##  Max.   :2010  
 ## </code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="preparation-steps.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nearZeroVar</span>(ames, <span class="at">saveMetrics =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="preparation-steps.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nearZeroVar</span>(ames, <span class="at">saveMetrics =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>##                freqRatio percentUnique zeroVar   nzv
 ## Sale_Price      1.000000    55.7321226   FALSE FALSE
 ## Gr_Liv_Area     1.333333    62.9965948   FALSE FALSE
@@ -290,17 +289,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## First_Flr_SF    1.777778    63.7911464   FALSE FALSE
 ## Second_Flr_SF  64.250000    31.3280363   FALSE FALSE
 ## Year_Built      1.116279    12.0317821   FALSE FALSE</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="preparation-steps.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ames<span class="sc">$</span>Overall_Qual) </span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="preparation-steps.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ames<span class="sc">$</span>Overall_Qual) </span></code></pre></div>
 <pre><code>##  [1] &quot;Above_Average&quot;  &quot;Average&quot;        &quot;Below_Average&quot;  &quot;Excellent&quot;     
 ##  [5] &quot;Fair&quot;           &quot;Good&quot;           &quot;Poor&quot;           &quot;Very_Excellent&quot;
 ##  [9] &quot;Very_Good&quot;      &quot;Very_Poor&quot;</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="preparation-steps.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># relevel the levels</span></span>
-<span id="cb20-2"><a href="preparation-steps.html#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="preparation-steps.html#cb20-3" aria-hidden="true" tabindex="-1"></a>ames<span class="sc">$</span>Overall_Qual <span class="ot">&lt;-</span> <span class="fu">factor</span>(ames<span class="sc">$</span>Overall_Qual, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Very_Poor&quot;</span>, <span class="st">&quot;Poor&quot;</span>, <span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Below_Average&quot;</span>, </span>
-<span id="cb20-4"><a href="preparation-steps.html#cb20-4" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">&quot;Average&quot;</span>, <span class="st">&quot;Above_Average&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very_Good&quot;</span>, </span>
-<span id="cb20-5"><a href="preparation-steps.html#cb20-5" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">&quot;Excellent&quot;</span>, <span class="st">&quot;Very_Excellent&quot;</span>))</span>
-<span id="cb20-6"><a href="preparation-steps.html#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="preparation-steps.html#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ames<span class="sc">$</span>Overall_Qual)   <span class="co"># the levels are properly ordered</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="preparation-steps.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># relevel the levels</span></span>
+<span id="cb11-2"><a href="preparation-steps.html#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="preparation-steps.html#cb11-3" aria-hidden="true" tabindex="-1"></a>ames<span class="sc">$</span>Overall_Qual <span class="ot">&lt;-</span> <span class="fu">factor</span>(ames<span class="sc">$</span>Overall_Qual, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Very_Poor&quot;</span>, <span class="st">&quot;Poor&quot;</span>, <span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Below_Average&quot;</span>, </span>
+<span id="cb11-4"><a href="preparation-steps.html#cb11-4" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">&quot;Average&quot;</span>, <span class="st">&quot;Above_Average&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very_Good&quot;</span>, </span>
+<span id="cb11-5"><a href="preparation-steps.html#cb11-5" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">&quot;Excellent&quot;</span>, <span class="st">&quot;Very_Excellent&quot;</span>))</span>
+<span id="cb11-6"><a href="preparation-steps.html#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="preparation-steps.html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ames<span class="sc">$</span>Overall_Qual)   <span class="co"># the levels are properly ordered</span></span></code></pre></div>
 <pre><code>##  [1] &quot;Very_Poor&quot;      &quot;Poor&quot;           &quot;Fair&quot;           &quot;Below_Average&quot; 
 ##  [5] &quot;Average&quot;        &quot;Above_Average&quot;  &quot;Good&quot;           &quot;Very_Good&quot;     
 ##  [9] &quot;Excellent&quot;      &quot;Very_Excellent&quot;</code></pre>
@@ -308,16 +307,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="data-spliting" class="section level3 hasAnchor" number="2.1.2">
 <h3><span class="header-section-number">2.1.2</span> Data Spliting<a href="preparation-steps.html#data-spliting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="preparation-steps.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)</span>
-<span id="cb22-2"><a href="preparation-steps.html#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="preparation-steps.html#cb22-3" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(<span class="at">y =</span> ames<span class="sc">$</span>Sale_Price, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)   <span class="co"># consider 80-20 split</span></span>
-<span id="cb22-4"><a href="preparation-steps.html#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="preparation-steps.html#cb22-5" aria-hidden="true" tabindex="-1"></a>ames_train <span class="ot">&lt;-</span> ames[index,]   <span class="co"># training data</span></span>
-<span id="cb22-6"><a href="preparation-steps.html#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-7"><a href="preparation-steps.html#cb22-7" aria-hidden="true" tabindex="-1"></a>ames_test <span class="ot">&lt;-</span> ames[<span class="sc">-</span>index,]   <span class="co"># test data</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="preparation-steps.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># investigate nominal categorical predictors </span></span>
-<span id="cb23-2"><a href="preparation-steps.html#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="preparation-steps.html#cb23-3" aria-hidden="true" tabindex="-1"></a>ames_train <span class="sc">%&gt;%</span> <span class="fu">count</span>(Neighborhood) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(n)   <span class="co"># check frequency of categories</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="preparation-steps.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)</span>
+<span id="cb13-2"><a href="preparation-steps.html#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="preparation-steps.html#cb13-3" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(<span class="at">y =</span> ames<span class="sc">$</span>Sale_Price, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)   <span class="co"># consider 80-20 split</span></span>
+<span id="cb13-4"><a href="preparation-steps.html#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="preparation-steps.html#cb13-5" aria-hidden="true" tabindex="-1"></a>ames_train <span class="ot">&lt;-</span> ames[index,]   <span class="co"># training data</span></span>
+<span id="cb13-6"><a href="preparation-steps.html#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="preparation-steps.html#cb13-7" aria-hidden="true" tabindex="-1"></a>ames_test <span class="ot">&lt;-</span> ames[<span class="sc">-</span>index,]   <span class="co"># test data</span></span>
+<span id="cb13-8"><a href="preparation-steps.html#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="preparation-steps.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># investigate nominal categorical predictors </span></span>
+<span id="cb13-10"><a href="preparation-steps.html#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="preparation-steps.html#cb13-11" aria-hidden="true" tabindex="-1"></a>ames_train <span class="sc">%&gt;%</span> <span class="fu">count</span>(Neighborhood) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(n)   <span class="co"># check frequency of categories</span></span></code></pre></div>
 <pre><code>## # A tibble: 26 × 2
 ##    Neighborhood            n
 ##    &lt;fct&gt;               &lt;int&gt;

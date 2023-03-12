@@ -150,7 +150,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.4.1" data-path="final-model.html"><a href="final-model.html#prediction-on-test-dataset"><i class="fa fa-check"></i><b>2.4.1</b> Prediction on Test Dataset</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="only-splines.html"><a href="only-splines.html"><i class="fa fa-check"></i><b>2.5</b> Only splines?</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="boston-housing-dataset-example.html"><a href="boston-housing-dataset-example.html"><i class="fa fa-check"></i><b>3</b> Boston housing dataset Example</a>
 <ul>
@@ -168,7 +167,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4" data-path="final-model-1.html"><a href="final-model-1.html"><i class="fa fa-check"></i><b>3.4</b> Final Model</a>
 <ul>
 <li class="chapter" data-level="3.4.1" data-path="final-model-1.html"><a href="final-model-1.html#prediction-on-test-dataset-1"><i class="fa fa-check"></i><b>3.4.1</b> Prediction on Test Dataset</a></li>
-<li class="chapter" data-level="3.4.2" data-path="final-model-1.html"><a href="final-model-1.html#only-splines-1"><i class="fa fa-check"></i><b>3.4.2</b> Only splines?</a></li>
+<li class="chapter" data-level="3.4.2" data-path="final-model-1.html"><a href="final-model-1.html#only-splines"><i class="fa fa-check"></i><b>3.4.2</b> Only splines?</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>4</b> Conclusion</a></li>
@@ -191,22 +190,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="recipt-and-blueprint-1" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Recipt and Blueprint<a href="recipt-and-blueprint-1.html#recipt-and-blueprint-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="recipt-and-blueprint-1.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up recipe </span></span>
-<span id="cb50-2"><a href="recipt-and-blueprint-1.html#cb50-2" aria-hidden="true" tabindex="-1"></a>boston_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(MEDV <span class="sc">~</span> ., <span class="at">data =</span> boston_train)</span>
-<span id="cb50-3"><a href="recipt-and-blueprint-1.html#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-4"><a href="recipt-and-blueprint-1.html#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># set up blueprint</span></span>
-<span id="cb50-5"><a href="recipt-and-blueprint-1.html#cb50-5" aria-hidden="true" tabindex="-1"></a>boston_blueprint <span class="ot">&lt;-</span> boston_recipe <span class="sc">%&gt;%</span>    </span>
-<span id="cb50-6"><a href="recipt-and-blueprint-1.html#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      <span class="co"># center (subtract mean) all numeric predictors (consider all the numeric predictors except the response)</span></span>
-<span id="cb50-7"><a href="recipt-and-blueprint-1.html#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())                     <span class="co"># scale (divide by standard deviation) all numeric predictors                     </span></span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="recipt-and-blueprint-1.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up recipe </span></span>
+<span id="cb45-2"><a href="recipt-and-blueprint-1.html#cb45-2" aria-hidden="true" tabindex="-1"></a>boston_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(MEDV <span class="sc">~</span> ., <span class="at">data =</span> boston_train)</span>
+<span id="cb45-3"><a href="recipt-and-blueprint-1.html#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="recipt-and-blueprint-1.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># set up blueprint</span></span>
+<span id="cb45-5"><a href="recipt-and-blueprint-1.html#cb45-5" aria-hidden="true" tabindex="-1"></a>boston_blueprint <span class="ot">&lt;-</span> boston_recipe <span class="sc">%&gt;%</span>    </span>
+<span id="cb45-6"><a href="recipt-and-blueprint-1.html#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      <span class="co"># center (subtract mean) all numeric predictors (consider all the numeric predictors except the response)</span></span>
+<span id="cb45-7"><a href="recipt-and-blueprint-1.html#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())                     <span class="co"># scale (divide by standard deviation) all numeric predictors                     </span></span></code></pre></div>
 <p>Since there’s no missing value, no zv/nzv features and no categorical variable in <code>boston</code> dataset, all we need in blueprint is to standardize the data.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="recipt-and-blueprint-1.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate feature engineering parameters based on training data</span></span>
-<span id="cb51-2"><a href="recipt-and-blueprint-1.html#cb51-2" aria-hidden="true" tabindex="-1"></a>boston_prepare <span class="ot">&lt;-</span> <span class="fu">prep</span>(boston_blueprint, <span class="at">data =</span> boston_train)   </span>
-<span id="cb51-3"><a href="recipt-and-blueprint-1.html#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-4"><a href="recipt-and-blueprint-1.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to training data for building final/optimal model</span></span>
-<span id="cb51-5"><a href="recipt-and-blueprint-1.html#cb51-5" aria-hidden="true" tabindex="-1"></a>boston_baked_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(boston_prepare, <span class="at">new_data =</span> boston_train)   </span>
-<span id="cb51-6"><a href="recipt-and-blueprint-1.html#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-7"><a href="recipt-and-blueprint-1.html#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to test data for future use</span></span>
-<span id="cb51-8"><a href="recipt-and-blueprint-1.html#cb51-8" aria-hidden="true" tabindex="-1"></a>boston_baked_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(boston_prepare, <span class="at">new_data =</span> boston_test)    </span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="recipt-and-blueprint-1.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate feature engineering parameters based on training data</span></span>
+<span id="cb46-2"><a href="recipt-and-blueprint-1.html#cb46-2" aria-hidden="true" tabindex="-1"></a>boston_prepare <span class="ot">&lt;-</span> <span class="fu">prep</span>(boston_blueprint, <span class="at">data =</span> boston_train)   </span>
+<span id="cb46-3"><a href="recipt-and-blueprint-1.html#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="recipt-and-blueprint-1.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to training data for building final/optimal model</span></span>
+<span id="cb46-5"><a href="recipt-and-blueprint-1.html#cb46-5" aria-hidden="true" tabindex="-1"></a>boston_baked_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(boston_prepare, <span class="at">new_data =</span> boston_train)   </span>
+<span id="cb46-6"><a href="recipt-and-blueprint-1.html#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="recipt-and-blueprint-1.html#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to test data for future use</span></span>
+<span id="cb46-8"><a href="recipt-and-blueprint-1.html#cb46-8" aria-hidden="true" tabindex="-1"></a>boston_baked_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(boston_prepare, <span class="at">new_data =</span> boston_test)    </span></code></pre></div>
 </div>
             </section>
 

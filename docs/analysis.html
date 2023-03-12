@@ -150,7 +150,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.4.1" data-path="final-model.html"><a href="final-model.html#prediction-on-test-dataset"><i class="fa fa-check"></i><b>2.4.1</b> Prediction on Test Dataset</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="only-splines.html"><a href="only-splines.html"><i class="fa fa-check"></i><b>2.5</b> Only splines?</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="boston-housing-dataset-example.html"><a href="boston-housing-dataset-example.html"><i class="fa fa-check"></i><b>3</b> Boston housing dataset Example</a>
 <ul>
@@ -168,7 +167,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4" data-path="final-model-1.html"><a href="final-model-1.html"><i class="fa fa-check"></i><b>3.4</b> Final Model</a>
 <ul>
 <li class="chapter" data-level="3.4.1" data-path="final-model-1.html"><a href="final-model-1.html#prediction-on-test-dataset-1"><i class="fa fa-check"></i><b>3.4.1</b> Prediction on Test Dataset</a></li>
-<li class="chapter" data-level="3.4.2" data-path="final-model-1.html"><a href="final-model-1.html#only-splines-1"><i class="fa fa-check"></i><b>3.4.2</b> Only splines?</a></li>
+<li class="chapter" data-level="3.4.2" data-path="final-model-1.html"><a href="final-model-1.html#only-splines"><i class="fa fa-check"></i><b>3.4.2</b> Only splines?</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>4</b> Conclusion</a></li>
@@ -193,25 +192,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">2.3</span> Analysis<a href="analysis.html#analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="bulid-model" class="section level3 hasAnchor" number="2.3.1">
 <h3><span class="header-section-number">2.3.1</span> Bulid Model<a href="analysis.html#bulid-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="analysis.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
-<span id="cb27-2"><a href="analysis.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># implement 5-fold CV with 5 times of repeats</span></span>
-<span id="cb27-3"><a href="analysis.html#cb27-3" aria-hidden="true" tabindex="-1"></a>cv_specs <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">5</span>)</span>
-<span id="cb27-4"><a href="analysis.html#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="analysis.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># set tunegrid</span></span>
-<span id="cb27-6"><a href="analysis.html#cb27-6" aria-hidden="true" tabindex="-1"></a>tunegrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="at">select =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-7"><a href="analysis.html#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="analysis.html#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># GAM model</span></span>
-<span id="cb27-9"><a href="analysis.html#cb27-9" aria-hidden="true" tabindex="-1"></a>ames_model<span class="ot">&lt;-</span><span class="fu">train</span>(ames_blueprint,</span>
-<span id="cb27-10"><a href="analysis.html#cb27-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> ames_train,</span>
-<span id="cb27-11"><a href="analysis.html#cb27-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">&quot;gam&quot;</span>,</span>
-<span id="cb27-12"><a href="analysis.html#cb27-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">tuneGrid =</span> tunegrid,  </span>
-<span id="cb27-13"><a href="analysis.html#cb27-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">trControl =</span> cv_specs)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="analysis.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb17-2"><a href="analysis.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># implement 5-fold CV repeated 5 times</span></span>
+<span id="cb17-3"><a href="analysis.html#cb17-3" aria-hidden="true" tabindex="-1"></a>cv_specs <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>, <span class="at">repeats=</span><span class="dv">5</span>)</span>
+<span id="cb17-4"><a href="analysis.html#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="analysis.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># set tunegrid</span></span>
+<span id="cb17-6"><a href="analysis.html#cb17-6" aria-hidden="true" tabindex="-1"></a>tunegrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="at">select =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-7"><a href="analysis.html#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="analysis.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># GAM model</span></span>
+<span id="cb17-9"><a href="analysis.html#cb17-9" aria-hidden="true" tabindex="-1"></a>ames_model<span class="ot">&lt;-</span><span class="fu">train</span>(ames_blueprint,</span>
+<span id="cb17-10"><a href="analysis.html#cb17-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> ames_train,</span>
+<span id="cb17-11"><a href="analysis.html#cb17-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">&quot;gam&quot;</span>,</span>
+<span id="cb17-12"><a href="analysis.html#cb17-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">tuneGrid =</span> tunegrid,  </span>
+<span id="cb17-13"><a href="analysis.html#cb17-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">trControl =</span> cv_specs)</span></code></pre></div>
+<p>We implement 5 fold CV with 5 repeats here to ensure the model is not overfitting and is generalizable to new data, which is very important for GAM model.</p>
+<p>For the model, <code>Method = "gam"</code> indicates the smoothing parameter estimation method, <code>GCV</code> for models with unknown scale parameter and Mallows’ Cp/UBRE/AIC for models with known scale; <code>select=TRUE</code> adds extra penalty so that the smoothing parameter estimation can completely remove terms from the model</p>
 </div>
 <div id="models-performance" class="section level3 hasAnchor" number="2.3.2">
 <h3><span class="header-section-number">2.3.2</span> Model’s Performance<a href="analysis.html#models-performance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="analysis.html#cb28-1" aria-hidden="true" tabindex="-1"></a>ames_model<span class="sc">$</span>results<span class="sc">$</span>RMSE</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="analysis.html#cb18-1" aria-hidden="true" tabindex="-1"></a>ames_model<span class="sc">$</span>results<span class="sc">$</span>RMSE</span></code></pre></div>
 <pre><code>## [1] 70421.17</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="analysis.html#cb30-1" aria-hidden="true" tabindex="-1"></a>ames_model<span class="sc">$</span>finalMo</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="analysis.html#cb20-1" aria-hidden="true" tabindex="-1"></a>ames_model<span class="sc">$</span>finalMo</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -232,6 +233,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 8.662 7.680  total = 50.87 
 ## 
 ## GCV score: 722968462</code></pre>
+<p>Here we could see that the RMSE is 70421.17, which is pretty high, probably due to the size of the dataset being big.
+We could also look at the formula of the final model generated from training.
+It shows that out of the 53 variables, only 9 of the variables have a non-parametric relationship with the response.
+This could also be the reason for the high RMSE.</p>
 </div>
 </div>
             </section>

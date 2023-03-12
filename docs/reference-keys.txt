@@ -9,7 +9,6 @@ bulid-model
 models-performance
 final-model
 prediction-on-test-dataset
-only-splines
 boston-housing-dataset-example
 preparation-steps-1
 data-investigation-1
@@ -20,5 +19,5 @@ bulid-model-1
 models-performance-1
 final-model-1
 prediction-on-test-dataset-1
-only-splines-1
+only-splines
 conclusion
