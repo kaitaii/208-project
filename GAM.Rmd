@@ -1,0 +1,339 @@
+--- 
+title: "CMSC 208 Final Project"
+author: "Yi Lu, Shiyi Yang"
+date: "`r format(Sys.time(), '%B %d, %Y %H:%M %Z')`"
+site: bookdown::bookdown_site
+bibliography: references.bib
+biblio-style: apalike
+link-citations: yes
+---
+--- 
+title: "CMSC 208 Final Project"
+author: "Yi Lu, Shiyi Yang"
+date: "`r format(Sys.time(), '%B %d, %Y %H:%M %Z')`"
+site: bookdown::bookdown_site
+bibliography: references.bib
+biblio-style: apalike
+link-citations: yes
+---
+
+# Introduction
+
+Generalized Additive Models is a powerful extension of the linear regression model that can capture complex nonlinear relationships between predictors and response variables. 
+Unlike linear regression, GAMs allow for non-linear function of each variable, while maintaining their additivity. 
+Instead of $y = \beta_0 + \beta_1x_1 + \beta_2x_2+...+\epsilon$, GAMs have a function of $y = \beta_0 + f_1(x_1) + f_2(x_2) + ... +\epsilon$, where $f(xi)$ represent a (smooth) non-linear function. 
+GAMs can also model interactions between variables and handle different types of data, including continuous, categorical, and ordinal variables.
+
+In this project, we are trying to imply this new model we learned and explored the performance of it on two datasets, `ames` and `boston`, which have different features and complexity. 
+However, our initial results on the ames dataset were a bit disappointing, with a very large Root Mean Squared Error (RMSE) on both the training and test datasets, indicating poor performance.
+
+To address this issue, we further investigated the model and its hyper-parameters, and implemented the hyper-parameters on both `ames` and `boston` datasets.
+We present our findings for using GAMs on these datasets in this report.
+
+
+
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# Ames Housing Dataset Example
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Data Description:
+
+First, we use the `ames` dataset that we used in class, since we want to first learn how to apply this model and then do further investigation.
+Response variable: 
+
+1)`Sale_Price`: Property sale price in USD
+
+Explanatory variable:
+
+1) `Gr_Liv_Area`: Above grade (ground) living area square feet
+
+2) `Garage_Type`: Garage location
+
+3) `Garage_Cars`: Size of garage in car capacity
+
+4) `Garage_Area`: Size of garage in square feet
+
+5) `Street`: Type of road access to property
+
+6) `Utilities`: Type of utilities available
+
+7) `Pool_Area`: Pool area in square feet
+
+8) `Neighborhood`: Physical locations within Ames city limits
+
+9) `Screen_Porch`: Screen porch area in square feet
+
+10) `Overall_Qual`: Rates the overall material and finish of the house
+
+11) `Lot_Area`: Lot size in square feet
+
+12) `Lot_Frontage`: Linear feet of street connected to property
+
+13) `MS_SubClass`: Identifies the type of dwelling involved in the sale.
+
+14) `Misc_Val`: Dollar value of miscellaneous feature
+
+15) `Open_Porch_SF`: Open porch area in square feet
+
+16) `TotRms_AbvGrd`: Total rooms above grade (does not include bathrooms) · First_Flr_SF: First Floor square feet
+
+17) `Second_Flr_SF`: Second floor square feet
+
+18) `Year_Built`: Original construction date
+
+```{r,echo=FALSE,warning=FALSE, include=FALSE}
+library(tidyverse)
+library(caret)
+library(recipes)
+library(mgcv)
+ames<-readRDS("AmesHousing.rds")
+```
+
+## Preparation Steps
+
+### Data Investigation
+
+Just as before, we first investigate the dataset to see if there's any missing entries, non-numeric variables, or ZV/NZV features.
+
+```{r}
+glimpse(ames)
+sum(is.na(ames))  
+summary(ames)  
+nearZeroVar(ames, saveMetrics = TRUE)
+
+levels(ames$Overall_Qual) 
+
+# relevel the levels
+
+ames$Overall_Qual <- factor(ames$Overall_Qual, levels = c("Very_Poor", "Poor", "Fair", "Below_Average", 
+                                                  "Average", "Above_Average", "Good", "Very_Good", 
+                                                  "Excellent", "Very_Excellent"))
+
+levels(ames$Overall_Qual)   # the levels are properly ordered
+
+
+```
+
+Finding that there are 19 features in total and 13 of them are numerical variables, 6 of them are categorical variables. For the ordinal categorical variables `Overall_Qual`, finding that the level is not in order, hence, we releveled the level for this variable. Further, there're 113 NA values and 5 nzv features in the whole dataset. Those are things we need to deal within blueprint.
+
+### Data Spliting
+
+```{r}
+set.seed(013123)
+
+index <- createDataPartition(y = ames$Sale_Price, p = 0.8, list = FALSE)   # consider 80-20 split
+
+ames_train <- ames[index,]   # training data
+
+ames_test <- ames[-index,]   # test data
+
+# investigate nominal categorical predictors 
+
+ames_train %>% count(Neighborhood) %>% arrange(n)   # check frequency of categories
+```
+
+## Recipe and Blueprint
+
+After all preprocessing steps have been decided set up the overall blueprint.
+
+```{r}
+# set up recipe
+ames_recipe <- recipe(Sale_Price~., data = ames_train) 
+
+# specify feature engineering steps
+ames_blueprint <- ames_recipe %>%    
+  step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%  
+  step_impute_mean(Gr_Liv_Area) %>%                                   
+  step_integer(Overall_Qual) %>%                                       
+  step_center(all_numeric(), -all_outcomes()) %>%                      
+  step_scale(all_numeric(), -all_outcomes()) %>%                      
+  step_other(Neighborhood, threshold = 0.01, other = "other") %>%      
+  step_dummy(all_nominal(), one_hot = FALSE)                            
+```
+
+Within the blueprint, we first filter out the zv/nzv predictors, and impute the missing entries. Then, we do numeric conversion of level of ordinal categorical variable `Overall_Qual`. Following with the data standardization step and lumping step. Finally, do the one-hot/dummy encode of nominal categorical variables.
+
+```{r}
+# estimate feature engineering parameters based on training data
+ames_prepare <- prep(ames_blueprint, data = ames_train)   
+
+# apply the blueprint to training data for building final/optimal model
+ames_baked_train <- bake(ames_prepare, new_data = ames_train) 
+
+# apply the blueprint to test data for future use
+ames_baked_test <- bake(ames_prepare, new_data = ames_test)    
+```
+
+## Analysis
+
+### Bulid Model
+
+```{r}
+set.seed(111)
+# implement 5-fold CV repeated 5 times
+cv_specs <- trainControl(method = "repeatedcv", number = 5, repeats=5)
+
+# set tunegrid
+tunegrid <- data.frame(method = "GCV.Cp", select = TRUE)
+
+# GAM model
+ames_model<-train(ames_blueprint,
+             data = ames_train,
+             method = "gam",
+             tuneGrid = tunegrid,  
+             trControl = cv_specs)
+
+```
+
+We implement 5 fold CV with 5 repeats here to ensure the model is not overfitting and is generalizable to new data, which is very important for GAM model.
+
+For the model, `Method = "gam"` indicates the smoothing parameter estimation method, `GCV` for models with unknown scale parameter and Mallows' Cp/UBRE/AIC for models with known scale; `select=TRUE` adds extra penalty so that the smoothing parameter estimation can completely remove terms from the model
+
+
+### Model's Performance
+
+```{r}
+ames_model$results$RMSE
+
+ames_model$finalMo
+```
+
+Here we could see that the RMSE is 70421.17, which is pretty high, probably due to the size of the dataset being big. 
+The estimated degrees of freedom indicate the complexity of the model, and in this case, the EDF ranges from 0 to 8.662, with a total EDF of 50.87. 
+The EDF values for the smoothing functions indicate the effective number of parameters used to fit the data, and higher EDF values generally indicate more flexible, complex models.
+The GCV score is used as a measure of the model's performance because it provides a balance between the model's fit to the data and its complexity. 
+
+We could also look at the formula of the final model generated from training. 
+It shows that out of the 53 variables, only 9 of the variables have a non-parametric relationship with the response. 
+This could also be the reason for the high RMSE.
+
+
+## Final Model
+
+### Prediction on Test Dataset
+
+```{r}
+# build final model
+ames_final_model <- gam(Sale_Price~ Garage_Type_BuiltIn + Garage_Type_Detchd + Garage_Type_No_Garage +  Neighborhood_College_Creek + Neighborhood_Old_Town + Neighborhood_Edwards +  Neighborhood_Somerset + Neighborhood_Northridge_Heights + 
+    Neighborhood_Gilbert + Neighborhood_Sawyer + MS_SubClass_One_and_Half_Story_Finished_All_Ages +
+    MS_SubClass_Two_Story_1946_and_Newer + MS_SubClass_Duplex_All_Styles_and_Ages + 
+    MS_SubClass_One_Story_PUD_1946_and_Newer + Garage_Cars + 
+    Overall_Qual + s(TotRms_AbvGrd) + s(Lot_Frontage) + s(Year_Built) + 
+    s(Open_Porch_SF) + s(Second_Flr_SF) + s(Garage_Area) + s(Gr_Liv_Area) + 
+    s(First_Flr_SF) + s(Lot_Area),data=ames_baked_train) 
+ames_final_model_preds<- predict(object = ames_final_model, newdata = ames_baked_test, type = "response")    # obtain predictions
+
+sqrt(mean((ames_final_model_preds- ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
+```
+
+Using the formula provided from training, we tried to fit the GAM model. 
+The RMSE of the final model is 195576.6, compared to 70421.17 previously. 
+Obviously, this is not ideal, since now the RMSE is more than two times higher. 
+Why?
+
+```{r}
+plot(ames_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue",pch = 1, cex = 0.5,pages = 1)
+```
+
+Here we have the residual plot of those variables that had applied splines function, and the blue shades represent the 95% confidence interval. 
+From the graphs for `Gr_Liv_Area` and `Lot_Area`, we could see that the tails are drawn to the noises, letting it change the slope, which should not be happening. 
+
+In order to create a well-fit final model, we have to recognize what is wrong with out current model.
+First, let's look at the several plots `gam.check` had produced. 
+
+```{r}
+set.seed(1293)
+gam.check(ames_final_model)
+```
+
+From the Q-Q plot, we could see that there is a clear trend to the residuals; from the residual values plot, we could see that there's a cluster of points, and maybe a negative slope; from the histogram, we could see that there is a bell-shaped curve; and from the response vs. fitted values plot, we could see that the values are fitted pretty good. 
+We should also look at the table generated from `gam.check`.
+The table shows the `k` value, effective degrees of freedom, test statistics, and p-value of each basis functions. 
+The `k` value is very similar to the "knots" in MARS, representing how many basis function is used to fit the model, and could be used as the smoothing parameter. 
+Another smoothing parameter we would use is `λ`, since $FIT=Likelihood-λ*Wiggliness$ is how the fit of GAM model is calculated.
+The likelihood represents how well the model captures patterns in the data, and wiggliness represents the complexity of the model. 
+As described in the model, when the p-value is too low, or if the k-index is below 1, it's possible that we need to increase the size of the basis function. 
+In the table above, we could see that `Year_Built`, `Open_porch_SF`, and `Second_Flr_SF` all had p-values below 0.1.
+
+
+```{r}
+# build final model
+ames_final_model2 <- gam(Sale_Price~Garage_Type_BuiltIn + Garage_Type_Detchd + Garage_Type_No_Garage + Neighborhood_College_Creek + Neighborhood_Old_Town + Neighborhood_Edwards + Neighborhood_Somerset + Neighborhood_Northridge_Heights + Neighborhood_Gilbert + Neighborhood_Sawyer + MS_SubClass_One_and_Half_Story_Finished_All_Ages + MS_SubClass_Two_Story_1946_and_Newer + MS_SubClass_Duplex_All_Styles_and_Ages + 
+MS_SubClass_One_Story_PUD_1946_and_Newer + s(Garage_Cars,sp=0.1,k=2) + s(Overall_Qual,k=3) + s(TotRms_AbvGrd,sp=0.01,k=11) + s(Lot_Frontage,sp=0.1,k=7) +s(Year_Built,sp=0.0001,k=29) + s(Open_Porch_SF,sp=0.6,k=9) + s(Second_Flr_SF,sp=0.9,k=7) + s(Garage_Area,sp=1,k=5) + s(Gr_Liv_Area,sp=10,k=6) + s(First_Flr_SF,sp=0.001,k=3) + s(Lot_Area,sp=1,k=3) ,data=ames_baked_train) 
+```
+
+After seeing where the problem was, we started using the smoothing parameter to tune the variables.
+From the formula $FIT=Likelihood-λ*Wiggliness$, we know that, the more wiggly (complex) we want the variable to fit, the smaller `λ` needs to be (between 0 and 1), and if we want the fit to be less wiggly, `λ` has to be bigger than 1. 
+
+```{r}
+plot(ames_final_model,select=c(7), residuals=TRUE,shade = TRUE, shade.col = "lightblue")
+```
+
+For example, above is the plot from the first model of the variable `Gr_Liv_Area`. 
+We can see that, when the above ground living area was increasing, the trend of the price goes up when there are more data, and when there is less data, the price started dramatically. 
+This disobeys the common sense, since the bigger the house is, the more expensive the house should be. 
+
+```{r}
+plot(ames_final_model2,select=c(9), residuals=TRUE,shade = TRUE, shade.col = "lightblue")
+```
+
+This is the reason why we need to use `λ` and tune the variable. 
+For the second model, we chose a `λ` of 10, which means that we don't want the trend to be wiggly, and it should be as simple as possible, which also prevents the line of best fit to be drawn by the noises. 
+As we can see from the graph above, the price is now predicted to increase with the above ground area. 
+
+
+```{r}
+set.seed(12984)
+gam.check(ames_final_model2)
+```
+
+After tuning, we can see that now the basis dimension for all variables have p-values of bigger than 0.1.
+
+
+
+```{r}
+ames_final_model_preds2<- predict(object = ames_final_model2, newdata = ames_baked_test, type = "response")    # obtain predictions
+
+sqrt(mean((ames_final_model_preds2- ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
+```
+
+Here, we can also see that the RMSE value had decreased to 28781.85, compared to 195576.6 from the first model. 
+
+
+<!--chapter:end:ames_housing_dataset.Rmd-->
+
+
+# Boston housing dataset Example
+
+Placeholder
+
+
+## Preparation Steps
+### Data Investigation
+### Data Spliting
+## Recipe and Blueprint
+## Analysis
+### Bulid Model
+### Model's Performance
+## Final Model
+### Prediction on Test Dataset
+
+<!--chapter:end:Boston_housing_dataset.Rmd-->
+
+
+# Conclusion
+
+Placeholder
+
+
+
+<!--chapter:end:Conclusion.Rmd-->
+
