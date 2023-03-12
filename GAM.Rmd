@@ -1,0 +1,74 @@
+--- 
+title: "CMSC 208 Final Project"
+author: "Yi Lu, Shiyi Yang"
+date: "`r format(Sys.time(), '%B %d, %Y %H:%M %Z')`"
+site: bookdown::bookdown_site
+bibliography: references.bib
+biblio-style: apalike
+link-citations: yes
+---
+
+# Introduction
+
+Generalized Additive Models is a powerful extension of the linear regression model that can capture complex nonlinear relationships between predictors and response variables. 
+Unlike linear regression, GAMs allow for non-linear function of each variable, while maintaining their additivity. 
+Instead of $y = \beta_0 + \beta_1x_1 + \beta_2x_2+...+\epsilon$, GAMs have a function of $y = \beta_0 + f_1(x_1) + f_2(x_2) + ... +\epsilon$, where $f(xi)$ represent a (smooth) non-linear function. 
+GAMs can also model interactions between variables and handle different types of data, including continuous, categorical, and ordinal variables.
+
+In this project, we are trying to imply this new model we learned and explored the performance of it on two datasets, `ames` and `boston`, which have different features and complexity. 
+However, our initial results on the ames dataset were a bit disappointing, with a very large Root Mean Squared Error (RMSE) on both the training and test datasets, indicating poor performance.
+
+To address this issue, we further investigated the model and its hyper-parameters, and implemented the hyper-parameters on both `ames` and `boston` datasets.
+We present our findings for using GAMs on these datasets in this report.
+
+
+
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# Ames Housing Dataset Example
+
+Placeholder
+
+
+## Preparation Steps
+### Data Investigation
+### Data Spliting
+## Recipt and Blueprint
+## Analysis
+### Bulid Model
+### Model's Performance
+## Final Model
+### Prediction on Test Dataset
+
+<!--chapter:end:ames_housing_dataset.Rmd-->
+
+
+# Boston housing dataset Example
+
+Placeholder
+
+
+## Preparation Steps
+### Data Investigation
+### Data Spliting
+## Recipe and Blueprint
+## Analysis
+### Bulid Model
+### Model's Performance
+## Final Model
+### Prediction on Test Dataset
+
+<!--chapter:end:Boston_housing_dataset.Rmd-->
+
+
+# Conclusion
+
+Placeholder
+
+
+
+<!--chapter:end:Conclusion.Rmd-->
+

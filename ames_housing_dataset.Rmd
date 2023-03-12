@@ -102,7 +102,7 @@ ames_test <- ames[-index,]   # test data
 ames_train %>% count(Neighborhood) %>% arrange(n)   # check frequency of categories
 ```
 
-## Recipt and Blueprint
+## Recipe and Blueprint
 
 After all preprocessing steps have been decided set up the overall blueprint.
 
