@@ -19,5 +19,4 @@ bulid-model-1
 models-performance-1
 final-model-1
 prediction-on-test-dataset-1
-only-splines
 conclusion
