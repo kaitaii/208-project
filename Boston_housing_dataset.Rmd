@@ -155,7 +155,7 @@ The GCV score is used as a measure of the model's performance because it provide
 ```{r}
 # obtain predictions and test set RMSE
 
-boston_final_model <- gam(MEDV ~ CHAS + RAD + s(ZN) + s(PTRATIO) + s(TAX) + s(INDUS) + s(NOX,sp=0.01) + s(B,sp=8) + s(AGE) + s(DIS,sp=0.01) + s(RM,sp=1) + s(LSTAT) + s(CRIM), data = boston_baked_train) 
+boston_final_model <- gam(MEDV ~ CHAS + RAD + s(ZN, sp = 0.1, k = 9) + s(PTRATIO, sp = 0.1, k = 12) + s(TAX, sp = 0.5, k = 12) + s(INDUS, sp = 0.1, k = 12) + s(NOX, sp = 0.01, k = 12) + s(B, sp = 8, k = 9) + s(AGE, k = 9) + s(DIS,sp = 0.01, k = 9) + s(RM,sp = 0.8, k = 9) + s(LSTAT, k = 9) + s(CRIM, k = 9), data = boston_baked_train) 
 
 boston_final_model_preds<- predict(object = boston_final_model, newdata = boston_baked_test, type = "response")    # obtain predictions
 
@@ -179,31 +179,10 @@ Let's look at the residual plot for the `boston` final model.
 As we can see from above, only two of the graphs seem to have a slope close to 0, and lots of others with non-parametric relationships. 
 This is a sign that the model is way more complex, compared to the `ames` dataset, where only 3 explanatory variables seemed to have non-parametric relationship with the response.
 
-### Only splines?
-
-What happens if we only use the variables with splines to predict the response `MEDV`? 
-As we've seen from the attempt in `ames`, the RMSE of only using splines as the explanatory variables had reduced the RMSE. 
-Would that work the same here?
 
 ```{r}
-# obtain predictions and test set RMSE
-
-boston_final_model2 <- gam(MEDV~ s(ZN) + s(PTRATIO) + s(TAX) + s(INDUS) + 
-    s(NOX) + s(B) + s(AGE) + s(DIS) + s(RM) + s(LSTAT) + s(CRIM),data=boston_baked_train) 
-
-boston_final_model_preds2<- predict(object = boston_final_model2, newdata = boston_baked_test, type = "response")    # obtain predictions
-
-sqrt(mean((boston_final_model_preds2 - boston_baked_test$MEDV)^2))   # calculate test set RMSE
-```
-
-
-```{r}
-coef(boston_final_model)
-```
-
-
-```{r}
-summary(boston_final_model)
+set.seed(111)
+gam.check(boston_final_model)
 ```
 
 
