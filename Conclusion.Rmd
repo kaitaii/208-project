@@ -8,7 +8,7 @@ In the process of trying to increase the p-value, we had came across the possibl
 concurvity(boston_final_model,full=TRUE)
 ```
 
-From the correlation table, which shows how much each smooth is predetermined by all the other smooths,notice that for all variables except for `B`, all of the smooths has at least 0.8 of worst case concurvity. 
+From the concurvity table, which shows how much each smooth is predetermined by all the other smooths,notice that for all variables except for `B`, all of the smooths has at least 0.8 of worst case concurvity. 
 The problem with having concurvity is that, if two variables have high concurvity and form a perfect parabola with each other, the confidence interval would be really wide, and negatively affect the ability of model prediction. 
 
 ```{r}

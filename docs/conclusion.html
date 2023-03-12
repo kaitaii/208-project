@@ -192,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Even though the RMSE from the boston final model was better than that of ames, we were still not satisfied with the result.
 The first problem is the low p-value for the basis k dimension from the boston final model.
 In the process of trying to increase the p-value, we had came across the possible explanation, that the concurvity of our model is too high.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="conclusion.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">concurvity</span>(boston_final_model,<span class="at">full=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="conclusion.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">concurvity</span>(boston_final_model,<span class="at">full=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>##                  para     s(ZN) s(PTRATIO)    s(TAX)  s(INDUS)    s(NOX)
 ## worst    3.594799e-17 0.9287231  0.9693997 0.9998736 0.9998697 0.9668546
 ## observed 3.594799e-17 0.7498905  0.8759169 0.9332306 0.9215548 0.6775295
@@ -201,9 +201,9 @@ In the process of trying to increase the p-value, we had came across the possibl
 ## worst    0.5103302 0.8551451 0.9495880 0.7725760 0.8605279 0.9823724
 ## observed 0.4525747 0.8311019 0.8860317 0.6858639 0.8224553 0.7821311
 ## estimate 0.4503063 0.7763011 0.8481623 0.5836800 0.7448919 0.3287977</code></pre>
-<p>From the correlation table, which shows how much each smooth is predetermined by all the other smooths,notice that for all variables except for <code>B</code>, all of the smooths has at least 0.8 of worst case concurvity.
+<p>From the concurvity table, which shows how much each smooth is predetermined by all the other smooths,notice that for all variables except for <code>B</code>, all of the smooths has at least 0.8 of worst case concurvity.
 The problem with having concurvity is that, if two variables have high concurvity and form a perfect parabola with each other, the confidence interval would be really wide, and negatively affect the ability of model prediction.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="conclusion.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">concurvity</span>(ames_final_model2,<span class="at">full=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="conclusion.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">concurvity</span>(ames_final_model2,<span class="at">full=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>##               para s(Garage_Cars) s(Overall_Qual) s(TotRms_AbvGrd)
 ## worst    0.8515993      0.9225410       0.7815817        0.7880980
 ## observed 0.8515993      0.7601708       0.7791756        0.5239233

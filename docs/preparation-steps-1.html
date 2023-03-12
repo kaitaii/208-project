@@ -192,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="data-investigation-1" class="section level3 hasAnchor" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Data Investigation<a href="preparation-steps-1.html#data-investigation-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Just as before, we first investigate the dataset to see if there’s any missing entries, non-numeric variables, or ZV/NZV features.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="preparation-steps-1.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(boston)  </span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="preparation-steps-1.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(boston)  </span></code></pre></div>
 <pre><code>## Rows: 506
 ## Columns: 14
 ## $ CRIM    &lt;dbl&gt; 0.00632, 0.02731, 0.02729, 0.03237, 0.06905, 0.02985, 0.08829,…
@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ B       &lt;dbl&gt; 396.90, 396.90, 392.83, 394.63, 396.90, 394.12, 395.60, 396.90…
 ## $ LSTAT   &lt;dbl&gt; 4.98, 9.14, 4.03, 2.94, 5.33, 5.21, 12.43, 19.15, 29.93, 17.10…
 ## $ MEDV    &lt;dbl&gt; 24.0, 21.6, 34.7, 33.4, 36.2, 28.7, 22.9, 27.1, 16.5, 18.9, 15…</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="preparation-steps-1.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(boston) </span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="preparation-steps-1.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(boston) </span></code></pre></div>
 <pre><code>##       CRIM                ZN             INDUS            CHAS        
 ##  Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   Min.   :0.00000  
 ##  1st Qu.: 0.08205   1st Qu.:  0.00   1st Qu.: 5.19   1st Qu.:0.00000  
@@ -238,23 +238,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  Mean   :12.65   Mean   :22.53  
 ##  3rd Qu.:16.95   3rd Qu.:25.00  
 ##  Max.   :37.97   Max.   :50.00</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="preparation-steps-1.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(boston)) </span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="preparation-steps-1.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(boston)) </span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="preparation-steps-1.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nearZeroVar</span>(boston) </span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="preparation-steps-1.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nearZeroVar</span>(boston) </span></code></pre></div>
 <pre><code>## integer(0)</code></pre>
 <p>Finding that there are 13 features in total and all of them are numerical variables. There is no NA value in the whole dataset and no zv or nzv features.</p>
 </div>
 <div id="data-spliting-1" class="section level3 hasAnchor" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> Data Spliting<a href="preparation-steps-1.html#data-spliting-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="preparation-steps-1.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)  </span>
-<span id="cb43-2"><a href="preparation-steps-1.html#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-3"><a href="preparation-steps-1.html#cb43-3" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(<span class="at">y =</span> boston<span class="sc">$</span>MEDV, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)   <span class="co"># consider 80-20 split</span></span>
-<span id="cb43-4"><a href="preparation-steps-1.html#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-5"><a href="preparation-steps-1.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Data Spliting </span></span>
-<span id="cb43-6"><a href="preparation-steps-1.html#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-7"><a href="preparation-steps-1.html#cb43-7" aria-hidden="true" tabindex="-1"></a>boston_train <span class="ot">&lt;-</span> boston[index,]   <span class="co"># training data</span></span>
-<span id="cb43-8"><a href="preparation-steps-1.html#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-9"><a href="preparation-steps-1.html#cb43-9" aria-hidden="true" tabindex="-1"></a>boston_test <span class="ot">&lt;-</span> boston[<span class="sc">-</span>index,]   <span class="co"># test data</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="preparation-steps-1.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)  </span>
+<span id="cb42-2"><a href="preparation-steps-1.html#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="preparation-steps-1.html#cb42-3" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(<span class="at">y =</span> boston<span class="sc">$</span>MEDV, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)   <span class="co"># consider 80-20 split</span></span>
+<span id="cb42-4"><a href="preparation-steps-1.html#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="preparation-steps-1.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Data Spliting </span></span>
+<span id="cb42-6"><a href="preparation-steps-1.html#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="preparation-steps-1.html#cb42-7" aria-hidden="true" tabindex="-1"></a>boston_train <span class="ot">&lt;-</span> boston[index,]   <span class="co"># training data</span></span>
+<span id="cb42-8"><a href="preparation-steps-1.html#cb42-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-9"><a href="preparation-steps-1.html#cb42-9" aria-hidden="true" tabindex="-1"></a>boston_test <span class="ot">&lt;-</span> boston[<span class="sc">-</span>index,]   <span class="co"># test data</span></span></code></pre></div>
 </div>
 </div>
             </section>

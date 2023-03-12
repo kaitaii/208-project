@@ -191,27 +191,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.3</span> Analysis<a href="analysis-1.html#analysis-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="bulid-model-1" class="section level3 hasAnchor" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> Bulid Model<a href="analysis-1.html#bulid-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="analysis-1.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
-<span id="cb46-2"><a href="analysis-1.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># implement 5-fold CV with no repeat</span></span>
-<span id="cb46-3"><a href="analysis-1.html#cb46-3" aria-hidden="true" tabindex="-1"></a>cv_specs <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)</span>
-<span id="cb46-4"><a href="analysis-1.html#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-5"><a href="analysis-1.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="co"># set tunegrid</span></span>
-<span id="cb46-6"><a href="analysis-1.html#cb46-6" aria-hidden="true" tabindex="-1"></a>tunegrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="at">select =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb46-7"><a href="analysis-1.html#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-8"><a href="analysis-1.html#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="co"># GAM model</span></span>
-<span id="cb46-9"><a href="analysis-1.html#cb46-9" aria-hidden="true" tabindex="-1"></a>boston_model <span class="ot">&lt;-</span> <span class="fu">train</span>(boston_blueprint,</span>
-<span id="cb46-10"><a href="analysis-1.html#cb46-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> boston_train,</span>
-<span id="cb46-11"><a href="analysis-1.html#cb46-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">&quot;gam&quot;</span>,</span>
-<span id="cb46-12"><a href="analysis-1.html#cb46-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="at">select =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb46-13"><a href="analysis-1.html#cb46-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">trControl =</span> cv_specs)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="analysis-1.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb45-2"><a href="analysis-1.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co"># implement 5-fold CV with no repeat</span></span>
+<span id="cb45-3"><a href="analysis-1.html#cb45-3" aria-hidden="true" tabindex="-1"></a>cv_specs <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)</span>
+<span id="cb45-4"><a href="analysis-1.html#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="analysis-1.html#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># set tunegrid</span></span>
+<span id="cb45-6"><a href="analysis-1.html#cb45-6" aria-hidden="true" tabindex="-1"></a>tunegrid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="at">select =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb45-7"><a href="analysis-1.html#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="analysis-1.html#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co"># GAM model</span></span>
+<span id="cb45-9"><a href="analysis-1.html#cb45-9" aria-hidden="true" tabindex="-1"></a>boston_model <span class="ot">&lt;-</span> <span class="fu">train</span>(boston_blueprint,</span>
+<span id="cb45-10"><a href="analysis-1.html#cb45-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> boston_train,</span>
+<span id="cb45-11"><a href="analysis-1.html#cb45-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">&quot;gam&quot;</span>,</span>
+<span id="cb45-12"><a href="analysis-1.html#cb45-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">method =</span> <span class="st">&quot;GCV.Cp&quot;</span>, <span class="at">select =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb45-13"><a href="analysis-1.html#cb45-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">trControl =</span> cv_specs)</span></code></pre></div>
 <p>We implement CV with no repeat here to ensure the model is not overfitting and is generalizable to new data, which is very important for GAM model.</p>
 </div>
 <div id="models-performance-1" class="section level3 hasAnchor" number="3.3.2">
 <h3><span class="header-section-number">3.3.2</span> Model’s Performance<a href="analysis-1.html#models-performance-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="analysis-1.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># RMSE</span></span>
-<span id="cb47-2"><a href="analysis-1.html#cb47-2" aria-hidden="true" tabindex="-1"></a>boston_model<span class="sc">$</span>results<span class="sc">$</span>RMSE</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="analysis-1.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># RMSE</span></span>
+<span id="cb46-2"><a href="analysis-1.html#cb46-2" aria-hidden="true" tabindex="-1"></a>boston_model<span class="sc">$</span>results<span class="sc">$</span>RMSE</span></code></pre></div>
 <pre><code>## [1] 3.989444</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="analysis-1.html#cb49-1" aria-hidden="true" tabindex="-1"></a>boston_model<span class="sc">$</span>finalMo</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="analysis-1.html#cb48-1" aria-hidden="true" tabindex="-1"></a>boston_model<span class="sc">$</span>finalMo</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 

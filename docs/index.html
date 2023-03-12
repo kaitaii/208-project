@@ -190,14 +190,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">CMSC 208 Final Project</h1>
 <p class="author"><em>Yi Lu, Shiyi Yang</em></p>
-<p class="date"><em>March 12, 2023 05:01 UTC</em></p>
+<p class="date"><em>March 12, 2023 20:26 UTC</em></p>
 </div>
 <div id="introduction" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">1</span> Introduction<a href="index.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Generalized Additive Models is a powerful extension of the linear regression model that can capture complex nonlinear relationships between predictors and response variables.
-Unlike linear regression, GAMs allow for non-linear function of each variable, while maintaining their additivity.
-Instead of <span class="math inline">\(y = \beta_0 + \beta_1x_1 + \beta_2x_2+...+\epsilon\)</span>, GAMs have a function of <span class="math inline">\(y = \beta_0 + f_1(x_1) + f_2(x_2) + ... +\epsilon\)</span>, where <span class="math inline">\(f(xi)\)</span> represent a (smooth) non-linear function.
-GAMs can also model interactions between variables and handle different types of data, including continuous, categorical, and ordinal variables.</p>
+<p>Generalized Additive Models is a powerful extension of the linear regression model that can capture complex nonlinear relationships between predictors and response variables.</p>
+<p>Unlike linear regression, GAMs allow for non-linear function of each variable, while maintaining their additivity. Instead of <span class="math inline">\(y = \beta_0 + \beta_1x_1 + \beta_2x_2+...+\epsilon\)</span>, GAMs have a function of <span class="math inline">\(y = \beta_0 + f_1(x_1) + f_2(x_2) + ... +\epsilon\)</span>, where <span class="math inline">\(f(x_i)\)</span> represent a (smooth) non-linear function.</p>
+<p>GAMs can also model interactions between variables and handle different types of data, including continuous, categorical, and ordinal variables.</p>
 <p>In this project, we are trying to imply this new model we learned and explored the performance of it on two datasets, <code>ames</code> and <code>boston</code>, which have different features and complexity.
 However, our initial results on the ames dataset were a bit disappointing, with a very large Root Mean Squared Error (RMSE) on both the training and test datasets, indicating poor performance.</p>
 <p>To address this issue, we further investigated the model and its hyper-parameters, and implemented the hyper-parameters on both <code>ames</code> and <code>boston</code> datasets.
