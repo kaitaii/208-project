@@ -8,7 +8,48 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Data Description:
 
-First, we use the `ames` dataset that we used in class, since we want to first learn how to apply this model and then do further investigation. 
+First, we use the `ames` dataset that we used in class, since we want to first learn how to apply this model and then do further investigation.
+Response variable: 
+
+1)`Sale_Price`: Property sale price in USD
+
+Explanatory variable:
+
+1) `Gr_Liv_Area`: Above grade (ground) living area square feet
+
+2) `Garage_Type`: Garage location
+
+3) `Garage_Cars`: Size of garage in car capacity
+
+4) `Garage_Area`: Size of garage in square feet
+
+5) `Street`: Type of road access to property
+
+6) `Utilities`: Type of utilities available
+
+7) `Pool_Area`: Pool area in square feet
+
+8) `Neighborhood`: Physical locations within Ames city limits
+
+9) `Screen_Porch`: Screen porch area in square feet
+
+10) `Overall_Qual`: Rates the overall material and finish of the house
+
+11) `Lot_Area`: Lot size in square feet
+
+12) `Lot_Frontage`: Linear feet of street connected to property
+
+13) `MS_SubClass`: Identifies the type of dwelling involved in the sale.
+
+14) `Misc_Val`: Dollar value of miscellaneous feature
+
+15) `Open_Porch_SF`: Open porch area in square feet
+
+16) `TotRms_AbvGrd`: Total rooms above grade (does not include bathrooms) · First_Flr_SF: First Floor square feet
+
+17) `Second_Flr_SF`: Second floor square feet
+
+18) `Year_Built`: Original construction date
 
 ```{r,echo=FALSE,warning=FALSE, include=FALSE}
 library(tidyverse)
@@ -159,7 +200,7 @@ plot(ames_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue",pch 
 ```
 
 Here we have the residual plot of those variables that had applied splines function, and the blue shades represent the 95% confidence interval. 
-From the graphs for Gr_Liv_Area and Lot_Area, we could see that the tails are drawn to the noises, letting it change the slope, which should not be happening. 
+From the graphs for `Gr_Liv_Area` and `Lot_Area`, we could see that the tails are drawn to the noises, letting it change the slope, which should not be happening. 
 
 In order to create a well-fit final model, we have to recognize what is wrong with out current model.
 First, let's look at the several plots `gam.check` had produced. 
@@ -170,10 +211,10 @@ gam.check(ames_final_model)
 
 From the Q-Q plot, we could see that there is a clear trend to the residuals; from the residual values plot, we could see that there's a cluster of points, and maybe a negative slope; from the histogram, we could see that there is a bell-shaped curve; and from the response vs. fitted values plot, we could see that the values are fitted pretty good. 
 We should also look at the table generated from `gam.check`.
-The table shows the k value, effective degrees of freedom, test statistics, and p-value of each basis functions. 
-The k value is very similar to the "knots" in MARS, representing how many basic function is used to fit the model. 
-
-What could be use the smoothing parameters `λ` and `k`
+The table shows the `k` value, effective degrees of freedom, test statistics, and p-value of each basis functions. 
+The `k` value is very similar to the "knots" in MARS, representing how many basis function is used to fit the model, and could be used as the smoothing parameter. 
+Another smoothing parameter we would use is `λ`, since `FIT=Likelihood-λ*Wiggliness` is how the fit of GAM model is calculated.
+The likelihood represents how well the model captures patterns in the data, and wiggliness represents the complexity of the model. 
 
 
 ```{r}
@@ -185,7 +226,8 @@ ames_final_model_preds2<- predict(object = ames_final_model2, newdata = ames_bak
 sqrt(mean((ames_final_model_preds2- ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
 ```
 
-
+After seeing where the problem was, we started using the smoothing parameter to tune the variables.
+From the formula above, we know that, the more wiggly we want the variable to fit, the smaller `λ` needs to be (between 0 and 1), and if we want the fit to be less wiggly, `λ` has to be bigger than 1. 
 
 ```{r}
 plot(ames_final_model2, residuals=TRUE,shade = TRUE, shade.col = "lightblue")
