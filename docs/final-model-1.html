@@ -191,6 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.4</span> Final Model<a href="final-model-1.html#final-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="prediction-on-test-dataset-1" class="section level3 hasAnchor" number="3.4.1">
 <h3><span class="header-section-number">3.4.1</span> Prediction on Test Dataset<a href="final-model-1.html#prediction-on-test-dataset-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="final-model-1.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain predictions and test set RMSE</span></span>
 <span id="cb51-2"><a href="final-model-1.html#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-3"><a href="final-model-1.html#cb51-3" aria-hidden="true" tabindex="-1"></a>boston_final_model <span class="ot">&lt;-</span> <span class="fu">gam</span>(MEDV <span class="sc">~</span> CHAS <span class="sc">+</span> RAD <span class="sc">+</span> <span class="fu">s</span>(ZN, <span class="at">sp =</span> <span class="fl">0.1</span>, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(PTRATIO, <span class="at">sp =</span> <span class="fl">0.1</span>, <span class="at">k =</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">s</span>(TAX, <span class="at">sp =</span> <span class="fl">0.5</span>, <span class="at">k =</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">s</span>(INDUS, <span class="at">sp =</span> <span class="fl">0.1</span>, <span class="at">k =</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">s</span>(NOX, <span class="at">sp =</span> <span class="fl">0.01</span>, <span class="at">k =</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">s</span>(B, <span class="at">sp =</span> <span class="dv">8</span>, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(AGE, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(DIS,<span class="at">sp =</span> <span class="fl">0.01</span>, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(RM,<span class="at">sp =</span> <span class="fl">0.8</span>, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(LSTAT, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(CRIM, <span class="at">k =</span> <span class="dv">9</span>), <span class="at">data =</span> boston_baked_train) </span>
@@ -199,21 +200,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb51-6"><a href="final-model-1.html#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-7"><a href="final-model-1.html#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((boston_final_model_preds <span class="sc">-</span> boston_baked_test<span class="sc">$</span>MEDV)<span class="sc">^</span><span class="dv">2</span>))   <span class="co"># calculate test set RMSE</span></span></code></pre></div>
 <pre><code>## [1] 2.62626</code></pre>
+=======
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="final-model-1.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain predictions and test set RMSE</span></span>
+<span id="cb52-2"><a href="final-model-1.html#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="final-model-1.html#cb52-3" aria-hidden="true" tabindex="-1"></a>boston_final_model <span class="ot">&lt;-</span> <span class="fu">gam</span>(MEDV <span class="sc">~</span> CHAS <span class="sc">+</span> RAD <span class="sc">+</span> <span class="fu">s</span>(ZN, <span class="at">sp =</span> <span class="dv">1</span>, <span class="at">k =</span> <span class="dv">8</span>) <span class="sc">+</span> <span class="fu">s</span>(PTRATIO, <span class="at">sp =</span> <span class="fl">0.1</span>, <span class="at">k =</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">s</span>(TAX, <span class="at">sp =</span> <span class="fl">1.2</span>, <span class="at">k =</span> <span class="dv">13</span>) <span class="sc">+</span> <span class="fu">s</span>(INDUS,<span class="at">sp =</span> <span class="fl">0.1</span>, <span class="at">k =</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">s</span>(NOX, <span class="at">sp =</span> <span class="fl">0.01</span>, <span class="at">k =</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">s</span>(B, <span class="at">sp =</span> <span class="dv">8</span>, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(AGE, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(DIS,<span class="at">sp =</span> <span class="fl">0.01</span>, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(RM,<span class="at">sp =</span> <span class="fl">0.8</span>, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(LSTAT, <span class="at">k =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(CRIM, <span class="at">k =</span> <span class="dv">9</span>), <span class="at">data =</span> boston_baked_train) </span>
+<span id="cb52-4"><a href="final-model-1.html#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="final-model-1.html#cb52-5" aria-hidden="true" tabindex="-1"></a>boston_final_model_preds<span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> boston_final_model, <span class="at">newdata =</span> boston_baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)    <span class="co"># obtain predictions</span></span>
+<span id="cb52-6"><a href="final-model-1.html#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-7"><a href="final-model-1.html#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((boston_final_model_preds <span class="sc">-</span> boston_baked_test<span class="sc">$</span>MEDV)<span class="sc">^</span><span class="dv">2</span>))   <span class="co"># calculate test set RMSE</span></span></code></pre></div>
+<pre><code>## [1] 2.628545</code></pre>
+>>>>>>> ce0c153d454ffbad1227cec4567994f216f6ca4a
 <p>The test set RMSE is even smaller, which is a good sign.</p>
 <p>Comparing with the first model using GAM model for <code>ames</code> dataset, using it for <code>boston</code> dataset seems to be a lot better.
 The reason to that is the fact that the <code>boston</code> dataset is a lot more complex then the <code>ames</code> dataset.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="final-model-1.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boston_final_model, <span class="at">residuals=</span><span class="cn">TRUE</span>,<span class="at">shade =</span> <span class="cn">TRUE</span>, <span class="at">shade.col =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="at">pch =</span> <span class="dv">1</span>)</span></code></pre></div>
+=======
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="final-model-1.html#cb54-1" aria-hidden="true" tabindex="-1"></a>boston_final_model<span class="sc">$</span>sp</span></code></pre></div>
+<pre><code>##       s(AGE)     s(LSTAT)      s(CRIM) 
+## 1.494081e+09 1.072045e-02 1.667002e-02</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="final-model-1.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boston_final_model, <span class="at">residuals=</span><span class="cn">TRUE</span>,<span class="at">shade =</span> <span class="cn">TRUE</span>, <span class="at">shade.col =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="at">pch =</span> <span class="dv">1</span>)</span></code></pre></div>
+>>>>>>> ce0c153d454ffbad1227cec4567994f216f6ca4a
 <p><img src="GAM_files/figure-html/unnamed-chunk-24-1.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-2.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-3.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-4.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-5.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-6.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-7.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-8.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-9.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-10.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-24-11.png" width="672" /></p>
 <p>Let’s look at the residual plot for the <code>boston</code> final model.
 As we can see from above, only two of the graphs seem to have a slope close to 0, and lots of others with non-parametric relationships.
 This is a sign that the model is way more complex, compared to the <code>ames</code> dataset, where only 3 explanatory variables seemed to have non-parametric relationship with the response.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="final-model-1.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
 <span id="cb54-2"><a href="final-model-1.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(boston_final_model)</span></code></pre></div>
+=======
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="final-model-1.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb57-2"><a href="final-model-1.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(boston_final_model)</span></code></pre></div>
+>>>>>>> ce0c153d454ffbad1227cec4567994f216f6ca4a
 <p><img src="GAM_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <pre><code>## 
 ## Method: GCV   Optimizer: magic
 ## Smoothing parameter selection converged after 14 iterations.
+<<<<<<< HEAD
 ## The RMS GCV score gradient at convergence was 8.721706e-07 .
+=======
+## The RMS GCV score gradient at convergence was 8.826314e-07 .
+>>>>>>> ce0c153d454ffbad1227cec4567994f216f6ca4a
 ## The Hessian was positive definite.
 ## Model rank =  103 / 103 
 ## 
@@ -221,6 +248,7 @@ This is a sign that the model is way more complex, compared to the <code>ames</c
 ## indicate that k is too low, especially if edf is close to k&#39;.
 ## 
 ##               k&#39;   edf k-index p-value    
+<<<<<<< HEAD
 ## s(ZN)       8.00  3.74    0.72  &lt;2e-16 ***
 ## s(PTRATIO) 11.00  5.07    0.73  &lt;2e-16 ***
 ## s(TAX)     11.00  4.26    0.72  &lt;2e-16 ***
@@ -235,6 +263,21 @@ This is a sign that the model is way more complex, compared to the <code>ames</c
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>However, after several attempts, we were not able to increase the p-value of the basis dimension values and k-index.</p>
+=======
+## s(ZN)       7.00  2.28    0.71  &lt;2e-16 ***
+## s(PTRATIO) 11.00  5.12    0.72  &lt;2e-16 ***
+## s(TAX)     12.00  3.57    0.72  &lt;2e-16 ***
+## s(INDUS)   11.00  4.30    0.68  &lt;2e-16 ***
+## s(NOX)     11.00  8.39    0.88  &lt;2e-16 ***
+## s(B)        8.00  1.42    0.99    0.45    
+## s(AGE)      8.00  1.00    1.05    0.80    
+## s(DIS)      8.00  6.42    0.84  &lt;2e-16 ***
+## s(RM)       8.00  3.16    0.93    0.04 *  
+## s(LSTAT)    8.00  6.93    1.03    0.76    
+## s(CRIM)     8.00  4.42    1.03    0.77    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+>>>>>>> ce0c153d454ffbad1227cec4567994f216f6ca4a
 
 </div>
 </div>

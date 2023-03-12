@@ -140,7 +140,7 @@ From the result, seeing that the RMSE is very small here, around 4, which indica
 ```{r}
 # obtain predictions and test set RMSE
 
-boston_final_model <- gam(MEDV ~ CHAS + RAD + s(ZN, sp = 0.1, k = 9) + s(PTRATIO, sp = 0.1, k = 12) + s(TAX, sp = 0.5, k = 12) + s(INDUS, sp = 0.1, k = 12) + s(NOX, sp = 0.01, k = 12) + s(B, sp = 8, k = 9) + s(AGE, k = 9) + s(DIS,sp = 0.01, k = 9) + s(RM,sp = 0.8, k = 9) + s(LSTAT, k = 9) + s(CRIM, k = 9), data = boston_baked_train) 
+boston_final_model <- gam(MEDV ~ CHAS + RAD + s(ZN, sp = 1, k = 8) + s(PTRATIO, sp = 0.1, k = 12) + s(TAX, sp = 1.2, k = 13) + s(INDUS,sp = 0.1, k = 12) + s(NOX, sp = 0.01, k = 12) + s(B, sp = 8, k = 9) + s(AGE, k = 9) + s(DIS,sp = 0.01, k = 9) + s(RM,sp = 0.8, k = 9) + s(LSTAT, k = 9) + s(CRIM, k = 9), data = boston_baked_train) 
 
 boston_final_model_preds<- predict(object = boston_final_model, newdata = boston_baked_test, type = "response")    # obtain predictions
 
