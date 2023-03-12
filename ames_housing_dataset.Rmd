@@ -116,7 +116,7 @@ ames_model<-train(ames_blueprint,
 
 We implement 5 fold CV with 5 repeats here to ensure the model is not overfitting and is generalizable to new data, which is very important for GAM model.
 
-For the model, Method = "gam" indicates the smoothing parameter estimation method, GCV for models with unknown scale parameter and Mallows' Cp/UBRE/AIC for models with known scale; select=TRUE adds extra penalty so that the smoothing parameter estimation can completely remove terms from the model
+For the model, `Method = "gam"` indicates the smoothing parameter estimation method, `GCV` for models with unknown scale parameter and Mallows' Cp/UBRE/AIC for models with known scale; `select=TRUE` adds extra penalty so that the smoothing parameter estimation can completely remove terms from the model
 
 
 ### Model's Performance
@@ -127,7 +127,10 @@ ames_model$results$RMSE
 ames_model$finalMo
 ```
 
-Here we could see that the RMSE is 70421.17, which is pretty high, probably due to the size of the dataset being big. We could also look at the formula of the final model generated from training. It shows that out of the 53 variables, only 9 of the variables have a non-parametric relationship with the response. This could also be the reason for the high RMSE.
+Here we could see that the RMSE is 70421.17, which is pretty high, probably due to the size of the dataset being big. 
+We could also look at the formula of the final model generated from training. 
+It shows that out of the 53 variables, only 9 of the variables have a non-parametric relationship with the response. 
+This could also be the reason for the high RMSE.
 
 ## Final Model
 
@@ -147,7 +150,9 @@ ames_final_model_preds<- predict(object = ames_final_model, newdata = ames_baked
 sqrt(mean((ames_final_model_preds- ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
 ```
 
-Using the formula provided from training, we tried to fit the GAM model. The RMSE of the final model is 195576.6, compared to 70421.17 previously. Obviously, this is not ideal, since now the RMSE is more than two times higher. Why?
+Using the formula provided from training, we tried to fit the GAM model. 
+The RMSE of the final model is 195576.6, compared to 70421.17 previously. 
+Obviously, this is not ideal, since now the RMSE is more than two times higher. Why?
 
 ```{r}
 plot(ames_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue",pch = 1, cex = 0.5)
@@ -156,44 +161,45 @@ plot(ames_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue",pch 
 Here we have the residual plot of those variables that had applied splines function, and the blue shades represent the 95% confidence interval. 
 From the graphs for Gr_Liv_Area and Lot_Area, we could see that the tails are drawn to the noises, letting it change the slope, which should not be happening. 
 
-In order to create a well-fit final model, we have to use the smoothing parameters λ and k. 
+In order to create a well-fit final model, we have to recognize what is wrong with out current model.
+First, let's look at the several plots `gam.check` had produced. 
+
 ```{r}
 gam.check(ames_final_model)
 ```
 
+From the Q-Q plot, we could see that there is a clear trend to the residuals; from the residual values plot, we could see that there's a cluster of points, and maybe a negative slope; from the histogram, we could see that there is a bell-shaped curve; and from the response vs. fitted values plot, we could see that the values are fitted pretty good. 
+We should also look at the table generated from `gam.check`.
+The table shows the k value, effective degrees of freedom, test statistics, and p-value of each basis functions. 
+The k value is very similar to the "knots" in MARS, representing how many basic function is used to fit the model. 
+
+What could be use the smoothing parameters `λ` and `k`
 
 
+```{r}
+# build final model
+ames_final_model2 <- gam(Sale_Price~Garage_Type_BuiltIn + Garage_Type_Detchd + Garage_Type_No_Garage + Neighborhood_College_Creek + Neighborhood_Old_Town + Neighborhood_Edwards + Neighborhood_Somerset + Neighborhood_Northridge_Heights + Neighborhood_Gilbert + Neighborhood_Sawyer + MS_SubClass_One_and_Half_Story_Finished_All_Ages + MS_SubClass_Two_Story_1946_and_Newer + MS_SubClass_Duplex_All_Styles_and_Ages + 
+MS_SubClass_One_Story_PUD_1946_and_Newer + s(Garage_Cars,sp=0.1,k=2) + s(Overall_Qual,k=3) + s(TotRms_AbvGrd,sp=0.01,k=11) + s(Lot_Frontage,sp=0.1,k=6) +s(Year_Built,sp=0.0001,k=24) + s(Open_Porch_SF,sp=0.15,k=9) + s(Second_Flr_SF,sp=0.9,k=7) + s(Garage_Area,sp=1,k=5) + s(Gr_Liv_Area,sp=0.4,k=6) + s(First_Flr_SF,sp=0.001,k=3) + s(Lot_Area,sp=1,k=3) ,data=ames_baked_train) 
+ames_final_model_preds2<- predict(object = ames_final_model2, newdata = ames_baked_test, type = "response")    # obtain predictions
 
+sqrt(mean((ames_final_model_preds2- ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
+```
 
 
 
 ```{r}
-plot(ames_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue")
+plot(ames_final_model2, residuals=TRUE,shade = TRUE, shade.col = "lightblue")
 ```
 
-
+```{r}
+gam.check(ames_final_model2)
+```
 Noticing that the RMSE for both train dataset and test dataset are all large, especailly for test dataset, which means the GAM model didn't work well for ames housing dataset. In order to show a better performance, we found another dataset, boston housing, to have a try. 
 
 
 
 
-```{r}
-# build final model
-ames_final_model <- gam(Sale_Price~Garage_Type_BuiltIn + Garage_Type_Detchd + Garage_Type_No_Garage + Neighborhood_College_Creek + Neighborhood_Old_Town + Neighborhood_Edwards + Neighborhood_Somerset + Neighborhood_Northridge_Heights + Neighborhood_Gilbert + Neighborhood_Sawyer + MS_SubClass_One_and_Half_Story_Finished_All_Ages + MS_SubClass_Two_Story_1946_and_Newer + MS_SubClass_Duplex_All_Styles_and_Ages + 
-MS_SubClass_One_Story_PUD_1946_and_Newer + s(Garage_Cars,k=5) + s(Overall_Qual,k=9) + s(TotRms_AbvGrd,k=9) + s(Lot_Frontage,k=9) + s(Year_Built,sp=0.1,k=6) + s(Open_Porch_SF,k=9) + s(Second_Flr_SF,k=9) + s(Garage_Area,sp=1,k=9) + s(Gr_Liv_Area,sp=1,k=9) + s(First_Flr_SF,sp=-0.001,k=3) + s(Lot_Area,sp=1,k=4) ,data=ames_baked_train) 
-```
 
-
-
-## Only splines?
-
-```{r}
-ames_final_model2 <- gam(Sale_Price~ s(Gr_Liv_Area) + 
-    s(First_Flr_SF) + s(Lot_Area) ,data=ames_baked_train) 
-ames_final_model_preds2<- predict(object = ames_final_model2, newdata = ames_baked_test, type = "response")    # obtain predictions
-
-sqrt(mean((ames_final_model_preds2 - ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
-```
 
 
 
