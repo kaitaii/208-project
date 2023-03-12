@@ -158,7 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1.1" data-path="preparation-steps-1.html"><a href="preparation-steps-1.html#data-investigation-1"><i class="fa fa-check"></i><b>3.1.1</b> Data Investigation</a></li>
 <li class="chapter" data-level="3.1.2" data-path="preparation-steps-1.html"><a href="preparation-steps-1.html#data-spliting-1"><i class="fa fa-check"></i><b>3.1.2</b> Data Spliting</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="recipt-and-blueprint-1.html"><a href="recipt-and-blueprint-1.html"><i class="fa fa-check"></i><b>3.2</b> Recipt and Blueprint</a></li>
+<li class="chapter" data-level="3.2" data-path="recipe-and-blueprint.html"><a href="recipe-and-blueprint.html"><i class="fa fa-check"></i><b>3.2</b> Recipe and Blueprint</a></li>
 <li class="chapter" data-level="3.3" data-path="analysis-1.html"><a href="analysis-1.html"><i class="fa fa-check"></i><b>3.3</b> Analysis</a>
 <ul>
 <li class="chapter" data-level="3.3.1" data-path="analysis-1.html"><a href="analysis-1.html#bulid-model-1"><i class="fa fa-check"></i><b>3.3.1</b> Bulid Model</a></li>
@@ -167,7 +167,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4" data-path="final-model-1.html"><a href="final-model-1.html"><i class="fa fa-check"></i><b>3.4</b> Final Model</a>
 <ul>
 <li class="chapter" data-level="3.4.1" data-path="final-model-1.html"><a href="final-model-1.html#prediction-on-test-dataset-1"><i class="fa fa-check"></i><b>3.4.1</b> Prediction on Test Dataset</a></li>
-<li class="chapter" data-level="3.4.2" data-path="final-model-1.html"><a href="final-model-1.html#only-splines"><i class="fa fa-check"></i><b>3.4.2</b> Only splines?</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>4</b> Conclusion</a></li>
@@ -190,6 +189,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="conclusion" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">4</span> Conclusion<a href="conclusion.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Even though the RMSE from the boston final model was better than that of ames, we were still not satisfied with the result.
+The first problem is the low p-value for the basis k dimension from the boston final model.
+In the process of trying to increase the p-value, we had came across the possible explanation, that the concurvity of our model is too high.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="conclusion.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">concurvity</span>(boston_final_model,<span class="at">full=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##                  para     s(ZN) s(PTRATIO)    s(TAX)  s(INDUS)    s(NOX)
+## worst    3.751579e-17 0.9237290  0.9670236 0.9998832 0.9998795 0.9678524
+## observed 3.751579e-17 0.6489464  0.8752870 0.9257757 0.9177210 0.6799442
+## estimate 3.751579e-17 0.8652185  0.8392224 0.9605631 0.9114781 0.8280104
+##               s(B)    s(AGE)    s(DIS)     s(RM)  s(LSTAT)   s(CRIM)
+## worst    0.5109025 0.8556897 0.9484437 0.7730773 0.8631137 0.9824971
+## observed 0.4520965 0.8320833 0.8858404 0.6869104 0.8264678 0.7936450
+## estimate 0.4504998 0.7777118 0.8497868 0.5836476 0.7463859 0.3288903</code></pre>
+<p>From the correlation table, which shows how much each smooth is predetermined by all the other smooths,notice that for all variables except for <code>B</code>, all of the smooths has at least 0.8 of worst case concurvity.
+The problem with having concurvity is that, if two variables have high concurvity and form a perfect parabola with each other, the confidence interval would be really wide, and negatively affect the ability of model prediction.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="conclusion.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">concurvity</span>(ames_final_model2,<span class="at">full=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##               para s(Garage_Cars) s(Overall_Qual) s(TotRms_AbvGrd)
+## worst    0.8515993      0.9225410       0.7815817        0.7880980
+## observed 0.8515993      0.7601708       0.7791756        0.5239233
+## estimate 0.8515993      0.8729244       0.7568255        0.7343907
+##          s(Lot_Frontage) s(Year_Built) s(Open_Porch_SF) s(Second_Flr_SF)
+## worst          0.5672953     0.8254358        0.4569746        0.9287979
+## observed       0.5442263     0.6477651        0.2792555        0.9049044
+## estimate       0.3707956     0.6689463        0.3191145        0.8286263
+##          s(Garage_Area) s(Gr_Liv_Area) s(First_Flr_SF) s(Lot_Area)
+## worst         0.9528111      0.9431845       0.9286778   0.6092605
+## observed      0.6167421      0.9185987       0.9109896   0.5703752
+## estimate      0.7947228      0.8660314       0.9233605   0.5703277</code></pre>
+<p>Here we can see the concurvity table of our second ames model.
+Similarly, this model also has some high worst case concurvities, but slightly less in nunmber compared to the boston model.</p>
+<p><img src="amesqq.png" alt="Ames Q-Q Plot" />
+<img src="bostonqq.png" alt="Boston Q-Q Plot" /></p>
+<p>From both the Q-Q plots, we can see the problem with concurvity more clearly.
+Both models still have trends in the graph, but ames model performs a little better by being more linear.</p>
+<p>In conclusion, when using Generalized Additive models, it’s a good idea to always check the concurvity within the models, even if you’re getting very low RMSE values.
+It’s possible that through using smoothing parameters, the RMSE lowers, but the existence of high concurvity would always be a bad sign in using GAM.</p>
 
 </div>
             </section>

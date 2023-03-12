@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.1 Preparation Steps | CMSC 208 Final Project</title>
-  <meta name="description" content="3.1 Preparation Steps | CMSC 208 Final Project" />
+  <title>3.2 Recipe and Blueprint | CMSC 208 Final Project</title>
+  <meta name="description" content="3.2 Recipe and Blueprint | CMSC 208 Final Project" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.1 Preparation Steps | CMSC 208 Final Project" />
+  <meta property="og:title" content="3.2 Recipe and Blueprint | CMSC 208 Final Project" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.1 Preparation Steps | CMSC 208 Final Project" />
+  <meta name="twitter:title" content="3.2 Recipe and Blueprint | CMSC 208 Final Project" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="boston-housing-dataset-example.html"/>
-<link rel="next" href="recipe-and-blueprint.html"/>
+<link rel="prev" href="preparation-steps-1.html"/>
+<link rel="next" href="analysis-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -187,83 +187,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="preparation-steps-1" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Preparation Steps<a href="preparation-steps-1.html#preparation-steps-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="data-investigation-1" class="section level3 hasAnchor" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> Data Investigation<a href="preparation-steps-1.html#data-investigation-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Just as before, we first investigate the dataset to see if there’s any missing entries, non-numeric variables, or ZV/NZV features.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="preparation-steps-1.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(boston)  </span></code></pre></div>
-<pre><code>## Rows: 506
-## Columns: 14
-## $ CRIM    &lt;dbl&gt; 0.00632, 0.02731, 0.02729, 0.03237, 0.06905, 0.02985, 0.08829,…
-## $ ZN      &lt;dbl&gt; 18.0, 0.0, 0.0, 0.0, 0.0, 0.0, 12.5, 12.5, 12.5, 12.5, 12.5, 1…
-## $ INDUS   &lt;dbl&gt; 2.31, 7.07, 7.07, 2.18, 2.18, 2.18, 7.87, 7.87, 7.87, 7.87, 7.…
-## $ CHAS    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
-## $ NOX     &lt;dbl&gt; 0.538, 0.469, 0.469, 0.458, 0.458, 0.458, 0.524, 0.524, 0.524,…
-## $ RM      &lt;dbl&gt; 6.575, 6.421, 7.185, 6.998, 7.147, 6.430, 6.012, 6.172, 5.631,…
-## $ AGE     &lt;dbl&gt; 65.2, 78.9, 61.1, 45.8, 54.2, 58.7, 66.6, 96.1, 100.0, 85.9, 9…
-## $ DIS     &lt;dbl&gt; 4.0900, 4.9671, 4.9671, 6.0622, 6.0622, 6.0622, 5.5605, 5.9505…
-## $ RAD     &lt;dbl&gt; 1, 2, 2, 3, 3, 3, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4,…
-## $ TAX     &lt;dbl&gt; 296, 242, 242, 222, 222, 222, 311, 311, 311, 311, 311, 311, 31…
-## $ PTRATIO &lt;dbl&gt; 15.3, 17.8, 17.8, 18.7, 18.7, 18.7, 15.2, 15.2, 15.2, 15.2, 15…
-## $ B       &lt;dbl&gt; 396.90, 396.90, 392.83, 394.63, 396.90, 394.12, 395.60, 396.90…
-## $ LSTAT   &lt;dbl&gt; 4.98, 9.14, 4.03, 2.94, 5.33, 5.21, 12.43, 19.15, 29.93, 17.10…
-## $ MEDV    &lt;dbl&gt; 24.0, 21.6, 34.7, 33.4, 36.2, 28.7, 22.9, 27.1, 16.5, 18.9, 15…</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="preparation-steps-1.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(boston) </span></code></pre></div>
-<pre><code>##       CRIM                ZN             INDUS            CHAS        
-##  Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   Min.   :0.00000  
-##  1st Qu.: 0.08205   1st Qu.:  0.00   1st Qu.: 5.19   1st Qu.:0.00000  
-##  Median : 0.25651   Median :  0.00   Median : 9.69   Median :0.00000  
-##  Mean   : 3.61352   Mean   : 11.36   Mean   :11.14   Mean   :0.06917  
-##  3rd Qu.: 3.67708   3rd Qu.: 12.50   3rd Qu.:18.10   3rd Qu.:0.00000  
-##  Max.   :88.97620   Max.   :100.00   Max.   :27.74   Max.   :1.00000  
-##       NOX               RM             AGE              DIS        
-##  Min.   :0.3850   Min.   :3.561   Min.   :  2.90   Min.   : 1.130  
-##  1st Qu.:0.4490   1st Qu.:5.886   1st Qu.: 45.02   1st Qu.: 2.100  
-##  Median :0.5380   Median :6.208   Median : 77.50   Median : 3.207  
-##  Mean   :0.5547   Mean   :6.285   Mean   : 68.57   Mean   : 3.795  
-##  3rd Qu.:0.6240   3rd Qu.:6.623   3rd Qu.: 94.08   3rd Qu.: 5.188  
-##  Max.   :0.8710   Max.   :8.780   Max.   :100.00   Max.   :12.127  
-##       RAD              TAX           PTRATIO            B         
-##  Min.   : 1.000   Min.   :187.0   Min.   :12.60   Min.   :  0.32  
-##  1st Qu.: 4.000   1st Qu.:279.0   1st Qu.:17.40   1st Qu.:375.38  
-##  Median : 5.000   Median :330.0   Median :19.05   Median :391.44  
-##  Mean   : 9.549   Mean   :408.2   Mean   :18.46   Mean   :356.67  
-##  3rd Qu.:24.000   3rd Qu.:666.0   3rd Qu.:20.20   3rd Qu.:396.23  
-##  Max.   :24.000   Max.   :711.0   Max.   :22.00   Max.   :396.90  
-##      LSTAT            MEDV      
-##  Min.   : 1.73   Min.   : 5.00  
-##  1st Qu.: 6.95   1st Qu.:17.02  
-##  Median :11.36   Median :21.20  
-##  Mean   :12.65   Mean   :22.53  
-##  3rd Qu.:16.95   3rd Qu.:25.00  
-##  Max.   :37.97   Max.   :50.00</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="preparation-steps-1.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(boston)) </span></code></pre></div>
-<pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="preparation-steps-1.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nearZeroVar</span>(boston) </span></code></pre></div>
-<pre><code>## integer(0)</code></pre>
-<p>Finding that there are 13 features in total and all of them are numerical variables. There is no NA value in the whole dataset and no zv or nzv features.</p>
-</div>
-<div id="data-spliting-1" class="section level3 hasAnchor" number="3.1.2">
-<h3><span class="header-section-number">3.1.2</span> Data Spliting<a href="preparation-steps-1.html#data-spliting-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="preparation-steps-1.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)  </span>
-<span id="cb43-2"><a href="preparation-steps-1.html#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-3"><a href="preparation-steps-1.html#cb43-3" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(<span class="at">y =</span> boston<span class="sc">$</span>MEDV, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)   <span class="co"># consider 80-20 split</span></span>
-<span id="cb43-4"><a href="preparation-steps-1.html#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-5"><a href="preparation-steps-1.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Data Spliting </span></span>
-<span id="cb43-6"><a href="preparation-steps-1.html#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-7"><a href="preparation-steps-1.html#cb43-7" aria-hidden="true" tabindex="-1"></a>boston_train <span class="ot">&lt;-</span> boston[index,]   <span class="co"># training data</span></span>
-<span id="cb43-8"><a href="preparation-steps-1.html#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-9"><a href="preparation-steps-1.html#cb43-9" aria-hidden="true" tabindex="-1"></a>boston_test <span class="ot">&lt;-</span> boston[<span class="sc">-</span>index,]   <span class="co"># test data</span></span></code></pre></div>
-</div>
+<div id="recipe-and-blueprint" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Recipe and Blueprint<a href="recipe-and-blueprint.html#recipe-and-blueprint" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="recipe-and-blueprint.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up recipe </span></span>
+<span id="cb44-2"><a href="recipe-and-blueprint.html#cb44-2" aria-hidden="true" tabindex="-1"></a>boston_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(MEDV <span class="sc">~</span> ., <span class="at">data =</span> boston_train)</span>
+<span id="cb44-3"><a href="recipe-and-blueprint.html#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="recipe-and-blueprint.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># set up blueprint</span></span>
+<span id="cb44-5"><a href="recipe-and-blueprint.html#cb44-5" aria-hidden="true" tabindex="-1"></a>boston_blueprint <span class="ot">&lt;-</span> boston_recipe <span class="sc">%&gt;%</span>    </span>
+<span id="cb44-6"><a href="recipe-and-blueprint.html#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      <span class="co"># center (subtract mean) all numeric predictors (consider all the numeric predictors except the response)</span></span>
+<span id="cb44-7"><a href="recipe-and-blueprint.html#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())                     <span class="co"># scale (divide by standard deviation) all numeric predictors                     </span></span></code></pre></div>
+<p>Since there’s no missing value, no zv/nzv features and no categorical variable in <code>boston</code> dataset, all we need in blueprint is to standardize the data.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="recipe-and-blueprint.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate feature engineering parameters based on training data</span></span>
+<span id="cb45-2"><a href="recipe-and-blueprint.html#cb45-2" aria-hidden="true" tabindex="-1"></a>boston_prepare <span class="ot">&lt;-</span> <span class="fu">prep</span>(boston_blueprint, <span class="at">data =</span> boston_train)   </span>
+<span id="cb45-3"><a href="recipe-and-blueprint.html#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="recipe-and-blueprint.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to training data for building final/optimal model</span></span>
+<span id="cb45-5"><a href="recipe-and-blueprint.html#cb45-5" aria-hidden="true" tabindex="-1"></a>boston_baked_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(boston_prepare, <span class="at">new_data =</span> boston_train)   </span>
+<span id="cb45-6"><a href="recipe-and-blueprint.html#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="recipe-and-blueprint.html#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to test data for future use</span></span>
+<span id="cb45-8"><a href="recipe-and-blueprint.html#cb45-8" aria-hidden="true" tabindex="-1"></a>boston_baked_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(boston_prepare, <span class="at">new_data =</span> boston_test)    </span></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="boston-housing-dataset-example.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="recipe-and-blueprint.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="preparation-steps-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="analysis-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

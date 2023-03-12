@@ -158,7 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1.1" data-path="preparation-steps-1.html"><a href="preparation-steps-1.html#data-investigation-1"><i class="fa fa-check"></i><b>3.1.1</b> Data Investigation</a></li>
 <li class="chapter" data-level="3.1.2" data-path="preparation-steps-1.html"><a href="preparation-steps-1.html#data-spliting-1"><i class="fa fa-check"></i><b>3.1.2</b> Data Spliting</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="recipt-and-blueprint-1.html"><a href="recipt-and-blueprint-1.html"><i class="fa fa-check"></i><b>3.2</b> Recipt and Blueprint</a></li>
+<li class="chapter" data-level="3.2" data-path="recipe-and-blueprint.html"><a href="recipe-and-blueprint.html"><i class="fa fa-check"></i><b>3.2</b> Recipe and Blueprint</a></li>
 <li class="chapter" data-level="3.3" data-path="analysis-1.html"><a href="analysis-1.html"><i class="fa fa-check"></i><b>3.3</b> Analysis</a>
 <ul>
 <li class="chapter" data-level="3.3.1" data-path="analysis-1.html"><a href="analysis-1.html#bulid-model-1"><i class="fa fa-check"></i><b>3.3.1</b> Bulid Model</a></li>
@@ -167,7 +167,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4" data-path="final-model-1.html"><a href="final-model-1.html"><i class="fa fa-check"></i><b>3.4</b> Final Model</a>
 <ul>
 <li class="chapter" data-level="3.4.1" data-path="final-model-1.html"><a href="final-model-1.html#prediction-on-test-dataset-1"><i class="fa fa-check"></i><b>3.4.1</b> Prediction on Test Dataset</a></li>
-<li class="chapter" data-level="3.4.2" data-path="final-model-1.html"><a href="final-model-1.html#only-splines"><i class="fa fa-check"></i><b>3.4.2</b> Only splines?</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>4</b> Conclusion</a></li>
@@ -206,14 +205,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 195576.6</code></pre>
 <p>Using the formula provided from training, we tried to fit the GAM model.
 The RMSE of the final model is 195576.6, compared to 70421.17 previously.
-Obviously, this is not ideal, since now the RMSE is more than two times higher. Why?</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="final-model.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ames_final_model, <span class="at">residuals=</span><span class="cn">TRUE</span>,<span class="at">shade =</span> <span class="cn">TRUE</span>, <span class="at">shade.col =</span> <span class="st">&quot;lightblue&quot;</span>,<span class="at">pch =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code></pre></div>
-<p><img src="GAM_files/figure-html/unnamed-chunk-9-1.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-9-2.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-9-3.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-9-4.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-9-5.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-9-6.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-9-7.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-9-8.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-9-9.png" width="672" /></p>
+Obviously, this is not ideal, since now the RMSE is more than two times higher.
+Why?</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="final-model.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ames_final_model, <span class="at">residuals=</span><span class="cn">TRUE</span>,<span class="at">shade =</span> <span class="cn">TRUE</span>, <span class="at">shade.col =</span> <span class="st">&quot;lightblue&quot;</span>,<span class="at">pch =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="fl">0.5</span>,<span class="at">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Here we have the residual plot of those variables that had applied splines function, and the blue shades represent the 95% confidence interval.
 From the graphs for <code>Gr_Liv_Area</code> and <code>Lot_Area</code>, we could see that the tails are drawn to the noises, letting it change the slope, which should not be happening.</p>
 <p>In order to create a well-fit final model, we have to recognize what is wrong with out current model.
 First, let’s look at the several plots <code>gam.check</code> had produced.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="final-model.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(ames_final_model)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="final-model.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1293</span>)</span>
+<span id="cb25-2"><a href="final-model.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(ames_final_model)</span></code></pre></div>
 <p><img src="GAM_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <pre><code>## 
 ## Method: GCV   Optimizer: magic
@@ -225,63 +226,73 @@ First, let’s look at the several plots <code>gam.check</code> had produced.</p
 ## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
 ## indicate that k is too low, especially if edf is close to k&#39;.
 ## 
-##                    k&#39;  edf k-index p-value   
-## s(TotRms_AbvGrd) 9.00 1.00    1.05   0.890   
-## s(Lot_Frontage)  9.00 1.00    0.97   0.200   
-## s(Year_Built)    9.00 3.94    0.92   0.010 **
-## s(Open_Porch_SF) 9.00 1.00    0.91   0.005 **
-## s(Second_Flr_SF) 9.00 1.00    0.95   0.075 . 
-## s(Garage_Area)   9.00 3.62    0.98   0.220   
-## s(Gr_Liv_Area)   9.00 9.00    1.00   0.485   
-## s(First_Flr_SF)  9.00 6.48    1.09   1.000   
-## s(Lot_Area)      9.00 7.81    1.05   0.930   
+##                    k&#39;  edf k-index p-value    
+## s(TotRms_AbvGrd) 9.00 1.00    1.05   0.865    
+## s(Lot_Frontage)  9.00 1.00    0.97   0.200    
+## s(Year_Built)    9.00 3.94    0.92   0.015 *  
+## s(Open_Porch_SF) 9.00 1.00    0.91  &lt;2e-16 ***
+## s(Second_Flr_SF) 9.00 1.00    0.95   0.085 .  
+## s(Garage_Area)   9.00 3.62    0.98   0.295    
+## s(Gr_Liv_Area)   9.00 9.00    1.00   0.560    
+## s(First_Flr_SF)  9.00 6.48    1.09   0.970    
+## s(Lot_Area)      9.00 7.81    1.05   0.930    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>From the Q-Q plot, we could see that there is a clear trend to the residuals; from the residual values plot, we could see that there’s a cluster of points, and maybe a negative slope; from the histogram, we could see that there is a bell-shaped curve; and from the response vs. fitted values plot, we could see that the values are fitted pretty good.
 We should also look at the table generated from <code>gam.check</code>.
 The table shows the <code>k</code> value, effective degrees of freedom, test statistics, and p-value of each basis functions.
 The <code>k</code> value is very similar to the “knots” in MARS, representing how many basis function is used to fit the model, and could be used as the smoothing parameter.
-Another smoothing parameter we would use is <code>λ</code>, since <code>FIT=Likelihood-λ*Wiggliness</code> is how the fit of GAM model is calculated.
-The likelihood represents how well the model captures patterns in the data, and wiggliness represents the complexity of the model.</p>
+Another smoothing parameter we would use is <code>λ</code>, since <span class="math inline">\(FIT=Likelihood-λ*Wiggliness\)</span> is how the fit of GAM model is calculated.
+The likelihood represents how well the model captures patterns in the data, and wiggliness represents the complexity of the model.
+As described in the model, when the p-value is too low, or if the k-index is below 1, it’s possible that we need to increase the size of the basis function.
+In the table above, we could see that <code>Year_Built</code>, <code>Open_porch_SF</code>, and <code>Second_Flr_SF</code> all had p-values below 0.1.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="final-model.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build final model</span></span>
 <span id="cb27-2"><a href="final-model.html#cb27-2" aria-hidden="true" tabindex="-1"></a>ames_final_model2 <span class="ot">&lt;-</span> <span class="fu">gam</span>(Sale_Price<span class="sc">~</span>Garage_Type_BuiltIn <span class="sc">+</span> Garage_Type_Detchd <span class="sc">+</span> Garage_Type_No_Garage <span class="sc">+</span> Neighborhood_College_Creek <span class="sc">+</span> Neighborhood_Old_Town <span class="sc">+</span> Neighborhood_Edwards <span class="sc">+</span> Neighborhood_Somerset <span class="sc">+</span> Neighborhood_Northridge_Heights <span class="sc">+</span> Neighborhood_Gilbert <span class="sc">+</span> Neighborhood_Sawyer <span class="sc">+</span> MS_SubClass_One_and_Half_Story_Finished_All_Ages <span class="sc">+</span> MS_SubClass_Two_Story_1946_and_Newer <span class="sc">+</span> MS_SubClass_Duplex_All_Styles_and_Ages <span class="sc">+</span> </span>
-<span id="cb27-3"><a href="final-model.html#cb27-3" aria-hidden="true" tabindex="-1"></a>MS_SubClass_One_Story_PUD_1946_and_Newer <span class="sc">+</span> <span class="fu">s</span>(Garage_Cars,<span class="at">sp=</span><span class="fl">0.1</span>,<span class="at">k=</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">s</span>(Overall_Qual,<span class="at">k=</span><span class="dv">3</span>) <span class="sc">+</span> <span class="fu">s</span>(TotRms_AbvGrd,<span class="at">sp=</span><span class="fl">0.01</span>,<span class="at">k=</span><span class="dv">11</span>) <span class="sc">+</span> <span class="fu">s</span>(Lot_Frontage,<span class="at">sp=</span><span class="fl">0.1</span>,<span class="at">k=</span><span class="dv">6</span>) <span class="sc">+</span><span class="fu">s</span>(Year_Built,<span class="at">sp=</span><span class="fl">0.0001</span>,<span class="at">k=</span><span class="dv">24</span>) <span class="sc">+</span> <span class="fu">s</span>(Open_Porch_SF,<span class="at">sp=</span><span class="fl">0.15</span>,<span class="at">k=</span><span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(Second_Flr_SF,<span class="at">sp=</span><span class="fl">0.9</span>,<span class="at">k=</span><span class="dv">7</span>) <span class="sc">+</span> <span class="fu">s</span>(Garage_Area,<span class="at">sp=</span><span class="dv">1</span>,<span class="at">k=</span><span class="dv">5</span>) <span class="sc">+</span> <span class="fu">s</span>(Gr_Liv_Area,<span class="at">sp=</span><span class="fl">0.4</span>,<span class="at">k=</span><span class="dv">6</span>) <span class="sc">+</span> <span class="fu">s</span>(First_Flr_SF,<span class="at">sp=</span><span class="fl">0.001</span>,<span class="at">k=</span><span class="dv">3</span>) <span class="sc">+</span> <span class="fu">s</span>(Lot_Area,<span class="at">sp=</span><span class="dv">1</span>,<span class="at">k=</span><span class="dv">3</span>) ,<span class="at">data=</span>ames_baked_train) </span></code></pre></div>
+<span id="cb27-3"><a href="final-model.html#cb27-3" aria-hidden="true" tabindex="-1"></a>MS_SubClass_One_Story_PUD_1946_and_Newer <span class="sc">+</span> <span class="fu">s</span>(Garage_Cars,<span class="at">sp=</span><span class="fl">0.1</span>,<span class="at">k=</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">s</span>(Overall_Qual,<span class="at">k=</span><span class="dv">3</span>) <span class="sc">+</span> <span class="fu">s</span>(TotRms_AbvGrd,<span class="at">sp=</span><span class="fl">0.01</span>,<span class="at">k=</span><span class="dv">11</span>) <span class="sc">+</span> <span class="fu">s</span>(Lot_Frontage,<span class="at">sp=</span><span class="fl">0.1</span>,<span class="at">k=</span><span class="dv">7</span>) <span class="sc">+</span><span class="fu">s</span>(Year_Built,<span class="at">sp=</span><span class="fl">0.0001</span>,<span class="at">k=</span><span class="dv">29</span>) <span class="sc">+</span> <span class="fu">s</span>(Open_Porch_SF,<span class="at">sp=</span><span class="fl">0.6</span>,<span class="at">k=</span><span class="dv">9</span>) <span class="sc">+</span> <span class="fu">s</span>(Second_Flr_SF,<span class="at">sp=</span><span class="fl">0.9</span>,<span class="at">k=</span><span class="dv">7</span>) <span class="sc">+</span> <span class="fu">s</span>(Garage_Area,<span class="at">sp=</span><span class="dv">1</span>,<span class="at">k=</span><span class="dv">5</span>) <span class="sc">+</span> <span class="fu">s</span>(Gr_Liv_Area,<span class="at">sp=</span><span class="dv">10</span>,<span class="at">k=</span><span class="dv">6</span>) <span class="sc">+</span> <span class="fu">s</span>(First_Flr_SF,<span class="at">sp=</span><span class="fl">0.001</span>,<span class="at">k=</span><span class="dv">3</span>) <span class="sc">+</span> <span class="fu">s</span>(Lot_Area,<span class="at">sp=</span><span class="dv">1</span>,<span class="at">k=</span><span class="dv">3</span>) ,<span class="at">data=</span>ames_baked_train) </span></code></pre></div>
 <pre><code>## Warning in smooth.construct.tp.smooth.spec(object, dk$data, dk$knots): basis dimension, k, increased to minimum possible</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="final-model.html#cb29-1" aria-hidden="true" tabindex="-1"></a>ames_final_model_preds2<span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> ames_final_model2, <span class="at">newdata =</span> ames_baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)    <span class="co"># obtain predictions</span></span>
-<span id="cb29-2"><a href="final-model.html#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="final-model.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((ames_final_model_preds2<span class="sc">-</span> ames_baked_test<span class="sc">$</span>Sale_Price)<span class="sc">^</span><span class="dv">2</span>))   <span class="co"># calculate test set RMSE</span></span></code></pre></div>
-<pre><code>## [1] 28805.21</code></pre>
 <p>After seeing where the problem was, we started using the smoothing parameter to tune the variables.
-From the formula above, we know that, the more wiggly we want the variable to fit, the smaller <code>λ</code> needs to be (between 0 and 1), and if we want the fit to be less wiggly, <code>λ</code> has to be bigger than 1.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="final-model.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ames_final_model2, <span class="at">residuals=</span><span class="cn">TRUE</span>,<span class="at">shade =</span> <span class="cn">TRUE</span>, <span class="at">shade.col =</span> <span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
-<p><img src="GAM_files/figure-html/unnamed-chunk-12-1.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-12-2.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-12-3.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-12-4.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-12-5.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-12-6.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-12-7.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-12-8.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-12-9.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-12-10.png" width="672" /><img src="GAM_files/figure-html/unnamed-chunk-12-11.png" width="672" /></p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="final-model.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(ames_final_model2)</span></code></pre></div>
+From the formula <span class="math inline">\(FIT=Likelihood-λ*Wiggliness\)</span>, we know that, the more wiggly (complex) we want the variable to fit, the smaller <code>λ</code> needs to be (between 0 and 1), and if we want the fit to be less wiggly, <code>λ</code> has to be bigger than 1.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="final-model.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ames_final_model,<span class="at">select=</span><span class="fu">c</span>(<span class="dv">7</span>), <span class="at">residuals=</span><span class="cn">TRUE</span>,<span class="at">shade =</span> <span class="cn">TRUE</span>, <span class="at">shade.col =</span> <span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>For example, above is the plot from the first model of the variable <code>Gr_Liv_Area</code>.
+We can see that, when the above ground living area was increasing, the trend of the price goes up when there are more data, and when there is less data, the price started dramatically.
+This disobeys the common sense, since the bigger the house is, the more expensive the house should be.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="final-model.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ames_final_model2,<span class="at">select=</span><span class="fu">c</span>(<span class="dv">9</span>), <span class="at">residuals=</span><span class="cn">TRUE</span>,<span class="at">shade =</span> <span class="cn">TRUE</span>, <span class="at">shade.col =</span> <span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
 <p><img src="GAM_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>This is the reason why we need to use <code>λ</code> and tune the variable.
+For the second model, we chose a <code>λ</code> of 10, which means that we don’t want the trend to be wiggly, and it should be as simple as possible, which also prevents the line of best fit to be drawn by the noises.
+As we can see from the graph above, the price is now predicted to increase with the above ground area.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="final-model.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12984</span>)</span>
+<span id="cb31-2"><a href="final-model.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(ames_final_model2)</span></code></pre></div>
+<p><img src="GAM_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <pre><code>## 
 ## Method: GCV   Optimizer: magic
 ## Smoothing parameter selection converged after 8 iterations.
-## The RMS GCV score gradient at convergence was 1873.426 .
+## The RMS GCV score gradient at convergence was 3093.98 .
 ## The Hessian was positive definite.
-## Model rank =  84 / 84 
+## Model rank =  90 / 90 
 ## 
 ## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
 ## indicate that k is too low, especially if edf is close to k&#39;.
 ## 
-##                     k&#39;   edf k-index p-value  
-## s(Garage_Cars)    2.00  1.81    1.02    0.68  
-## s(Overall_Qual)   2.00  1.94    1.03    0.78  
-## s(TotRms_AbvGrd) 10.00  6.24    0.98    0.36  
-## s(Lot_Frontage)   5.00  3.37    0.98    0.27  
-## s(Year_Built)    23.00 22.02    0.94    0.03 *
-## s(Open_Porch_SF)  8.00  3.55    0.97    0.16  
-## s(Second_Flr_SF)  6.00  2.38    0.96    0.17  
-## s(Garage_Area)    4.00  1.81    1.00    0.43  
-## s(Gr_Liv_Area)    5.00  2.15    0.98    0.33  
-## s(First_Flr_SF)   2.00  1.95    1.02    0.64  
-## s(Lot_Area)       2.00  1.03    1.01    0.64  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>Noticing that the RMSE for both train dataset and test dataset are all large, especailly for test dataset, which means the GAM model didn’t work well for ames housing dataset. In order to show a better performance, we found another dataset, boston housing, to have a try.</p>
+##                     k&#39;   edf k-index p-value
+## s(Garage_Cars)    2.00  1.81    1.03    0.77
+## s(Overall_Qual)   2.00  1.95    1.04    0.91
+## s(TotRms_AbvGrd) 10.00  6.24    0.99    0.30
+## s(Lot_Frontage)   6.00  3.43    0.98    0.28
+## s(Year_Built)    28.00 25.78    0.95    0.12
+## s(Open_Porch_SF)  8.00  2.53    0.97    0.18
+## s(Second_Flr_SF)  6.00  2.46    0.98    0.23
+## s(Garage_Area)    4.00  1.80    1.00    0.48
+## s(Gr_Liv_Area)    5.00  1.08    0.97    0.20
+## s(First_Flr_SF)   2.00  1.97    1.00    0.47
+## s(Lot_Area)       2.00  1.03    1.02    0.74</code></pre>
+<p>After tuning, we can see that now the basis dimension for all variables have p-values of bigger than 0.1.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="final-model.html#cb33-1" aria-hidden="true" tabindex="-1"></a>ames_final_model_preds2<span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> ames_final_model2, <span class="at">newdata =</span> ames_baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)    <span class="co"># obtain predictions</span></span>
+<span id="cb33-2"><a href="final-model.html#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="final-model.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((ames_final_model_preds2<span class="sc">-</span> ames_baked_test<span class="sc">$</span>Sale_Price)<span class="sc">^</span><span class="dv">2</span>))   <span class="co"># calculate test set RMSE</span></span></code></pre></div>
+<pre><code>## [1] 28781.85</code></pre>
+<p>Here, we can also see that the RMSE value had decreased to 28781.85, compared to 195576.6 from the first model.</p>
 
 </div>
 </div>
