@@ -3,7 +3,7 @@ ames-housing-dataset-example
 preparation-steps
 data-investigation
 data-spliting
-recipt-and-blueprint
+recipe-and-blueprint
 analysis
 bulid-model
 models-performance
@@ -13,11 +13,10 @@ boston-housing-dataset-example
 preparation-steps-1
 data-investigation-1
 data-spliting-1
-recipe-and-blueprint
+recipe-and-blueprint-1
 analysis-1
 bulid-model-1
 models-performance-1
 final-model-1
 prediction-on-test-dataset-1
 conclusion
-recipe-and-blueprint-1
