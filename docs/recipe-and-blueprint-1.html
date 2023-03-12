@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.2 Recipt and Blueprint | CMSC 208 Final Project</title>
-  <meta name="description" content="2.2 Recipt and Blueprint | CMSC 208 Final Project" />
+  <title>3.2 Recipe and Blueprint | CMSC 208 Final Project</title>
+  <meta name="description" content="3.2 Recipe and Blueprint | CMSC 208 Final Project" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.2 Recipt and Blueprint | CMSC 208 Final Project" />
+  <meta property="og:title" content="3.2 Recipe and Blueprint | CMSC 208 Final Project" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.2 Recipt and Blueprint | CMSC 208 Final Project" />
+  <meta name="twitter:title" content="3.2 Recipe and Blueprint | CMSC 208 Final Project" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="preparation-steps.html"/>
-<link rel="next" href="analysis.html"/>
+<link rel="prev" href="preparation-steps-1.html"/>
+<link rel="next" href="analysis-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -140,7 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1.1" data-path="preparation-steps.html"><a href="preparation-steps.html#data-investigation"><i class="fa fa-check"></i><b>2.1.1</b> Data Investigation</a></li>
 <li class="chapter" data-level="2.1.2" data-path="preparation-steps.html"><a href="preparation-steps.html#data-spliting"><i class="fa fa-check"></i><b>2.1.2</b> Data Spliting</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="recipt-and-blueprint.html"><a href="recipt-and-blueprint.html"><i class="fa fa-check"></i><b>2.2</b> Recipt and Blueprint</a></li>
+<li class="chapter" data-level="2.2" data-path="recipe-and-blueprint.html"><a href="recipe-and-blueprint.html"><i class="fa fa-check"></i><b>2.2</b> Recipe and Blueprint</a></li>
 <li class="chapter" data-level="2.3" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>2.3</b> Analysis</a>
 <ul>
 <li class="chapter" data-level="2.3.1" data-path="analysis.html"><a href="analysis.html#bulid-model"><i class="fa fa-check"></i><b>2.3.1</b> Bulid Model</a></li>
@@ -158,7 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1.1" data-path="preparation-steps-1.html"><a href="preparation-steps-1.html#data-investigation-1"><i class="fa fa-check"></i><b>3.1.1</b> Data Investigation</a></li>
 <li class="chapter" data-level="3.1.2" data-path="preparation-steps-1.html"><a href="preparation-steps-1.html#data-spliting-1"><i class="fa fa-check"></i><b>3.1.2</b> Data Spliting</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="recipe-and-blueprint.html"><a href="recipe-and-blueprint.html"><i class="fa fa-check"></i><b>3.2</b> Recipe and Blueprint</a></li>
+<li class="chapter" data-level="3.2" data-path="recipe-and-blueprint-1.html"><a href="recipe-and-blueprint-1.html"><i class="fa fa-check"></i><b>3.2</b> Recipe and Blueprint</a></li>
 <li class="chapter" data-level="3.3" data-path="analysis-1.html"><a href="analysis-1.html"><i class="fa fa-check"></i><b>3.3</b> Analysis</a>
 <ul>
 <li class="chapter" data-level="3.3.1" data-path="analysis-1.html"><a href="analysis-1.html#bulid-model-1"><i class="fa fa-check"></i><b>3.3.1</b> Bulid Model</a></li>
@@ -187,38 +187,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="recipt-and-blueprint" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Recipt and Blueprint<a href="recipt-and-blueprint.html#recipt-and-blueprint" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>After all preprocessing steps have been decided set up the overall blueprint.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="recipt-and-blueprint.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set up recipe</span></span>
-<span id="cb15-2"><a href="recipt-and-blueprint.html#cb15-2" aria-hidden="true" tabindex="-1"></a>ames_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price<span class="sc">~</span>., <span class="at">data =</span> ames_train) </span>
-<span id="cb15-3"><a href="recipt-and-blueprint.html#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="recipt-and-blueprint.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># specify feature engineering steps</span></span>
-<span id="cb15-5"><a href="recipt-and-blueprint.html#cb15-5" aria-hidden="true" tabindex="-1"></a>ames_blueprint <span class="ot">&lt;-</span> ames_recipe <span class="sc">%&gt;%</span>    </span>
-<span id="cb15-6"><a href="recipt-and-blueprint.html#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_nzv</span>(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) <span class="sc">%&gt;%</span>  </span>
-<span id="cb15-7"><a href="recipt-and-blueprint.html#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_mean</span>(Gr_Liv_Area) <span class="sc">%&gt;%</span>                                   </span>
-<span id="cb15-8"><a href="recipt-and-blueprint.html#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_integer</span>(Overall_Qual) <span class="sc">%&gt;%</span>                                       </span>
-<span id="cb15-9"><a href="recipt-and-blueprint.html#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      </span>
-<span id="cb15-10"><a href="recipt-and-blueprint.html#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      </span>
-<span id="cb15-11"><a href="recipt-and-blueprint.html#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_other</span>(Neighborhood, <span class="at">threshold =</span> <span class="fl">0.01</span>, <span class="at">other =</span> <span class="st">&quot;other&quot;</span>) <span class="sc">%&gt;%</span>      </span>
-<span id="cb15-12"><a href="recipt-and-blueprint.html#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="at">one_hot =</span> <span class="cn">FALSE</span>)                            </span></code></pre></div>
-<p>Within the blueprint, we first filter out the zv/nzv predictors, and impute the missing entries. Then, we do numeric conversion of level of ordinal categorical variable <code>Overall_Qual</code>. Following with the data standardization step and lumping step. Finally, do the one-hot/dummy encode of nominal categorical variables.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="recipt-and-blueprint.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate feature engineering parameters based on training data</span></span>
-<span id="cb16-2"><a href="recipt-and-blueprint.html#cb16-2" aria-hidden="true" tabindex="-1"></a>ames_prepare <span class="ot">&lt;-</span> <span class="fu">prep</span>(ames_blueprint, <span class="at">data =</span> ames_train)   </span>
-<span id="cb16-3"><a href="recipt-and-blueprint.html#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="recipt-and-blueprint.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to training data for building final/optimal model</span></span>
-<span id="cb16-5"><a href="recipt-and-blueprint.html#cb16-5" aria-hidden="true" tabindex="-1"></a>ames_baked_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(ames_prepare, <span class="at">new_data =</span> ames_train) </span>
-<span id="cb16-6"><a href="recipt-and-blueprint.html#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="recipt-and-blueprint.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to test data for future use</span></span>
-<span id="cb16-8"><a href="recipt-and-blueprint.html#cb16-8" aria-hidden="true" tabindex="-1"></a>ames_baked_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(ames_prepare, <span class="at">new_data =</span> ames_test)    </span></code></pre></div>
+<div id="recipe-and-blueprint-1" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Recipe and Blueprint<a href="recipe-and-blueprint-1.html#recipe-and-blueprint-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="recipe-and-blueprint-1.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up recipe </span></span>
+<span id="cb44-2"><a href="recipe-and-blueprint-1.html#cb44-2" aria-hidden="true" tabindex="-1"></a>boston_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(MEDV <span class="sc">~</span> ., <span class="at">data =</span> boston_train)</span>
+<span id="cb44-3"><a href="recipe-and-blueprint-1.html#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="recipe-and-blueprint-1.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># set up blueprint</span></span>
+<span id="cb44-5"><a href="recipe-and-blueprint-1.html#cb44-5" aria-hidden="true" tabindex="-1"></a>boston_blueprint <span class="ot">&lt;-</span> boston_recipe <span class="sc">%&gt;%</span>    </span>
+<span id="cb44-6"><a href="recipe-and-blueprint-1.html#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      <span class="co"># center (subtract mean) all numeric predictors (consider all the numeric predictors except the response)</span></span>
+<span id="cb44-7"><a href="recipe-and-blueprint-1.html#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())                     <span class="co"># scale (divide by standard deviation) all numeric predictors                     </span></span></code></pre></div>
+<p>Since there’s no missing value, no zv/nzv features and no categorical variable in <code>boston</code> dataset, all we need in blueprint is to standardize the data.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="recipe-and-blueprint-1.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate feature engineering parameters based on training data</span></span>
+<span id="cb45-2"><a href="recipe-and-blueprint-1.html#cb45-2" aria-hidden="true" tabindex="-1"></a>boston_prepare <span class="ot">&lt;-</span> <span class="fu">prep</span>(boston_blueprint, <span class="at">data =</span> boston_train)   </span>
+<span id="cb45-3"><a href="recipe-and-blueprint-1.html#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="recipe-and-blueprint-1.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to training data for building final/optimal model</span></span>
+<span id="cb45-5"><a href="recipe-and-blueprint-1.html#cb45-5" aria-hidden="true" tabindex="-1"></a>boston_baked_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(boston_prepare, <span class="at">new_data =</span> boston_train)   </span>
+<span id="cb45-6"><a href="recipe-and-blueprint-1.html#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="recipe-and-blueprint-1.html#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co"># apply the blueprint to test data for future use</span></span>
+<span id="cb45-8"><a href="recipe-and-blueprint-1.html#cb45-8" aria-hidden="true" tabindex="-1"></a>boston_baked_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(boston_prepare, <span class="at">new_data =</span> boston_test)    </span></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="preparation-steps.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="preparation-steps-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="analysis-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -249,15 +243,15 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/kaitaii/208-project/edit/main/ames_housing_dataset.Rmd",
+"link": "https://github.com/kaitaii/208-project/edit/main/Boston_housing_dataset.Rmd",
 "text": "Edit"
 },
 "history": {
-"link": "https://github.com/kaitaii/208-project/commits/main/ames_housing_dataset.Rmd",
+"link": "https://github.com/kaitaii/208-project/commits/main/Boston_housing_dataset.Rmd",
 "text": null
 },
 "view": {
-"link": "https://github.com/kaitaii/208-project/blob/main/ames_housing_dataset.Rmd",
+"link": "https://github.com/kaitaii/208-project/blob/main/Boston_housing_dataset.Rmd",
 "text": null
 },
 "download": null,

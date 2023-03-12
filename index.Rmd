@@ -11,12 +11,19 @@ link-citations: yes
 # Introduction
 
 Generalized Additive Models is a powerful extension of the linear regression model that can capture complex nonlinear relationships between predictors and response variables. 
+<<<<<<< HEAD
 Unlike linear regression, GAMs allow for non-linear function of each variable, while maintaining their additivity. Instead of $y = \beta_0 + \beta_1x_1 + \beta_2x_2+...+\epsilon$, GAMs have a function of $y = \beta_0 + f_1(x_1) + f_2(x_2) + ... +\epsilon$, where $f(x_i)$ represent a (smooth) non-linear function. 
+=======
+Unlike linear regression, GAMs allow for non-linear function of each variable, while maintaining their additivity. 
+Instead of $y = \beta_0 + \beta_1x_1 + \beta_2x_2+...+\epsilon$, GAMs have a function of $y = \beta_0 + f_1(x_1) + f_2(x_2) + ... +\epsilon$, where $f(xi)$ represent a (smooth) non-linear function. 
+>>>>>>> 7dcf6d5a546b1a2be8880c558f43bbae0cf5f201
 GAMs can also model interactions between variables and handle different types of data, including continuous, categorical, and ordinal variables.
 
-In this project, we are trying to imply this new model we learned and explored the performance of it on two datasets, `ames` and `boston`, which have different features. 
+In this project, we are trying to imply this new model we learned and explored the performance of it on two datasets, `ames` and `boston`, which have different features and complexity. 
+However, our initial results on the ames dataset were a bit disappointing, with a very large Root Mean Squared Error (RMSE) on both the training and test datasets, indicating poor performance.
 
-However, our initial results on the ames dataset were a bit disappointing, with a very large Root Mean Squared Error (RMSE) on both the training and test datasets, indicating poor performance. To address this issue, we further investigated the model and its hyperparameters, and find another dataset `boston` with more complexity to improve GAMs performance. We present our findings for using GAMs on these datasets in this report.
+To address this issue, we further investigated the model and its hyper-parameters, and implemented the hyper-parameters on both `ames` and `boston` datasets.
+We present our findings for using GAMs on these datasets in this report.
 
 
 

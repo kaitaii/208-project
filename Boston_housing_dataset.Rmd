@@ -3,7 +3,7 @@
 
 Data description:
 
-Since GAM did not work well with the Ames housing dataset, which output a big RMSE, we decided to use another dataset and to test the GAM method on it again. The new dataset, Boston housing, includes 13 explanatory variables, and the response variable `MEDV`. The following is the description from Kaggle all variables:
+Orignially, since GAM did not work well with the Ames housing dataset, which output a big RMSE, we decided to use another dataset and to test the GAM method on it again. The new dataset, Boston housing, includes 13 explanatory variables, and the response variable `MEDV`. The following is the description from Kaggle all variables:
 
 Response Variable: 
 
@@ -40,13 +40,7 @@ Explanatory variables:
 
 
 ```{r,echo=FALSE,warning=FALSE, include=FALSE}
-# load package and dataset
-
-library(tidyverse)
-library(caret)
-library(recipes)
-library(mgcv)
-
+# load dataset
 boston<-read_csv("boston.csv") # load package and dataset
 ```
 
@@ -65,12 +59,6 @@ nearZeroVar(boston)
 
 Finding that there are 13 features in total and all of them are numerical variables. There is no NA value in the whole dataset and no zv or nzv features.
 
-```{r}
-cor(boston)
-```
-
-From the correlation plot, noticing that for variable `TAX` and `INDUS`, `DIS` and `INDUS`, `TAX` and `INDUS`, `NOX` and `INDUS`, `NOX` and `AGE`, `NOX` and `DIS`, `AGE` and `DIS`... are highly correlated variable. (We are saying two variables are highly correlated when their correlation value is greater that 0.7)
-
 
 ### Data Spliting
 
@@ -86,7 +74,7 @@ boston_train <- boston[index,]   # training data
 boston_test <- boston[-index,]   # test data
 ```
 
-## Recipt and Blueprint
+## Recipe and Blueprint
 
 ```{r}
 # Set up recipe 
@@ -144,9 +132,6 @@ boston_model$finalMo
 
 From the result, seeing that the RMSE is very small here, around 4, which indicates GAM model works well with train `boston` dataset. 
 
-The estimated degrees of freedom indicate the complexity of the model, and in this case, the EDF ranges from 0 to 8.392, with a total EDF of 44.8. The EDF values for the smoothing functions indicate the effective number of parameters used to fit the data, and higher EDF values generally indicate more flexible, complex models.
-
-The GCV score is used as a measure of the model's performance because it provides a balance between the model's fit to the data and its complexity. 
 
 ## Final Model
 
@@ -164,12 +149,9 @@ sqrt(mean((boston_final_model_preds - boston_baked_test$MEDV)^2))   # calculate 
 
 The test set RMSE is even smaller, which is a good sign. 
 
-Comparing with using GAM model for `ames` dataset, using it for `boston` dataset seems to be a lot better. 
+Comparing with the first model using GAM model for `ames` dataset, using it for `boston` dataset seems to be a lot better. 
 The reason to that is the fact that the `boston` dataset is a lot more complex then the `ames` dataset. 
 
-```{r}
-boston_final_model$sp
-```
 
 ```{r}
 plot(boston_final_model, residuals=TRUE,shade = TRUE, shade.col = "lightblue", pch = 1)
@@ -185,5 +167,5 @@ set.seed(111)
 gam.check(boston_final_model)
 ```
 
-
+However, after several attempts, we were not able to increase the p-value of the basis dimension values and k-index. 
 
