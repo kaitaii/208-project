@@ -20,3 +20,4 @@ models-performance-1
 final-model-1
 prediction-on-test-dataset-1
 conclusion
+recipe-and-blueprint-1
