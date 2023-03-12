@@ -11,7 +11,7 @@ Data Description:
 First, we use the `ames` dataset that we used in class, since we want to first learn how to apply this model and then do further investigation.
 Response variable: 
 
-1)`Sale_Price`: Property sale price in USD
+1) `Sale_Price`: Property sale price in USD
 
 Explanatory variable:
 
