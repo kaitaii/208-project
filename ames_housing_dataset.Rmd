@@ -206,6 +206,7 @@ In order to create a well-fit final model, we have to recognize what is wrong wi
 First, let's look at the several plots `gam.check` had produced. 
 
 ```{r}
+set.seed(1293)
 gam.check(ames_final_model)
 ```
 
@@ -220,26 +221,44 @@ The likelihood represents how well the model captures patterns in the data, and 
 ```{r}
 # build final model
 ames_final_model2 <- gam(Sale_Price~Garage_Type_BuiltIn + Garage_Type_Detchd + Garage_Type_No_Garage + Neighborhood_College_Creek + Neighborhood_Old_Town + Neighborhood_Edwards + Neighborhood_Somerset + Neighborhood_Northridge_Heights + Neighborhood_Gilbert + Neighborhood_Sawyer + MS_SubClass_One_and_Half_Story_Finished_All_Ages + MS_SubClass_Two_Story_1946_and_Newer + MS_SubClass_Duplex_All_Styles_and_Ages + 
-MS_SubClass_One_Story_PUD_1946_and_Newer + s(Garage_Cars,sp=0.1,k=2) + s(Overall_Qual,k=3) + s(TotRms_AbvGrd,sp=0.01,k=11) + s(Lot_Frontage,sp=0.1,k=6) +s(Year_Built,sp=0.0001,k=24) + s(Open_Porch_SF,sp=0.15,k=9) + s(Second_Flr_SF,sp=0.9,k=7) + s(Garage_Area,sp=1,k=5) + s(Gr_Liv_Area,sp=0.4,k=6) + s(First_Flr_SF,sp=0.001,k=3) + s(Lot_Area,sp=1,k=3) ,data=ames_baked_train) 
+MS_SubClass_One_Story_PUD_1946_and_Newer + s(Garage_Cars,sp=0.1,k=2) + s(Overall_Qual,k=3) + s(TotRms_AbvGrd,sp=0.01,k=11) + s(Lot_Frontage,sp=0.1,k=7) +s(Year_Built,sp=0.0001,k=29) + s(Open_Porch_SF,sp=0.6,k=9) + s(Second_Flr_SF,sp=0.9,k=7) + s(Garage_Area,sp=1,k=5) + s(Gr_Liv_Area,sp=10,k=6) + s(First_Flr_SF,sp=0.001,k=3) + s(Lot_Area,sp=1,k=3) ,data=ames_baked_train) 
+```
+
+After seeing where the problem was, we started using the smoothing parameter to tune the variables.
+From the formula above, we know that, the more wiggly (complex) we want the variable to fit, the smaller `λ` needs to be (between 0 and 1), and if we want the fit to be less wiggly, `λ` has to be bigger than 1. 
+
+```{r}
+plot(ames_final_model,select=c(7), residuals=TRUE,shade = TRUE, shade.col = "lightblue")
+```
+
+For example, above is the plot from the first model of the variable `Gr_Liv_Area`. 
+We can see that, when the above ground living area was increasing, the trend of the price goes up when there are more data, and when there is less data, the price started dramatically. 
+This disobeys the common sense, since the bigger the house is, the more expensive the house should be. 
+
+```{r}
+plot(ames_final_model2,select=c(9), residuals=TRUE,shade = TRUE, shade.col = "lightblue")
+```
+
+This is the reason why we need to use `λ` and tune the variable. 
+For the second model, we chose a `λ` of 10, which means that we don't want the trend to be wiggly, and it should be as simple as possible, which also prevents the line of best fit to be drawn by the noices. 
+As we can see from the graph above, the price is now predicted to increase with the above ground area. 
+
+
+```{r}
+set.seed(12984)
+gam.check(ames_final_model2)
+```
+
+```{r}
 ames_final_model_preds2<- predict(object = ames_final_model2, newdata = ames_baked_test, type = "response")    # obtain predictions
 
 sqrt(mean((ames_final_model_preds2- ames_baked_test$Sale_Price)^2))   # calculate test set RMSE
 ```
 
-After seeing where the problem was, we started using the smoothing parameter to tune the variables.
-From the formula above, we know that, the more wiggly we want the variable to fit, the smaller `λ` needs to be (between 0 and 1), and if we want the fit to be less wiggly, `λ` has to be bigger than 1. 
 
 ```{r}
-plot(ames_final_model2, residuals=TRUE,shade = TRUE, shade.col = "lightblue")
+concurvity(ames_final_model2,full=TRUE)
 ```
-
-```{r}
-gam.check(ames_final_model2)
-```
-Noticing that the RMSE for both train dataset and test dataset are all large, especailly for test dataset, which means the GAM model didn't work well for ames housing dataset. In order to show a better performance, we found another dataset, boston housing, to have a try. 
-
-
-
 
 
 
